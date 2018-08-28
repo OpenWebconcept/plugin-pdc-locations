@@ -28,24 +28,44 @@ class Location extends Model
      */
     protected static $globalFields = [];
 
-	/**
+    /**
      * Transform a single WP_Post item.
      *
      * @param WP_Post $post
      *
      * @return array
      */
-    public function transform(WP_Post $post)
+    public function transform(WP_Post $post, $metaboxes)
     {
+        $fields = $this->filterFields($metaboxes['locations']['fields']);
+
         $data = [
             'id'      => $post->ID,
             'title'   => $post->post_title,
-			'date'    => $post->post_date,
-			'address' => get_post_meta( $post->ID, '_owc_pdc-location-address', true )
+            'date'    => $post->post_date
         ];
 
         $data = $this->assignFields($data, $post);
 
         return $data;
-	}
+    }
+
+    /**
+     * Filter fields from config.
+     *
+     * @param array $fields
+     *
+     * @return array
+     */
+    protected function filterFields($fields): array
+    {
+        $fields = array_map(
+            function ($item) {
+                var_dump($item);
+                exit;
+                return $item;
+            },
+            $fields
+        );
+    }
 }

@@ -3,10 +3,10 @@
  * Provider which boots the admin serviceproviders.
  */
 
-namespace OWC\PDC\FAQ\Admin;
+namespace OWC\PDC\Locations\Admin;
 
-use OWC\PDC\FAQ\Plugin\ServiceProvider;
-use OWC\PDC\FAQ\Plugin;
+use OWC\PDC\Locations\Plugin\ServiceProvider;
+use OWC\PDC\Locations\Plugin;
 
 /**
  * Provider which boots the admin serviceproviders.
@@ -17,21 +17,21 @@ class Admin
     /**
      * Instance of the plugin.
      *
-     * @var $plugin \OWC\PDC\FAQ\Plugin
+     * @var $plugin \OWC\PDC\Locations\Plugin
      */
     protected $plugin;
 
     /**
      * Instance of the actions and filters loader.
      *
-     * @var $plugin \OWC\PDC\FAQ\Plugin\Loader
+     * @var $plugin \OWC\PDC\Locations\Plugin\Loader
      */
     protected $loader;
 
     /**
      * Admin constructor.
      *
-     * @param \OWC\PDC\FAQ\PLugin $plugin
+     * @param \OWC\PDC\Locations\PLugin $plugin
      */
     public function __construct(Plugin $plugin)
     {
@@ -57,15 +57,14 @@ class Admin
         foreach ($services as $service) {
             $service = new $service($this->plugin);
 
-            if ( ! $service instanceof ServiceProvider) {
+            if (! $service instanceof ServiceProvider) {
                 throw new \Exception('Provider must extend ServiceProvider.');
             }
 
             /**
-             * @var \OWC\PDC\FAQ\Plugin\ServiceProvider $service
+             * @var \OWC\PDC\Locations\Plugin\ServiceProvider $service
              */
             $service->register();
         }
     }
-
 }

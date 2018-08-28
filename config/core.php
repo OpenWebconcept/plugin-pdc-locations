@@ -11,12 +11,11 @@ return [
 		OWC\PDC\Locations\RestAPI\RestAPIServiceProvider::class,
 		OWC\PDC\Locations\PostType\LocationsPostTypeServiceProvider::class,
 		OWC\PDC\Locations\PostsToPosts\PostsToPostsServiceProvider::class,
-
 		/**
          * Providers specific to the admin.
          */
         'admin'    => [
-	        OWC\PDC\Locations\Metabox\MetaboxServiceProvider::class,
+			OWC\PDC\Locations\Metabox\MetaboxServiceProvider::class,
         ]
     ],
 

@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PDC FAQ\n"
+"Project-Id-Version: PDC Locations\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-25 07:56+0000\n"
 "PO-Revision-Date: 2018-04-25 07:57+0000\n"
-"Last-Translator: Yard Interetn <info@yard.nl>\n"
+"Last-Translator: Yard Internet <info@yard.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
@@ -22,7 +22,7 @@ msgid "Question"
 msgstr "Vraag"
 
 #: config/metaboxes.php:25
-msgctxt "Description for the Question of a FAQ item"
+msgctxt "Description for the Question of a Locations item"
 msgid ""
 msgstr ""
 
@@ -31,12 +31,12 @@ msgid "Answer"
 msgstr "Antwoord"
 
 #: config/metaboxes.php:31
-msgctxt "Description for the Answer of a FAQ item"
+msgctxt "Description for the Answer of a Locations item"
 msgid "Use of HTML is allowed"
 msgstr "Gebruik van HTML is toegestaan"
 
 #. Name of the plugin
-msgid "PDC FAQ"
+msgid "PDC Locations"
 msgstr ""
 
 #. Description of the plugin

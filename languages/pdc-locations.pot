@@ -1,0 +1,57 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PDC FAQ\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-25 07:56+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: config/metaboxes.php:7
+msgid "Frequently asked questions"
+msgstr ""
+
+#: config/metaboxes.php:24
+msgid "Question"
+msgstr ""
+
+#: config/metaboxes.php:25
+msgctxt "Description for the Question of a FAQ item"
+msgid ""
+msgstr ""
+
+#: config/metaboxes.php:30
+msgid "Answer"
+msgstr ""
+
+#: config/metaboxes.php:31
+msgctxt "Description for the Answer of a FAQ item"
+msgid "Use of HTML is allowed"
+msgstr ""
+
+#. Name of the plugin
+msgid "PDC FAQ"
+msgstr ""
+
+#. Description of the plugin
+msgid "Plugin to create the frequently asked questions section for a PDC item."
+msgstr ""
+
+#. URI of the plugin
+msgid "https://www.openwebconcept.nl/"
+msgstr ""
+
+#. Author of the plugin
+msgid "Yard Internet"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.yardinternet.nl/"
+msgstr ""

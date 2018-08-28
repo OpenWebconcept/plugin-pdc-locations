@@ -1,0 +1,45 @@
+{
+  "name": "plugin/pdc-locations",
+  "description": "Plugin to attach locations to a PDC item",
+  "authors": [
+    {
+      "name": "Yard Internet",
+      "email": "info@yard.nl",
+      "homepage": "https://www.yardinternet.nl"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@bitbucket.org:openwebconcept/plugin-pdc-base.git"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "plugin/pdc-base": "^2.0.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "1.0.*",
+    "phpunit/phpunit": "~7.0",
+    "10up/wp_mock": "dev-master",
+    "phpdocumentor/phpdocumentor": "2.*",
+    "squizlabs/php_codesniffer": "^3.0.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "OWC\\PDC\\Locations\\": "./src/Locations",
+      "OWC\\PDC\\Locations\\Tests\\": "./tests"
+    }
+  },
+  "scripts": {
+    "unit": "clear && ./vendor/bin/phpunit  --testsuite 'Unit Test Suite' --colors=always",
+    "unit-coverage": "clear && ./vendor/bin/phpunit  --testsuite 'Unit Test Suite' --colors=always --coverage-html ./tests/coverage",
+    "integration": "clear && ./vendor/bin/phpunit  --testsuite 'Integration Test Suite' --colors=always",
+    "test": [
+      "@unit",
+      "@integration"
+    ],
+    "docs": "./vendor/bin/phpdoc -d ./src/Locations -t ./docs"
+  }
+}

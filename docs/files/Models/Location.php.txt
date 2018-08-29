@@ -124,11 +124,11 @@ class Location extends Model
 			}
 
 			$fieldName = str_replace($this->posttype .'-', '', $field['id']);
-			$content = $this->allPostMeta['_owc_' . $field['id']][0] ?? '';
-			$fields[$fieldName] = maybe_unserialize($content);
+			$fields[$fieldName] = nl2br($this->allPostMeta['_owc_' . $field['id']][0]) ?? '';
 			unset($fields[$key]);
 		}
 
 		return $fields;
 	}
 }
+

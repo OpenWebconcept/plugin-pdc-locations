@@ -19,7 +19,14 @@ class Location extends Model
      *
      * @var string $posttype
      */
-    protected $posttype = 'pdc-location';
+	protected $posttype = 'pdc-location';
+
+	/**
+	 * All meta data of post
+	 *
+	 * @var array
+	 */
+	protected $allPostMeta = [];
 
     /**
      * Container with fields, associated with this model.
@@ -37,18 +44,29 @@ class Location extends Model
      */
     public function transform(WP_Post $post, $metaboxes)
     {
-        $fields = $this->filterFields($metaboxes['locations']['fields']);
-
-        $data = [
-            'id'      => $post->ID,
+		$this->allPostMeta = $this->getAllPostMeta($post);
+		$fields = $this->getFields($metaboxes['locations']['fields']);
+		$data = [
             'title'   => $post->post_title,
             'date'    => $post->post_date
         ];
 
-        $data = $this->assignFields($data, $post);
+        $data = $this->assignFields(array_merge($data, $fields), $post);
 
         return $data;
-    }
+	}
+
+	/**
+	 * Get all meta assigned to post
+	 *
+	 * @param WP_Post $post
+	 *
+	 * @return array
+	 */
+	protected function getAllPostMeta($post)
+	{
+		return get_metadata('post', $post->ID);
+	}
 
     /**
      * Filter fields from config.
@@ -57,15 +75,59 @@ class Location extends Model
      *
      * @return array
      */
-    protected function filterFields($fields): array
+    protected function getFields($fields): array
     {
-        $fields = array_map(
-            function ($item) {
-                var_dump($item);
-                exit;
-                return $item;
-            },
-            $fields
-        );
-    }
+		$fields = $this->removeUnnecessaryFieldsByKey($fields);
+		$fields = array_map(function($field) use ($fields) {
+			return $this->manipulate($field, $key);
+		},
+			$fields
+		);
+
+		return $fields;
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $fields
+	 * @return void
+	 */
+	protected function removeUnnecessaryFieldsByKey( $fields )
+	{
+
+		$toRemove = ['divider'];
+		$fields = array_filter( $fields, function($key) use ($toRemove) {
+			return (!in_array($key, $toRemove));
+		}, ARRAY_FILTER_USE_KEY);
+
+		return $fields;
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param array $field
+	 *
+	 * @return array
+	 */
+	protected function manipulate ($fields)
+	{
+		if ( count( $fields ) < 1 ) {
+			return $fields;
+		}
+
+		foreach( $fields as $key => $field ) {
+			if (!array_key_exists('_owc_' . $field['id'], $this->allPostMeta) AND ( !in_array('_owc_' . $field['id'], $this->allPostMeta ) )) {
+				unset($fields[$key]);
+				continue;
+			}
+
+			$fieldName = str_replace($this->posttype .'-', '', $field['id']);
+			$fields[$fieldName] = nl2br($this->allPostMeta['_owc_' . $field['id']][0]) ?? '';
+			unset($fields[$key]);
+		}
+
+		return $fields;
+	}
 }

@@ -31,8 +31,7 @@ class MetaboxServiceProvider extends ServiceProvider
      */
     public function registerMetaboxes(Plugin $basePlugin)
     {
-		$configMetaboxes = $this->plugin->config->get('metaboxes');
-		// var_dump($configMetaboxes); exit;
+        $configMetaboxes = $this->plugin->config->get('metaboxes');
         $basePlugin->config->set('metaboxes.locations', $configMetaboxes['locations']);
     }
 }

@@ -2,7 +2,7 @@
 
 return [
     'models' => [
-        'location' => [
+        'item' => [
             /**
              * Custom field creators.
              *

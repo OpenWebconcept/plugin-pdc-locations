@@ -93,8 +93,7 @@ class Location extends Model
         $fields = $this->removeUnnecessaryFieldsByKey($fields);
         $fields = array_map(function ($field) use ($fields) {
             return $this->manipulate($field, $key);
-        },
-            $fields);
+        }, $fields);
 
         return $fields;
     }
@@ -136,6 +135,8 @@ class Location extends Model
             }
 
             $fieldName = str_replace($this->posttype . '-', '', $field['id']);
+            // var_dump($fieldName);
+
             $content = $this->allPostMeta['_owc_' . $field['id']][0] ?? '';
             $fields[$fieldName] = maybe_unserialize($content);
             unset($fields[$key]);

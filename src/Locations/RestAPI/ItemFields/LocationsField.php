@@ -58,7 +58,7 @@ class LocationsField extends CreatesFields
         }
 
         return array_map(function (WP_Post $post) {
-            return (new Location())->transform($post, $this->plugin->config->get('metaboxes'));
+            return (new Location())->transform($post);
         }, $connection->get_connected($postID)->posts);
     }
 }

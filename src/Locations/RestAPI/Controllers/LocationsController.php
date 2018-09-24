@@ -25,7 +25,7 @@ class LocationsController extends BaseController
      */
     public function getItems(WP_REST_Request $request)
     {
-        $locations = (new Location());
+        $locations = new Location($this->plugin);
 
         $data = $locations->all();
         $query = $locations->getQuery();
@@ -54,22 +54,5 @@ class LocationsController extends BaseController
         }
 
         return $location;
-    }
-
-    /**
-     * Hide inactive item from output.
-     *
-     * @return array
-     */
-    protected function hideInactiveItem()
-    {
-        return [
-            'meta_query' => [
-                [
-                    'key' => '_owc_pdc_active',
-                    'value' => 1
-                ]
-            ]
-        ];
     }
 }

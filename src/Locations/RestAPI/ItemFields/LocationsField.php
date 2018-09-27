@@ -26,13 +26,13 @@ class LocationsField extends CreatesFields
     {
         $connections = array_filter($this->plugin->config->get('p2p_connections.connections'), function ($connection) {
             return in_array('pdc-item', $connection, true);
-		});
+        });
 
-		$result = [];
+        $result = [];
 
         foreach ($connections as $connection) {
-			$type = $connection['from'].'_to_'.$connection['to'];
-			$result = $this->getConnectedItems($post->ID, $type);
+            $type = $connection['from'].'_to_'.$connection['to'];
+            $result = $this->getConnectedItems($post->ID, $type);
         }
 
         return $result;
@@ -48,19 +48,17 @@ class LocationsField extends CreatesFields
      */
     protected function getConnectedItems(int $postID, string $type): array
     {
+
         $connection = p2p_type($type);
 
-        if ( ! $connection) {
+        if (! $connection) {
             return [
                 'error' => sprintf(__('Connection type "%s" does not exist', 'pdc-base'), $type)
             ];
         }
 
         return array_map(function (WP_Post $post) {
-			$location = new Location();
-
-			return $location->transform($post);
+            return (new Location($this->plugin))->transform($post);
         }, $connection->get_connected($postID)->posts);
     }
-
 }

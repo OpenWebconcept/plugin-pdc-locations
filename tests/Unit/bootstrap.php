@@ -17,8 +17,8 @@ define('WP_PLUGIN_DIR', __DIR__);
 \WP_Mock::setUsePatchwork( true );
 \WP_Mock::bootstrap();
 
-$GLOBALS['pdc-faq'] = [
-	'active_plugins' => ['pdc-faq/pdc-faq.php'],
+$GLOBALS['pdc-locations'] = [
+	'active_plugins' => ['pdc-locations/pdc-locations.php'],
 ];
 
 class WP_CLI

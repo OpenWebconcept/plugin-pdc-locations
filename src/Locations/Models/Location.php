@@ -71,7 +71,7 @@ class Location extends Model
         ];
 
         $data = $this->assignFields(array_merge($data, $fields), $post);
-        $data['messages'] = (new Openinghours($data['openinghours-settings']['openinghours']))->render();
+        $data['openinghours-settings']['messages'] = (new Openinghours($data['openinghours-settings']['openinghours']))->render();
 
         return $data;
     }

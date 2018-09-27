@@ -56,16 +56,14 @@ class TestOpeninghours extends TestCase
             ],
         ];
 
-		$openinghoursMessage = new Openinghours($data);
+        $openinghoursMessage = new Openinghours($data);
 
-		$openinghoursMessage->setNow('Thu, 27 September 2018 13:17:00');
+        $openinghoursMessage->setNow('Thu, 27 September 2018 13:17:00');
 
         $expected = $openinghoursMessage->render();
         $actual = [
-            'open' => [
-                'today' => "Vandaag open van 09:00 tot 18:00 uur",
-                'tomorrow' => "Morgen open van 12:00 tot 12:30 uur",
-            ],
+            'today' => "Vandaag open van 09:00 tot 18:00 uur",
+            'tomorrow' => "Morgen open van 12:00 tot 12:30 uur",
         ];
 
         $this->assertSame($expected, $actual);

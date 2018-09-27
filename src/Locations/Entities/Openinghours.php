@@ -60,7 +60,15 @@ class Openinghours
     protected function getOpeningHoursRaw(\DateTime $date)
     {
         $dayName = $this->getDayName($date);
-        return $this->data[$dayName];
+		$openClosed = $this->data[$dayName];
+
+		unset($openClosed['message']);
+
+        if (isset($openClosed['closed']) and $openClosed['closed'] == '1') {
+            $openClosed['open-time'] = null;
+            $openClosed['closed-time'] = null;
+        }
+        return $openClosed;
     }
 
     /**
@@ -182,9 +190,9 @@ class Openinghours
                 //check for dutch timeformat notation
                 if (false !== strpos($timestamp, '.')) {
                     $delimiter = ".";
-                }
+				}
 
-                list($hours, $minutes) = explode($delimiter, $timestamp);
+				list($hours, $minutes) = explode($delimiter, $timestamp);
                 return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
             },
             $this->getOpeningHoursRaw($date));
@@ -198,12 +206,12 @@ class Openinghours
     public function openTomorrowMessage()
     {
         $tomorrowDate = $this->getDateTime('+1 day');
-        $openClose = $this->getOpeningHoursRaw($tomorrowDate);
 
-        if ($this->isWeekend($tomorrowDate)) {
+		if ($this->isWeekend($tomorrowDate)) {
             return sprintf('Maandag open van %s tot %s uur', $this->contactInfo['_ys_mon_open_time'], $this->contactInfo['_ys_mon_close_time']);
-        }
+		}
 
+		$openClose = $this->getOpeningHoursRaw($tomorrowDate);
         if ($this->isClosed($this->getDayName($tomorrowDate)) || !$openClose['open-time'] || !$openClose['closed-time']) {
             return 'Morgen gesloten';
         }

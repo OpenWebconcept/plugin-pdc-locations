@@ -73,7 +73,86 @@ class Location extends Model
         $data = $this->assignFields(array_merge($data, $fields), $post);
         $data['messages'] = (new Openinghours($data['openinghours-settings']['openinghours']))->render();
 
+        $data = $this->hydrate($data);
+
         return $data;
+	}
+
+	protected function getDefaults() {
+		$defaultMetaboxes = $this->plugin->config->get('metaboxes');
+		$fields = $defaultMetaboxes['locations']['fields'];
+
+		$default = [];
+
+		foreach( $fields as $key => $field ) {
+			$default[$key] = $field;
+		}
+
+		var_dump($default); exit;
+	}
+
+    protected function hydrate($data)
+    {
+        var_dump($this->getDefaults()); exit;
+
+        var_dump($this->plugin->config->get('metaboxes'));exit;
+
+        $default = [
+            'title' => '',
+            'date' => '',
+            'general' => [
+                'description' => '',
+            ],
+            'address' => [
+                'street' => '',
+                'zipcode' => '',
+                'city' => '',
+                'postalcode' => '',
+                'postalcity' => '',
+                'maplink' => '',
+            ],
+            'communication' => [
+                'telephone-description' => '',
+                'telephone' => '',
+                'fax' => '',
+                'email' => '',
+            ],
+            'openinghours-settings' => [
+                'openinghours-message-active' => '',
+                'openinghours-message' => '',
+                'openinghours' => [
+
+                ],
+                'messages' => [
+
+                ],
+            ],
+        ];
+
+        return $this->recursiveMerge($data, $default);
+    }
+
+    /**
+     * Recursive merge two arrays.
+     *
+     * @param array $data
+     * @param array $default
+     *
+     * @return array
+     */
+    public function recursiveMerge(&$data, $default)
+    {
+        $data = (array) $data;
+        $default = (array) $default;
+        $result = $default;
+        foreach ($data as $k => &$v) {
+            if (is_array($v) && isset($result[$k])) {
+                $result[$k] = $this->recursiveMerge($v, $result[$k]);
+            } else {
+                $result[$k] = $v;
+            }
+        }
+        return $result;
     }
 
     /**

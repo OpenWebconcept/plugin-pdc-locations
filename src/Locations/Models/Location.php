@@ -6,6 +6,7 @@
 namespace OWC\PDC\Locations\Models;
 
 use OWC\PDC\Base\Models\Model;
+use OWC\PDC\Locations\Entities\Openinghours;
 use OWC\PDC\Locations\Foundation\Plugin;
 use \WP_Post;
 
@@ -43,6 +44,11 @@ class Location extends Model
      */
     protected $plugin;
 
+    /**
+     * Constructor of Location Model.
+     *
+     * @param Plugin $plugin
+     */
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
@@ -65,6 +71,7 @@ class Location extends Model
         ];
 
         $data = $this->assignFields(array_merge($data, $fields), $post);
+        $data['messages'] = (new Openinghours($data['openinghours-settings']['openinghours']))->render();
 
         return $data;
     }
@@ -116,9 +123,9 @@ class Location extends Model
     }
 
     /**
-     * Undocumented function
+     * Manipulate the fields array.
      *
-     * @param array $field
+     * @param array $fields
      *
      * @return array
      */

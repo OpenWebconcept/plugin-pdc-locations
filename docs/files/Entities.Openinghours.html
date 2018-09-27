@@ -21,7 +21,55 @@
     <script src="../js/jquery.smooth-scroll.js"></script>
     <script src="../js/prism.min.js"></script>
     <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-    
+        <script type="text/javascript">
+        function loadExternalCodeSnippets() {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                var src = pre.getAttribute('data-src');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist or is empty';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        $(document).ready(function(){
+            loadExternalCodeSnippets();
+        });
+        $('#source-view').on('shown', function () {
+            loadExternalCodeSnippets();
+        })
+    </script>
+
     <link rel="shortcut icon" href="../images/favicon.ico"/>
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
     <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
@@ -66,12 +114,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">1</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -96,81 +144,64 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-550638786"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-407419530"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-550638786" class="accordion-body collapse in">
+            <div id="namespace-407419530" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-285451895"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-914600928"></a>
                                 <a href="../namespaces/OWC.html" style="margin-left: 30px; padding-left: 0">OWC</a>
             </div>
-            <div id="namespace-285451895" class="accordion-body collapse ">
+            <div id="namespace-914600928" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-518413463"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-432160617"></a>
                                 <a href="../namespaces/OWC.PDC.html" style="margin-left: 30px; padding-left: 0">PDC</a>
             </div>
-            <div id="namespace-518413463" class="accordion-body collapse ">
+            <div id="namespace-432160617" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1837765858"></a>
-                                <a href="../namespaces/OWC.PDC.FAQ.html" style="margin-left: 30px; padding-left: 0">FAQ</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1589855971"></a>
+                                <a href="../namespaces/OWC.PDC.Locations.html" style="margin-left: 30px; padding-left: 0">Locations</a>
             </div>
-            <div id="namespace-1837765858" class="accordion-body collapse ">
+            <div id="namespace-1589855971" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-142420556"></a>
-                                <a href="../namespaces/OWC.PDC.FAQ.Admin.html" style="margin-left: 30px; padding-left: 0">Admin</a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2018776865"></a>
+                                <a href="../namespaces/OWC.PDC.Locations.Admin.html" style="margin-left: 30px; padding-left: 0">Admin</a>
             </div>
-            <div id="namespace-142420556" class="accordion-body collapse ">
+            <div id="namespace-2018776865" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/OWC.PDC.FAQ.Admin.Admin.html">Admin</a></li>
+                                                                                                    <li class="class"><a href="../classes/OWC.PDC.Locations.Admin.Admin.html">Admin</a></li>
                                             </ul>
                 </div>
             </div>
         </div>
     </div>
 
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1238588899"></a>
-                                <a href="../namespaces/OWC.PDC.Locations.html" style="margin-left: 30px; padding-left: 0">Locations</a>
-            </div>
-            <div id="namespace-1238588899" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-570393834"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-6944443"></a>
                                 <a href="../namespaces/OWC.PDC.Locations.Foundation.html" style="margin-left: 30px; padding-left: 0">Foundation</a>
             </div>
-            <div id="namespace-570393834" class="accordion-body collapse ">
+            <div id="namespace-6944443" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -185,10 +216,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-823021614"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1525732541"></a>
                                 <a href="../namespaces/OWC.PDC.Locations.Metabox.html" style="margin-left: 30px; padding-left: 0">Metabox</a>
             </div>
-            <div id="namespace-823021614" class="accordion-body collapse ">
+            <div id="namespace-1525732541" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -203,10 +234,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2039937469"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-594611909"></a>
                                 <a href="../namespaces/OWC.PDC.Locations.Models.html" style="margin-left: 30px; padding-left: 0">Models</a>
             </div>
-            <div id="namespace-2039937469" class="accordion-body collapse ">
+            <div id="namespace-594611909" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -221,10 +252,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-258806939"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1183801112"></a>
                                 <a href="../namespaces/OWC.PDC.Locations.PostsToPosts.html" style="margin-left: 30px; padding-left: 0">PostsToPosts</a>
             </div>
-            <div id="namespace-258806939" class="accordion-body collapse ">
+            <div id="namespace-1183801112" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -239,10 +270,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1160816743"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2091405509"></a>
                                 <a href="../namespaces/OWC.PDC.Locations.PostType.html" style="margin-left: 30px; padding-left: 0">PostType</a>
             </div>
-            <div id="namespace-1160816743" class="accordion-body collapse ">
+            <div id="namespace-2091405509" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -257,19 +288,19 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1387572499"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-538735248"></a>
                                 <a href="../namespaces/OWC.PDC.Locations.RestAPI.html" style="margin-left: 30px; padding-left: 0">RestAPI</a>
             </div>
-            <div id="namespace-1387572499" class="accordion-body collapse ">
+            <div id="namespace-538735248" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1200536631"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-363216185"></a>
                                 <a href="../namespaces/OWC.PDC.Locations.RestAPI.Controllers.html" style="margin-left: 30px; padding-left: 0">Controllers</a>
             </div>
-            <div id="namespace-1200536631" class="accordion-body collapse ">
+            <div id="namespace-363216185" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -284,10 +315,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-252638708"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1933493675"></a>
                                 <a href="../namespaces/OWC.PDC.Locations.RestAPI.ItemFields.html" style="margin-left: 30px; padding-left: 0">ItemFields</a>
             </div>
-            <div id="namespace-252638708" class="accordion-body collapse ">
+            <div id="namespace-1933493675" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -345,39 +376,31 @@
     <section class="row-fluid">
         <div class="span10 offset2">
             <div class="row-fluid">
-                <div class="span8 content namespace">
+                <div class="span8 content file">
                     <nav>
-                                                <a href="../namespaces/OWC.PDC.FAQ.html">\OWC\PDC\FAQ</a>
-                                            </nav>
-                    <h1><small>\OWC\PDC\FAQ</small>Admin</h1>
+                                                                    </nav>
+
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                    <h1><small>Entities</small>Openinghours.php</h1>
+                    <p><em></em></p>
+                    
 
                     
                     
-                    
-                                        <h2>Classes</h2>
-                    <table class="table table-hover">
-                                            <tr>
-                            <td><a href="../classes/OWC.PDC.FAQ.Admin.Admin.html">Admin</a></td>
-                            <td><em>Provider which boots the admin serviceproviders.</em></td>
-                        </tr>
-                                        </table>
                                     </div>
 
                 <aside class="span4 detailsbar">
                     <dl>
-                        <dt>Namespace hierarchy</dt>
-                        <dd class="hierarchy">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                                    <div class="namespace-wrapper"><a href="../namespaces/default.html">\</a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/OWC.html">\OWC</a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/OWC.PDC.html">\OWC\PDC</a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/OWC.PDC.FAQ.html">\OWC\PDC\FAQ</a></div>
-                                                                                        <div class="namespace-wrapper">\OWC\PDC\FAQ\Admin</div>
-                        </dd>
+                                                    <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">\Default</div></dd>
+                        
+                        
                     </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                            </table>
+
                 </aside>
             </div>
 
@@ -385,6 +408,16 @@
             
         </div>
     </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label"></h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Entities/Openinghours.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
 
     <footer class="row-fluid">
         <section class="span10 offset2">
@@ -423,7 +456,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 24th, 2018 at 13:27.
+                    on September 27th, 2018 at 11:42.
                 </section>
             </section>
         </section>

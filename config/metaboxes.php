@@ -68,8 +68,6 @@ foreach ($days as $dayID => $day ) {
 	$weeks['fields'][] = $days;
 }
 
-// var_dump($weeks); exit;
-
 return [
     'locations' => [
         'id' => 'pdc-location',

@@ -171,22 +171,22 @@ class Openinghours
      */
     protected function getOpeningHours(\DateTime $date)
     {
-		return array_map(
-			function ($timestamp) use ($date) {
-				if (empty($timestamp) or ('1' == $timestamp)) {
-					return;
-				}
+        return array_map(
+            function ($timestamp) use ($date) {
+                if (empty($timestamp) or ('1' == $timestamp)) {
+                    return;
+                }
 
-				$delimiter = ":";
+                $delimiter = ":";
 
-            //check for dutch timeformat notation
-				if (false !== strpos($timestamp, '.')) {
-					$delimiter = ".";
-				}
+                //check for dutch timeformat notation
+                if (false !== strpos($timestamp, '.')) {
+                    $delimiter = ".";
+                }
 
-				list($hours, $minutes) = explode($delimiter, $timestamp);
-				return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
-			},
+                list($hours, $minutes) = explode($delimiter, $timestamp);
+                return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
+            },
             $this->getOpeningHoursRaw($date));
     }
 
@@ -243,10 +243,8 @@ class Openinghours
     public function render()
     {
         return [
-            'open' => [
-                'today' => $this->openNowMessage(),
-                'tomorrow' => $this->openTomorrowMessage(),
-            ],
+            'today' => $this->openNowMessage(),
+            'tomorrow' => $this->openTomorrowMessage(),
         ];
     }
 }

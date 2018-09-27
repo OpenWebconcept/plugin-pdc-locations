@@ -99,7 +99,7 @@ class Location extends Model
     {
         $fields = $this->removeUnnecessaryFieldsByKey($fields);
         $fields = array_map(function ($field) use ($fields) {
-            return $this->manipulate($field, $key);
+            return $this->manipulate($field);
         }, $fields);
 
         return $fields;

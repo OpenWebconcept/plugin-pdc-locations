@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDC Locations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 17:05+0200\n"
+"POT-Creation-Date: 2018-10-02 13:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: Yard Digital <inf@yard.nl>\n"
@@ -22,6 +22,10 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: ../assets\n"
 "X-Poedit-SearchPathExcluded-1: ../node_modules\n"
 "X-Poedit-SearchPathExcluded-2: ../vendor\n"
+
+#: Locations/Entities/Openinghours.php:206
+msgid "Tomorrow closed"
+msgstr ""
 
 #: Locations/PostType/LocationsPostTypeServiceProvider.php:46
 msgctxt "post type general name"

@@ -42,4 +42,4 @@ $autoloader = new Autoloader();
  */
 add_action('plugins_loaded', function() {
     $plugin = (new Plugin(__DIR__))->boot();
-}, 9);
+}, 10);

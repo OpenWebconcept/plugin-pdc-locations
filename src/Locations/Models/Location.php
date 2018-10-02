@@ -64,16 +64,115 @@ class Location extends Model
     public function transform(WP_Post $post)
     {
         $this->allPostMeta = $this->getAllPostMeta($post);
-        $fields = $this->getFields($this->plugin->config->get('metaboxes.locations.fields'));
-        $data = [
+        $fields            = $this->getFields($this->plugin->config->get('metaboxes.locations.fields'));
+        $data              = [
             'title' => $post->post_title,
-            'date' => $post->post_date,
+            'date'  => $post->post_date,
         ];
 
-        $data = $this->assignFields(array_merge($data, $fields), $post);
-        $data['openinghours-settings']['messages'] = (new Openinghours($data['openinghours-settings']['openinghours']))->render();
+        $data                             = $this->assignFields(array_merge($data, $fields), $post);
+        $data                             = $this->hydrate($data);
+        $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days']))->render();
 
         return $data;
+    }
+
+    /**
+     * Return the defaults.
+     *
+     * @TODO should be generated from metabox config, to avoid duplicate code.
+     *
+     * @return array
+     */
+    protected function getDefaults()
+    {
+        return [
+            'title'         => '',
+            'date'          => '',
+            'general'       => [
+                'description' => '',
+            ],
+            'location'      => [
+                'street'     => '',
+                'zipcode'    => '',
+                'city'       => '',
+                'postalcode' => '',
+                'postalcity' => '',
+                'maplink'    => '',
+            ],
+            'communication' => [
+                'telephone-description' => '',
+                'telephone'             => '',
+                'whatsapp'              => '',
+                'fax'                   => '',
+                'email'                 => '',
+            ],
+            'openinghours'  => [
+                'message-active' => '0',
+                'message'        => '',
+                'days'           => [
+                    'monday'    => [
+                        'closed'      => '1',
+                        'message'     => '',
+                        'open-time'   => '',
+                        'closed-time' => '',
+                    ],
+                    'tuesday'   => [
+                        'closed'      => '1',
+                        'message'     => '',
+                        'open-time'   => '',
+                        'closed-time' => '',
+                    ],
+                    'wednesday' => [
+                        'closed'      => '1',
+                        'message'     => '',
+                        'open-time'   => '',
+                        'closed-time' => '',
+                    ],
+                    'thursday'  => [
+                        'closed'      => '1',
+                        'message'     => '',
+                        'open-time'   => '',
+                        'closed-time' => '',
+                    ],
+                    'friday'    => [
+                        'closed'      => '1',
+                        'message'     => '',
+                        'open-time'   => '',
+                        'closed-time' => '',
+                    ],
+                    'saturday'  => [
+                        'closed'      => '1',
+                        'message'     => '',
+                        'open-time'   => '',
+                        'closed-time' => '',
+                    ],
+                    'sunday'    => [
+                        'closed'      => '1',
+                        'message'     => '',
+                        'open-time'   => '',
+                        'closed-time' => '',
+                    ],
+                ],
+
+                'messages'       => [
+                    'today'    => '',
+                    'tomorrow' => '',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Fill all the fields this their defaults.
+     *
+     * @param array $data
+     *
+     * @return arry
+     */
+    protected function hydrate($data)
+    {
+        return array_replace_recursive($this->getDefaults(), $data);
     }
 
     /**
@@ -106,16 +205,17 @@ class Location extends Model
     }
 
     /**
-     * Undocumented function
+     * Remove the unnecessary fields, such as dividers.
+     * And rename the keys to readable keys.
      *
-     * @param [type] $fields
-     * @return void
+     * @param array $fields
+     *
+     * @return array
      */
     protected function removeUnnecessaryFieldsByKey($fields)
     {
-
         $toRemove = ['divider'];
-        $fields = array_filter($fields, function ($key) use ($toRemove) {
+        $fields   = array_filter($fields, function ($key) use ($toRemove) {
             return (!in_array($key, $toRemove));
         }, ARRAY_FILTER_USE_KEY);
 
@@ -141,10 +241,8 @@ class Location extends Model
                 continue;
             }
 
-            $fieldName = str_replace($this->posttype . '-', '', $field['id']);
-            // var_dump($fieldName);
-
-            $content = $this->allPostMeta['_owc_' . $field['id']][0] ?? '';
+            $fieldName          = str_replace($this->posttype . '-', '', $field['id']);
+            $content            = $this->allPostMeta['_owc_' . $field['id']][0] ?? '';
             $fields[$fieldName] = maybe_unserialize($content);
             unset($fields[$key]);
         }

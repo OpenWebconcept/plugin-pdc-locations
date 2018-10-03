@@ -2,24 +2,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDC Locations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 13:50+0200\n"
-"PO-Revision-Date: 2018-10-02 13:50+0200\n"
+"POT-Creation-Date: 2018-10-03 13:57+0200\n"
+"PO-Revision-Date: 2018-10-03 13:57+0200\n"
 "Last-Translator: Edwin Siebel <edwin@yard.nl>\n"
-"Language-Team: Dutch\n"
+"Language-Team: Yard Internet <info@yard.nl>\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 2.0.6\n"
+"X-Poedit-KeywordsList: __;_x;_e;_ex;_n;_nx;esc_attr__;esc_attr_e;esc_attr_x;"
+"esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop\n"
 "X-Poedit-Basepath: ..\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
-"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: vendor\n"
+"X-Poedit-SearchPathExcluded-0: tests\n"
+"X-Poedit-SearchPathExcluded-1: docs\n"
+"X-Poedit-SearchPathExcluded-2: vendor\n"
+"X-Poedit-SearchPathExcluded-3: languages\n"
 
 #: config/metaboxes.php:5
 msgid "Monday"
@@ -98,6 +99,9 @@ msgid "Message"
 msgstr "Bericht"
 
 #: config/metaboxes.php:81
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:45
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:47
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:48
 msgid "Locations"
 msgstr "Locaties"
 
@@ -130,7 +134,6 @@ msgid "Maplink"
 msgstr "Maplink"
 
 #: config/metaboxes.php:123
-msgctxt "Input for a map link for a location item"
 msgid "Link to external map service"
 msgstr "Link naar externe kaartservice"
 
@@ -163,105 +166,83 @@ msgid "Openinghours message"
 msgstr "Openingsuren bericht"
 
 #: config/p2p_connections.php:9
-msgctxt "P2P titel"
 msgid "PDC item"
 msgstr "PDC item"
 
 #: config/p2p_connections.php:14
-msgctxt "P2P titel"
 msgid "PDC Location"
 msgstr "PDC Locatie"
 
-#: src/Locations/Entities/Openinghours.php:145
-#: src/Locations/Entities/Openinghours.php:153
+#: src/Locations/Entities/Openinghours.php:165
+#: src/Locations/Entities/Openinghours.php:173
 msgid "Today closed"
 msgstr "Vandaag gesloten"
 
-#: src/Locations/Entities/Openinghours.php:150
+#: src/Locations/Entities/Openinghours.php:170
 #, php-format
 msgid "Today open from %s to %s hour"
 msgstr "Vandaag open van %s tot %s uur"
 
-#: src/Locations/Entities/Openinghours.php:202
+#: src/Locations/Entities/Openinghours.php:228
 #, php-format
 msgid "Monday open from %s to %s hour"
 msgstr "Maandag open van %s tot %s uur"
 
-#: src/Locations/Entities/Openinghours.php:206
+#: src/Locations/Entities/Openinghours.php:233
 msgid "Tomorrow closed"
 msgstr "Morgen gesloten"
 
-#: src/Locations/Entities/Openinghours.php:209
+#: src/Locations/Entities/Openinghours.php:236
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr "Morgen open van %s tot %s uur"
 
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:46
-msgctxt "post type general name"
-msgid "Locations"
-msgstr "Locaties"
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:47
-msgctxt "post type singular name"
 msgid "Location"
 msgstr "Locatie"
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:48
-msgctxt "admin menu"
-msgid "Locations"
-msgstr "Locaties"
-
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:49
-msgctxt "add new on admin bar"
-msgid "Locations"
-msgstr "Locaties"
-
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:50
-msgctxt "location"
 msgid "Add new location"
 msgstr "Voeg nieuwe locatie toe"
 
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:51
-msgid "Add new location"
-msgstr "Voeg nieuwe locatie toe"
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:52
 msgid "New location"
 msgstr "Nieuwe locatie"
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:53
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:52
 msgid "Edit location"
 msgstr "Bewerk locatie"
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:54
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:53
 msgid "View location"
 msgstr "Bekijken locatie"
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:55
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:54
 msgid "All locations"
 msgstr "Alle locaties"
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:56
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:55
 msgid "Search locations"
 msgstr "Zoek locaties"
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:57
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:56
 msgid "Parent locations:"
 msgstr "Hoofd locatie pagina:"
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:58
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:57
 msgid "No locations found."
 msgstr "Geen locaties gevonden."
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:59
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:58
 msgid "No locations found in Trash."
 msgstr "Geen locaties gevonden in prullenbak."
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:64
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:63
 msgid "PDC Locations"
 msgstr "PDC Locaties"
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:79
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:78
 msgid "Published"
 msgstr "Gepubliceerd"
 
@@ -269,6 +250,22 @@ msgstr "Gepubliceerd"
 #, php-format
 msgid "Connection type \"%s\" does not exist"
 msgstr "Verbindingstype \"%s\" bestaat niet"
+
+#~ msgctxt "post type general name"
+#~ msgid "Locations"
+#~ msgstr "Locaties"
+
+#~ msgctxt "admin menu"
+#~ msgid "Locations"
+#~ msgstr "Locaties"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Locations"
+#~ msgstr "Locaties"
+
+#~ msgctxt "location"
+#~ msgid "Add new location"
+#~ msgstr "Voeg nieuwe locatie toe"
 
 #~ msgctxt "Fax for the Question of a Locations item"
 #~ msgid "Fax"

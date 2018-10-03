@@ -120,7 +120,7 @@ return [
                 [
                     'id'   => 'pdc-location-maplink',
                     'name' => __('Maplink', 'pdc-locations'),
-                    'desc' => _x('Link to external map service', 'Input for a map link for a location item', 'pdc-locations'),
+                    'desc' => __('Link to external map service', 'pdc-locations'),
                     'type' => 'text',
                 ],
             ],

@@ -19,6 +19,8 @@ class Openinghours
     protected $data;
 
     /**
+     * DateTimeZone object
+     *
      * @var \DateTimeZone
      */
     protected $dateTimeZone;
@@ -31,10 +33,17 @@ class Openinghours
     protected $timeZone = 'Europe/Amsterdam';
 
     /**
+     * Current date string.
+     *
      * @var string
      */
     protected $now = 'now';
 
+    /**
+     * Constructor
+     *
+     * @param array $data
+     */
     public function __construct($data)
     {
         $this->data         = $data;
@@ -42,7 +51,9 @@ class Openinghours
     }
 
     /**
-     * @param \DateTime $dateTime
+     * Set the current date.
+     *
+     * @param string $now
      */
     public function setNow($now = 'now')
     {
@@ -59,13 +70,13 @@ class Openinghours
      */
     protected function getOpeningHoursRaw(\DateTime $date)
     {
-        $dayName = $this->getDayName($date);
-		$openClosed = $this->data[$dayName];
+        $dayName    = $this->getDayName($date);
+        $openClosed = $this->data[$dayName];
 
-		unset($openClosed['message']);
+        unset($openClosed['message']);
 
         if (isset($openClosed['closed']) and $openClosed['closed'] == '1') {
-            $openClosed['open-time'] = null;
+            $openClosed['open-time']   = null;
             $openClosed['closed-time'] = null;
         }
         return $openClosed;
@@ -118,7 +129,6 @@ class Openinghours
      * Gets the dayName i.e. mon or monday when the fullNotation is true
      *
      * @param \DateTime $date
-     * @param bool      $fullNotation
      *
      * @return string
      */
@@ -129,6 +139,8 @@ class Openinghours
     }
 
     /**
+     * Get the dateTime object depending on the $time parameter.
+     *
      * @param string $time
      *
      * @return \DateTime
@@ -162,7 +174,11 @@ class Openinghours
     }
 
     /**
-     * Checks if the checkbox 'closed' isset
+     * Checks if the checkbox 'closed' isset.
+     *
+     * @param string $dayName
+     *
+     * return bool
      */
     public function isClosed($dayName = 'monday')
     {
@@ -190,9 +206,9 @@ class Openinghours
                 //check for dutch timeformat notation
                 if (false !== strpos($timestamp, '.')) {
                     $delimiter = ".";
-				}
+                }
 
-				list($hours, $minutes) = explode($delimiter, $timestamp);
+                list($hours, $minutes) = explode($delimiter, $timestamp);
                 return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
             },
             $this->getOpeningHoursRaw($date));
@@ -212,7 +228,7 @@ class Openinghours
             return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $this->contactInfo['_ys_mon_open_time'], $this->contactInfo['_ys_mon_close_time']);
         }
 
-		$openClose = $this->getOpeningHoursRaw($tomorrowDate);
+        $openClose = $this->getOpeningHoursRaw($tomorrowDate);
         if ($this->isClosed($this->getDayName($tomorrowDate)) || !$openClose['open-time'] || !$openClose['closed-time']) {
             return __('Tomorrow closed', 'pdc-locations');
         }

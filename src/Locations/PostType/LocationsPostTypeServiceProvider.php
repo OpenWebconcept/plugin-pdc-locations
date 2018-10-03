@@ -6,7 +6,6 @@
 namespace OWC\PDC\Locations\PostType;
 
 use OWC\PDC\Base\Foundation\ServiceProvider;
-use OWC\PDC\Locations\Shortcode\ShortcodeServiceProvider;
 
 /**
  * Provider which handles registration of posttype.
@@ -38,16 +37,16 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
     public function registerPostType()
     {
 
-        if (! function_exists('register_extended_post_type')) {
-            require_once($this->plugin->getRootPath() . '/src/Locations/vendor/johnbillion/extended-cpts/extended-cpts.php');
+        if (!function_exists('register_extended_post_type')) {
+            require_once $this->plugin->getRootPath() . '/src/Locations/vendor/johnbillion/extended-cpts/extended-cpts.php';
         }
 
         $labels = [
-            'name'               => _x('Locations', 'post type general name', 'pdc-locations'),
-            'singular_name'      => _x('Location', 'post type singular name', 'pdc-locations'),
-            'menu_name'          => _x('Locations', 'admin menu', 'pdc-locations'),
-            'name_admin_bar'     => _x('Locations', 'add new on admin bar', 'pdc-locations'),
-            'add_new'            => _x('Add new location', 'location', 'pdc-locations'),
+            'name'               => __('Locations', 'pdc-locations'),
+            'singular_name'      => __('Location', 'pdc-locations'),
+            'menu_name'          => __('Locations', 'pdc-locations'),
+            'name_admin_bar'     => __('Locations', 'pdc-locations'),
+            'add_new'            => __('Add new location', 'pdc-locations'),
             'add_new_item'       => __('Add new location', 'pdc-locations'),
             'new_item'           => __('New location', 'pdc-locations'),
             'edit_item'          => __('Edit location', 'pdc-locations'),
@@ -56,7 +55,7 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
             'search_items'       => __('Search locations', 'pdc-locations'),
             'parent_item_colon'  => __('Parent locations:', 'pdc-locations'),
             'not_found'          => __('No locations found.', 'pdc-locations'),
-            'not_found_in_trash' => __('No locations found in Trash.', 'pdc-locations')
+            'not_found_in_trash' => __('No locations found in Trash.', 'pdc-locations'),
         ];
 
         $args = [
@@ -75,11 +74,11 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
             'show_in_feed'       => false,
             'archive'            => false,
             'admin_cols'         => [
-                'published'    => [
+                'published' => [
                     'title'       => __('Published', 'pdc-locations'),
                     'post_field'  => 'post_date',
-                    'date_format' => 'd M Y'
-                ]
+                    'date_format' => 'd M Y',
+                ],
             ],
         ];
 

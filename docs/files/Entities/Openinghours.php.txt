@@ -1,15 +1,6 @@
 <?php
-
 /**
- * A summary informing the user what the associated element does.
- *
- * A *description*, that can span multiple lines, to go _in-depth_ into the details of this element
- * and to provide some background information or textual references.
- *
- * @param string $myArgument With a *description* of this argument, these may also
- *    span multiple lines.
- *
- * @return void
+ * Entity for the openinghours.
  */
 
 namespace OWC\PDC\Locations\Entities;
@@ -28,6 +19,8 @@ class Openinghours
     protected $data;
 
     /**
+     * DateTimeZone object
+     *
      * @var \DateTimeZone
      */
     protected $dateTimeZone;
@@ -40,18 +33,27 @@ class Openinghours
     protected $timeZone = 'Europe/Amsterdam';
 
     /**
+     * Current date string.
+     *
      * @var string
      */
     protected $now = 'now';
 
+    /**
+     * Constructor
+     *
+     * @param array $data
+     */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->data         = $data;
         $this->dateTimeZone = new \DateTimeZone($this->timeZone);
     }
 
     /**
-     * @param \DateTime $dateTime
+     * Set the current date.
+     *
+     * @param string $now
      */
     public function setNow($now = 'now')
     {
@@ -68,8 +70,16 @@ class Openinghours
      */
     protected function getOpeningHoursRaw(\DateTime $date)
     {
-        $dayName = $this->getDayName($date);
-        return $this->data[$dayName];
+        $dayName    = $this->getDayName($date);
+        $openClosed = $this->data[$dayName];
+
+        unset($openClosed['message']);
+
+        if (isset($openClosed['closed']) and $openClosed['closed'] == '1') {
+            $openClosed['open-time']   = null;
+            $openClosed['closed-time'] = null;
+        }
+        return $openClosed;
     }
 
     /**
@@ -102,14 +112,14 @@ class Openinghours
     protected function dotNotation($key, $default = null)
     {
         $current = $this->data;
-        $p = strtok($key, '.');
+        $p       = strtok($key, '.');
 
         while ($p !== false) {
             if (!isset($current[$p])) {
                 return $default;
             }
             $current = $current[$p];
-            $p = strtok('.');
+            $p       = strtok('.');
         }
 
         return $current;
@@ -119,7 +129,6 @@ class Openinghours
      * Gets the dayName i.e. mon or monday when the fullNotation is true
      *
      * @param \DateTime $date
-     * @param bool      $fullNotation
      *
      * @return string
      */
@@ -130,6 +139,8 @@ class Openinghours
     }
 
     /**
+     * Get the dateTime object depending on the $time parameter.
+     *
      * @param string $time
      *
      * @return \DateTime
@@ -147,23 +158,27 @@ class Openinghours
     public function openNowMessage()
     {
 
-        $date = $this->getDateTime($this->now);
+        $date          = $this->getDateTime($this->now);
         $openCloseTime = $this->getOpeningHours($date);
 
         if ($this->isClosed($this->getDayName($date))) {
-            return sprintf('Vandaag gesloten');
+            return sprintf(__('Today closed', 'pdc-locations'));
         }
 
         $openClose = $this->getOpeningHoursRaw($this->getDateTime($this->now));
         if ($openCloseTime['open-time'] < $date && $openCloseTime['closed-time'] > $date) {
-            return sprintf('Vandaag open van %s tot %s uur', $openClose['open-time'], $openClose['closed-time']);
+            return sprintf(__('Today open from %s to %s hour', 'pdc-locations'), $openClose['open-time'], $openClose['closed-time']);
         }
 
-        return sprintf('Vandaag gesloten');
+        return sprintf(__('Today closed', 'pdc-locations'));
     }
 
     /**
-     * Checks if the checkbox 'closed' isset
+     * Checks if the checkbox 'closed' isset.
+     *
+     * @param string $dayName
+     *
+     * return bool
      */
     public function isClosed($dayName = 'monday')
     {
@@ -180,20 +195,22 @@ class Openinghours
      */
     protected function getOpeningHours(\DateTime $date)
     {
-        return array_map(function ($timestamp) use ($date) {
-            if (empty($timestamp)) {
-                return;
-            }
+        return array_map(
+            function ($timestamp) use ($date) {
+                if (empty($timestamp) or ('1' == $timestamp)) {
+                    return;
+                }
 
-            $delimiter = ":";
+                $delimiter = ":";
 
-            //check for dutch timeformat notation
-            if (false !== strpos($timestamp, '.')) {
-                $delimiter = ".";
-            }
-            [$hours, $minutes] = explode($delimiter, $timestamp);
-            return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
-        },
+                //check for dutch timeformat notation
+                if (false !== strpos($timestamp, '.')) {
+                    $delimiter = ".";
+                }
+
+                list($hours, $minutes) = explode($delimiter, $timestamp);
+                return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
+            },
             $this->getOpeningHoursRaw($date));
     }
 
@@ -204,18 +221,19 @@ class Openinghours
      */
     public function openTomorrowMessage()
     {
-        $tomorrowDate = $this->getDateTime('+1 day');
-        $openClose = $this->getOpeningHoursRaw($tomorrowDate);
+        $tomorrowDate = $this->getDateTime($this->now . '+1 day');
+        $openClose    = $this->getOpeningHoursRaw($tomorrowDate);
 
         if ($this->isWeekend($tomorrowDate)) {
-            return sprintf('Maandag open van %s tot %s uur', $this->contactInfo['_ys_mon_open_time'], $this->contactInfo['_ys_mon_close_time']);
+            return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $this->contactInfo['_ys_mon_open_time'], $this->contactInfo['_ys_mon_close_time']);
         }
 
+        $openClose = $this->getOpeningHoursRaw($tomorrowDate);
         if ($this->isClosed($this->getDayName($tomorrowDate)) || !$openClose['open-time'] || !$openClose['closed-time']) {
-            return 'Morgen gesloten';
+            return __('Tomorrow closed', 'pdc-locations');
         }
 
-        return sprintf('Morgen open van %s tot %s uur', $openClose['open-time'], $openClose['closed-time']);
+        return sprintf(__('Tomorrow open from %s to %s hour', 'pdc-locations'), $openClose['open-time'], $openClose['closed-time']);
     }
 
     /**
@@ -251,7 +269,7 @@ class Openinghours
     {
         return [
             'open' => [
-                'today' => $this->openNowMessage(),
+                'today'    => $this->openNowMessage(),
                 'tomorrow' => $this->openTomorrowMessage(),
             ],
         ];

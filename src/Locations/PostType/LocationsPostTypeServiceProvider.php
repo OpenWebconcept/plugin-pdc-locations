@@ -70,7 +70,7 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
             'has_archive'        => false,
             'hierarchical'       => false,
             'menu_position'      => 5,
-            'supports'           => ['title', 'thumbnail', 'revisions'],
+            'supports'           => ['title', 'thumbnail', 'revisions', 'page-attributes'],
             'show_in_feed'       => false,
             'archive'            => false,
             'admin_cols'         => [

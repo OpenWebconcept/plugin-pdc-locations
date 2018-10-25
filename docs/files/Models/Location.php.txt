@@ -68,10 +68,12 @@ class Location extends Model
         $data              = [
             'title' => $post->post_title,
             'date'  => $post->post_date,
+
         ];
 
         $data                             = $this->assignFields(array_merge($data, $fields), $post);
         $data                             = $this->hydrate($data);
+        $data['location']['image']        = get_the_post_thumbnail_url($post->ID) ?? '';
         $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days']))->render();
 
         return $data;
@@ -99,6 +101,7 @@ class Location extends Model
                 'postalcode' => '',
                 'postalcity' => '',
                 'maplink'    => '',
+                'image'      => '',
             ],
             'communication' => [
                 'telephone-description' => '',

@@ -211,7 +211,8 @@ class Openinghours
                 list($hours, $minutes) = explode($delimiter, $timestamp);
                 return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
             },
-            $this->getOpeningHoursRaw($date));
+            $this->getOpeningHoursRaw($date)
+        );
     }
 
     /**

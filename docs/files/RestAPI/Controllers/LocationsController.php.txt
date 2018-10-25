@@ -5,8 +5,8 @@
 
 namespace OWC\PDC\Locations\RestAPI\Controllers;
 
-use OWC\PDC\Locations\Models\Location;
 use OWC\PDC\Base\RestAPI\Controllers\BaseController;
+use OWC\PDC\Locations\Models\Location;
 use WP_Error;
 use WP_REST_Request;
 
@@ -25,9 +25,13 @@ class LocationsController extends BaseController
      */
     public function getItems(WP_REST_Request $request)
     {
-        $locations = new Location($this->plugin);
-
-        $data = $locations->all();
+        $orderBy   = $request->get_param('orderby') ?? 'title';
+        $order     = $request->get_param('order') ?? 'ASC';
+        $locations = (new Location($this->plugin))->query([
+            'order'   => $order,
+            'orderby' => $orderBy,
+        ]);
+        $data  = $locations->all();
         $query = $locations->getQuery();
 
         return $this->addPaginator($data, $query);
@@ -47,9 +51,9 @@ class LocationsController extends BaseController
         $location = (new Location)
             ->find($id);
 
-        if (! $location) {
+        if (!$location) {
             return new WP_Error('no_item_found', sprintf('Item with ID "%d" not found', $id), [
-                'status' => 404
+                'status' => 404,
             ]);
         }
 

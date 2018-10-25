@@ -12,8 +12,8 @@ return [
              * ]
              */
             'fields' => [
-                'locations'         => OWC\PDC\Locations\RestAPI\ItemFields\LocationsField::class
-            ]
+                'locations' => OWC\PDC\Locations\RestAPI\ItemFields\LocationsField::class,
+            ],
         ],
-    ]
+    ],
 ];

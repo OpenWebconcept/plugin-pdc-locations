@@ -5,7 +5,6 @@
 
 namespace OWC\PDC\Locations\RestAPI;
 
-use OWC\PDC\Base\Models\Item;
 use OWC\PDC\Base\Foundation\ServiceProvider;
 use \WP_REST_Server;
 
@@ -50,12 +49,12 @@ class RestAPIServiceProvider extends ServiceProvider
     public function registerRoutes()
     {
         register_rest_route($this->namespace, 'locations', [
-            'methods' => WP_REST_Server::READABLE,
+            'methods'  => WP_REST_Server::READABLE,
             'callback' => [new Controllers\LocationsController($this->plugin), 'getItems'],
         ]);
 
         register_rest_route($this->namespace, 'locations/(?P<id>\d+)', [
-            'methods' => WP_REST_Server::READABLE,
+            'methods'  => WP_REST_Server::READABLE,
             'callback' => [new Controllers\LocationsController($this->plugin), 'getItem'],
         ]);
     }
@@ -68,20 +67,20 @@ class RestAPIServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function whitelist($whitelist) : array
+    public function whitelist($whitelist): array
     {
         // Remove default root endpoint
         unset($whitelist['wp/v2']);
 
         $whitelist[$this->namespace] = [
             'endpoint_stub' => '/' . $this->namespace,
-            'methods' => ['GET'],
+            'methods'       => ['GET'],
         ];
 
         return $whitelist;
     }
 
-     /**
+    /**
      * Register fields for all configured posttypes.
      *
      * @return void

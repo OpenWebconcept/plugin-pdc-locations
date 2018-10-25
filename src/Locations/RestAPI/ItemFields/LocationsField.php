@@ -31,7 +31,7 @@ class LocationsField extends CreatesFields
         $result = [];
 
         foreach ($connections as $connection) {
-            $type = $connection['from'].'_to_'.$connection['to'];
+            $type   = $connection['from'] . '_to_' . $connection['to'];
             $result = $this->getConnectedItems($post->ID, $type);
         }
 
@@ -51,9 +51,9 @@ class LocationsField extends CreatesFields
 
         $connection = p2p_type($type);
 
-        if (! $connection) {
+        if (!$connection) {
             return [
-                'error' => sprintf(__('Connection type "%s" does not exist', 'pdc-base'), $type)
+                'error' => sprintf(__('Connection type "%s" does not exist', 'pdc-base'), $type),
             ];
         }
 

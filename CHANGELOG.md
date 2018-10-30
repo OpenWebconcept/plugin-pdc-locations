@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 1.0.2
+### Features:
+* Change: logic for messages in api
+
 ## Version 1.0.1
 ### Features:
 * Add: image to api

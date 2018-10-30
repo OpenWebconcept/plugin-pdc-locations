@@ -167,10 +167,10 @@ class Openinghours
 
         $openClose = $this->getOpeningHoursRaw($this->getDateTime($this->now));
         if ($openCloseTime['open-time'] < $date && $openCloseTime['closed-time'] > $date) {
-            return sprintf(__('Today open from %s to %s hour', 'pdc-locations'), $openClose['open-time'], $openClose['closed-time']);
+            return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openClose['open-time'], $openClose['closed-time']);
         }
 
-        return sprintf(__('Today closed', 'pdc-locations'));
+        return sprintf(__('Now closed', 'pdc-locations'));
     }
 
     /**

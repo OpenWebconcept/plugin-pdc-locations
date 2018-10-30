@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDC Locations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-03 13:57+0200\n"
-"PO-Revision-Date: 2018-10-03 13:57+0200\n"
+"POT-Creation-Date: 2018-10-30 17:04+0100\n"
+"PO-Revision-Date: 2018-10-30 17:04+0100\n"
 "Last-Translator: Edwin Siebel <edwin@yard.nl>\n"
 "Language-Team: Yard Internet <info@yard.nl>\n"
 "Language: nl_NL\n"
@@ -174,25 +174,28 @@ msgid "PDC Location"
 msgstr "PDC Locatie"
 
 #: src/Locations/Entities/Openinghours.php:165
-#: src/Locations/Entities/Openinghours.php:173
 msgid "Today closed"
 msgstr "Vandaag gesloten"
 
 #: src/Locations/Entities/Openinghours.php:170
 #, php-format
-msgid "Today open from %s to %s hour"
-msgstr "Vandaag open van %s tot %s uur"
+msgid "Now open from %s to %s hour"
+msgstr "Nu open van %s tot %s uur"
 
-#: src/Locations/Entities/Openinghours.php:228
+#: src/Locations/Entities/Openinghours.php:173
+msgid "Now closed"
+msgstr "Nu gesloten"
+
+#: src/Locations/Entities/Openinghours.php:229
 #, php-format
 msgid "Monday open from %s to %s hour"
 msgstr "Maandag open van %s tot %s uur"
 
-#: src/Locations/Entities/Openinghours.php:233
+#: src/Locations/Entities/Openinghours.php:234
 msgid "Tomorrow closed"
 msgstr "Morgen gesloten"
 
-#: src/Locations/Entities/Openinghours.php:236
+#: src/Locations/Entities/Openinghours.php:237
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr "Morgen open van %s tot %s uur"

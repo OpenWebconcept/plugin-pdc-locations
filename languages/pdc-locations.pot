@@ -171,25 +171,28 @@ msgid "PDC Location"
 msgstr ""
 
 #: src/Locations/Entities/Openinghours.php:165
-#: src/Locations/Entities/Openinghours.php:173
 msgid "Today closed"
 msgstr ""
 
 #: src/Locations/Entities/Openinghours.php:170
 #, php-format
-msgid "Today open from %s to %s hour"
+msgid "Now open from %s to %s hour"
 msgstr ""
 
-#: src/Locations/Entities/Openinghours.php:228
+#: src/Locations/Entities/Openinghours.php:173
+msgid "Now closed"
+msgstr ""
+
+#: src/Locations/Entities/Openinghours.php:229
 #, php-format
 msgid "Monday open from %s to %s hour"
 msgstr ""
 
-#: src/Locations/Entities/Openinghours.php:233
+#: src/Locations/Entities/Openinghours.php:234
 msgid "Tomorrow closed"
 msgstr ""
 
-#: src/Locations/Entities/Openinghours.php:236
+#: src/Locations/Entities/Openinghours.php:237
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr ""

@@ -63,7 +63,7 @@ class TestOpeninghours extends TestCase
 
         $actual = [
             'open' => [
-                'today'    => sprintf(__('Today open from %s to %s hour', 'pdc-locations'),
+                'today'    => sprintf(__('Now open from %s to %s hour', 'pdc-locations'),
                     '09:00',
                     '18:00'),
                 'tomorrow' => sprintf(__('Tomorrow open from %s to %s hour', 'pdc-locations'),

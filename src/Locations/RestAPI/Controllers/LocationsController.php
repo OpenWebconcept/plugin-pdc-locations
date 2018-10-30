@@ -48,7 +48,7 @@ class LocationsController extends BaseController
     {
         $id = (int) $request->get_param('id');
 
-        $location = (new Location)
+        $location = (new Location($this->plugin))
             ->find($id);
 
         if (!$location) {

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 1.0.3
+### Features:
+* Change: change openinghour messages
+
 ## Version 1.0.2
 ### Features:
 * Change: logic for messages in api

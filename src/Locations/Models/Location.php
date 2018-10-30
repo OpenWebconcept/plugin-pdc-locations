@@ -127,7 +127,7 @@ class Location extends Model
                         'closed-time' => '',
                     ],
                     'wednesday' => [
-                        'closed'      => '',
+                        'closed'      => '0',
                         'message'     => '',
                         'open-time'   => '',
                         'closed-time' => '',

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDC Locations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-30 17:04+0100\n"
-"PO-Revision-Date: 2018-10-30 17:04+0100\n"
+"POT-Creation-Date: 2018-10-30 17:13+0100\n"
+"PO-Revision-Date: 2018-10-30 17:13+0100\n"
 "Last-Translator: Edwin Siebel <edwin@yard.nl>\n"
 "Language-Team: Yard Internet <info@yard.nl>\n"
 "Language: nl_NL\n"
@@ -174,8 +174,8 @@ msgid "PDC Location"
 msgstr "PDC Locatie"
 
 #: src/Locations/Entities/Openinghours.php:165
-msgid "Today closed"
-msgstr "Vandaag gesloten"
+msgid "Closed"
+msgstr "Gesloten"
 
 #: src/Locations/Entities/Openinghours.php:170
 #, php-format
@@ -253,6 +253,9 @@ msgstr "Gepubliceerd"
 #, php-format
 msgid "Connection type \"%s\" does not exist"
 msgstr "Verbindingstype \"%s\" bestaat niet"
+
+#~ msgid "Today closed"
+#~ msgstr "Vandaag gesloten"
 
 #~ msgctxt "post type general name"
 #~ msgid "Locations"

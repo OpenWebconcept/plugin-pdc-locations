@@ -171,7 +171,7 @@ msgid "PDC Location"
 msgstr ""
 
 #: src/Locations/Entities/Openinghours.php:165
-msgid "Today closed"
+msgid "Closed"
 msgstr ""
 
 #: src/Locations/Entities/Openinghours.php:170

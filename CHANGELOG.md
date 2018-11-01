@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 1.0.4
+### Features:
+* Change: add all image sizes with meta data to api output
+
 ## Version 1.0.3
 ### Features:
 * Change: change openinghour messages

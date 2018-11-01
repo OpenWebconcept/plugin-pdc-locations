@@ -42,6 +42,12 @@
     ],
     "cs": "./vendor/bin/phpcs",
     "csfix": "./vendor/bin/phpcbf",
-    "docs": "./vendor/bin/phpdoc -d ./src/Locations -t ./docs"
+    "docs": "./vendor/bin/phpdoc -d ./src/Locations -t ./docs",
+    "post-install-cmd": [
+      "cp hooks .git/hooks"
+    ],
+    "post-update-cmd": [
+      "cp hooks .git/hooks"
+    ]
   }
 }

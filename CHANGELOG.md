@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 1.0.5
+### Features:
+* Change: closed message
+
 ## Version 1.0.4
 ### Features:
 * Change: add all image sizes with meta data to api output

@@ -162,7 +162,7 @@ class Openinghours
         $openCloseTime = $this->getOpeningHours($date);
 
         if ($this->isClosed($this->getDayName($date))) {
-            return sprintf(__('Closed', 'pdc-locations'));
+            return sprintf(__('Now closed', 'pdc-locations'));
         }
 
         $openClose = $this->getOpeningHoursRaw($this->getDateTime($this->now));

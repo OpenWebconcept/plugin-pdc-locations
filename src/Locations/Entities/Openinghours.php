@@ -16,7 +16,12 @@ class Openinghours
      *
      * @var array
      */
-    protected $data;
+	protected $data;
+
+	/**
+	 * @var array
+	 */
+	protected $contactInfo;
 
     /**
      * DateTimeZone object

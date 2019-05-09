@@ -8,23 +8,23 @@ return [
         /**
          * Global providers.
          */
-		OWC\PDC\Locations\RestAPI\RestAPIServiceProvider::class,
-		OWC\PDC\Locations\PostType\LocationsPostTypeServiceProvider::class,
-		OWC\PDC\Locations\PostsToPosts\PostsToPostsServiceProvider::class,
-		/**
+        OWC\PDC\Locations\RestAPI\RestAPIServiceProvider::class,
+        OWC\PDC\Locations\PostType\LocationsPostTypeServiceProvider::class,
+        OWC\PDC\Locations\PostsToPosts\PostsToPostsServiceProvider::class,
+        /**
          * Providers specific to the admin.
          */
-        'admin'    => [
-			OWC\PDC\Locations\Metabox\MetaboxServiceProvider::class,
-        ]
+        'admin' => [
+            OWC\PDC\Locations\Metabox\MetaboxServiceProvider::class,
+        ],
     ],
 
-    'dependencies' => 	[
-		[
-			'label'   => 'OpenPDC Base',
-			'file'    => 'pdc-base/pdc-base.php',
-			'version' => '2.0.0',
-			'type'    => 'plugin'
-		]
-	]
+    'dependencies' => [
+        [
+            'type' => 'plugin',
+            'label' => 'OpenPDC Base',
+            'version' => '2.1.5',
+            'file' => 'pdc-base/pdc-base.php',
+        ],
+    ],
 ];

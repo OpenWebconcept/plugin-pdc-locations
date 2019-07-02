@@ -167,8 +167,22 @@ return [
                     'name' => __('Openinghours message', 'pdc-locations'),
                     'type' => 'textarea',
                 ],
-                $weeks,
+                $weeks
             ],
+
+            'custom-openinghours' => [
+                [
+                    'id'   => 'pdc-location-custom-openinghours-message-active',
+                    'name' => __('Custom openinghoursmessage active?', 'pdc-locations'),
+                    'type' => 'checkbox',
+                ],
+                [
+                    'id'   => 'pdc-location-custom-openinghours-message',
+                    'name' => __('Custom openinghours message', 'pdc-locations'),
+                    'type' => 'textarea',
+                ],
+                \OWC\PDC\Locations\Entities\CustomOpeninghours::renderMetabox()
+            ]
         ],
     ],
 ];

@@ -48,7 +48,6 @@ class LocationsField extends CreatesFields
      */
     protected function getConnectedItems(int $postID, string $type): array
     {
-
         $connection = p2p_type($type);
 
         if (!$connection) {

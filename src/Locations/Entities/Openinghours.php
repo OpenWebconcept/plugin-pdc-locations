@@ -80,7 +80,7 @@ class Openinghours
 
         unset($openClosed['message']);
 
-        if (isset($openClosed['closed']) and $openClosed['closed'] == '1') {
+        if (isset($openClosed['closed']) and $openClosed['closed'] == true) {
             $openClosed['open-time']   = null;
             $openClosed['closed-time'] = null;
         }
@@ -162,7 +162,6 @@ class Openinghours
      */
     public function openNowMessage()
     {
-
         $date          = $this->getDateTime($this->now);
         $openCloseTime = $this->getOpeningHours($date);
 
@@ -187,12 +186,12 @@ class Openinghours
      */
     public function isClosed($dayName = 'monday')
     {
-        return ((null !== $this->get($dayName . '.closed')) && $this->get($dayName . '.closed') == '1');
+        return ((null !== $this->get($dayName . '.closed')) && $this->get($dayName . '.closed') == true);
     }
 
     /**
      * Returns array with open/close date objects used for date comparison
-     * The setTime sets the hour and minutes from the getOpeningHoursRaw func
+     * The setTime sets the hour and minutes from the getOpeningHoursRaw func.
      *
      * @param \DateTime $date
      *
@@ -271,7 +270,7 @@ class Openinghours
      *
      * @return array
      */
-    public function render()
+    public function getMessages()
     {
         return [
             'open' => [

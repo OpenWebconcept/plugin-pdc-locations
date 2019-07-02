@@ -6,7 +6,11 @@
 namespace OWC\PDC\Locations\Models;
 
 use OWC\PDC\Base\Models\Model;
+use OWC\PDC\Locations\Entities\CustomOpeninghours;
+use OWC\PDC\Locations\Entities\Day;
 use OWC\PDC\Locations\Entities\Openinghours;
+use OWC\PDC\Locations\Entities\Timeslot;
+use OWC\PDC\Locations\Entities\Week;
 use OWC\PDC\Locations\Foundation\Plugin;
 use \WP_Post;
 
@@ -72,9 +76,21 @@ class Location extends Model
         ];
 
         $data                             = $this->assignFields(array_merge($data, $fields), $post);
+        $data                             = $this->hydrateCustomOpeninghours($data);
         $data                             = $this->hydrate($data);
         $data['location']['image']        = $this->getFeaturedImage($post);
-        $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days']))->render();
+        $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days']))->getMessages();
+
+        $week = new Week();
+        foreach ($data['custom-openinghours']['custom-days'] as $name => $timeslots) {
+            $day = new Day($name);
+            foreach ($timeslots as $timeslot) {
+                $day->addTimeslot(Timeslot::make($timeslot));
+            }
+
+            $week->addDay($name, $day);
+        }
+        $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages();
 
         return $data;
     }
@@ -170,47 +186,47 @@ class Location extends Model
                 'email'                 => '',
             ],
             'openinghours'  => [
-                'message-active' => '0',
+                'message-active' => false,
                 'message'        => '',
                 'days'           => [
                     'monday'    => [
-                        'closed'      => '0',
+                        'closed'      => false,
                         'message'     => '',
                         'open-time'   => '',
                         'closed-time' => '',
                     ],
                     'tuesday'   => [
-                        'closed'      => '0',
+                        'closed'      => false,
                         'message'     => '',
                         'open-time'   => '',
                         'closed-time' => '',
                     ],
                     'wednesday' => [
-                        'closed'      => '0',
+                        'closed'      => false,
                         'message'     => '',
                         'open-time'   => '',
                         'closed-time' => '',
                     ],
                     'thursday'  => [
-                        'closed'      => '0',
+                        'closed'      => false,
                         'message'     => '',
                         'open-time'   => '',
                         'closed-time' => '',
                     ],
                     'friday'    => [
-                        'closed'      => '0',
+                        'closed'      => false,
                         'message'     => '',
                         'open-time'   => '',
                         'closed-time' => '',
                     ],
                     'saturday'  => [
-                        'closed'      => '0',
+                        'closed'      => false,
                         'message'     => '',
                         'open-time'   => '',
                         'closed-time' => '',
                     ],
                     'sunday'    => [
-                        'closed'      => '0',
+                        'closed'      => false,
                         'message'     => '',
                         'open-time'   => '',
                         'closed-time' => '',
@@ -235,6 +251,108 @@ class Location extends Model
     protected function hydrate($data)
     {
         return array_replace_recursive($this->getDefaults(), $data);
+    }
+
+    /**
+     * Fill all the fields this their defaults.
+     *
+     * @param array $data
+     *
+     * @return arry
+     */
+    protected function hydrateCustomOpeninghours($data)
+    {
+        $default =   [
+            'closed'      => false,
+            'message'     => '',
+            'open-time'   => '',
+            'closed-time' => '',
+        ];
+
+        $daysDefault = [
+            'monday'    => [
+                [
+                    'closed'      => false,
+                    'message'     => '',
+                    'open-time'   => '',
+                    'closed-time' => '',
+                ]
+            ],
+            'tuesday'   => [
+                [
+                    'closed'      => false,
+                    'message'     => '',
+                    'open-time'   => '',
+                    'closed-time' => '',
+                ]
+            ],
+            'wednesday' => [
+                [
+                    'closed'      => false,
+                    'message'     => '',
+                    'open-time'   => '',
+                    'closed-time' => '',
+                ]
+            ],
+            'thursday'  => [
+                [
+                    'closed'      => false,
+                    'message'     => '',
+                    'open-time'   => '',
+                    'closed-time' => '',
+                ]
+            ],
+            'friday'    => [
+                [
+                    'closed'      => false,
+                    'message'     => '',
+                    'open-time'   => '',
+                    'closed-time' => '',
+                ]
+            ],
+            'saturday'  => [
+                [
+                    'closed'      => false,
+                    'message'     => '',
+                    'open-time'   => '',
+                    'closed-time' => '',
+                ]
+            ],
+            'sunday'    => [
+                [
+                    'closed'      => false,
+                    'message'     => '',
+                    'open-time'   => '',
+                    'closed-time' => '',
+                ]
+            ]
+        ];
+
+        if (!isset($data['custom-openinghours']['custom-days'])) {
+            foreach ($daysDefault as $day => $fields) {
+                if (isset($data['custom-openinghours']['custom-days'][$day])) {
+                    continue;
+                }
+                $data['custom-openinghours']['custom-days'][$day] = $fields;
+            }
+            return $data;
+        }
+
+        foreach ($data['custom-openinghours']['custom-days'] as $key => $day) {
+            foreach ($day as $fieldKey => $field) {
+                $field['closed'] = isset($field['closed']) ? (bool) $field['closed'] : false;
+                $data['custom-openinghours']['custom-days'][$key][$fieldKey] = array_replace($default, $field);
+            }
+        }
+
+        foreach ($daysDefault as $day => $fields) {
+            if (isset($data['custom-openinghours']['custom-days'][$day])) {
+                continue;
+            }
+            $data['custom-openinghours']['custom-days'][$day] = $fields;
+        }
+
+        return $data;
     }
 
     /**
@@ -305,6 +423,9 @@ class Location extends Model
 
             $fieldName          = str_replace($this->posttype . '-', '', $field['id']);
             $content            = $this->allPostMeta['_owc_' . $field['id']][0] ?? '';
+            if (in_array($content, ['0', '1'])) {
+                $content = filter_var($content, FILTER_VALIDATE_BOOLEAN);
+            }
             $fields[$fieldName] = maybe_unserialize($content);
             unset($fields[$key]);
         }

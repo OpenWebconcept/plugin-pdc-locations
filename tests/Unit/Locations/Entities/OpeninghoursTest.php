@@ -7,17 +7,16 @@ use WP_Mock;
 
 class TestOpeninghours extends TestCase
 {
-
     protected $config;
 
     protected $plugin;
 
-    public function setUp()
+    protected function setUp(): void
     {
         WP_Mock::setUp();
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         WP_Mock::tearDown();
     }
@@ -59,16 +58,20 @@ class TestOpeninghours extends TestCase
         $openinghoursMessage = new Openinghours($data);
         $openinghoursMessage->setNow('Thu, 27 September 2018 13:17:00');
 
-        $expected = $openinghoursMessage->render();
+        $expected = $openinghoursMessage->getMessages();
 
         $actual = [
             'open' => [
-                'today'    => sprintf(__('Now open from %s to %s hour', 'pdc-locations'),
+                'today'    => sprintf(
+                    __('Now open from %s to %s hour', 'pdc-locations'),
                     '09:00',
-                    '18:00'),
-                'tomorrow' => sprintf(__('Tomorrow open from %s to %s hour', 'pdc-locations'),
+                    '18:00'
+                ),
+                'tomorrow' => sprintf(
+                    __('Tomorrow open from %s to %s hour', 'pdc-locations'),
                     '12:00',
-                    '12:30'),
+                    '12:30'
+                ),
             ],
         ];
 

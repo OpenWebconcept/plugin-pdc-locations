@@ -201,7 +201,7 @@ class Openinghours
     {
         return array_map(
             function ($timestamp) use ($date) {
-                if (empty($timestamp) or ('1' == $timestamp)) {
+                if (empty($timestamp) or (true === $timestamp)) {
                     return;
                 }
 

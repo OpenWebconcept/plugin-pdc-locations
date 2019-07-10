@@ -124,14 +124,22 @@ class CustomOpeninghours extends Openinghours
      */
     public function openNowMessage()
     {
-        $date          = $this->getDateTime($this->now);
-        $openObject = $this->getOpeningHours($date);
-
-        if (! $openObject->isOpen()) {
+        $openObject = $this->getOpeningHours($this->getDateTime($this->now));
+        if (false === $openObject or ! $openObject->isOpen()) {
             return sprintf(__('Now closed', 'pdc-locations'));
         }
 
-        return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openClose['open-time'], $openClose['closed-time']);
+        return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openObject->getTimeObject($openObject->getOpenTime())->format(), $openObject->getTimeObject($openObject->getClosedTime())->format());
+    }
+
+    public function openTomorrowMessage()
+    {
+        $openObject = $this->getOpeningHours($this->getDateTime($this->now . '+1 day'));
+        if (false === $openObject or ! $openObject->isOpen()) {
+            return sprintf(__('Now closed', 'pdc-locations'));
+        }
+
+        return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openObject->getTimeObject($openObject->getOpenTime())->format(), $openObject->getTimeObject($openObject->getClosedTime())->format());
     }
 
     /**

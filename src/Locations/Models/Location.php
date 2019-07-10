@@ -376,12 +376,9 @@ class Location extends Model
      */
     protected function getFields($fields): array
     {
-        $fields = $this->removeUnnecessaryFieldsByKey($fields);
-        $fields = array_map(function ($field) use ($fields) {
+        return array_map(function ($field) {
             return $this->manipulate($field);
-        }, $fields);
-
-        return $fields;
+        }, $this->removeUnnecessaryFieldsByKey($fields));
     }
 
     /**
@@ -423,7 +420,7 @@ class Location extends Model
 
             $fieldName          = str_replace($this->posttype . '-', '', $field['id']);
             $content            = $this->allPostMeta['_owc_' . $field['id']][0] ?? '';
-            if (in_array($content, ['0', '1'])) {
+            if (in_array($content, ['0', '1', "0", "1"])) {
                 $content = filter_var($content, FILTER_VALIDATE_BOOLEAN);
             }
             $fields[$fieldName] = maybe_unserialize($content);

@@ -14,10 +14,10 @@ pipelines:
           - ./vendor/bin/phpunit --testsuite "Unit Test Suite"
     - step:
         name: Deploy docs to production
+        deployment: production
         caches:
           - composer
           - vendor-directory
-        deployment: production
         script:
           - apt-get update && apt-get install -y git openssh-server rsync
           - composer docs

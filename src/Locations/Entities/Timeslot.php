@@ -6,6 +6,7 @@
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
+use OWC\PDC\Locations\Entities\Time;
 
 /**
  * Entity for the openinghours.
@@ -68,6 +69,11 @@ class Timeslot
     public function getOpenTime()
     {
         return $this->data['open-time'] ?? null;
+    }
+
+    public function getTimeObject(DateTime $date)
+    {
+        return Time::make($date);
     }
 
     public function getClosedTime()

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDC Locations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-30 17:13+0100\n"
-"PO-Revision-Date: 2018-10-30 17:13+0100\n"
+"POT-Creation-Date: 2019-07-11 12:57+0200\n"
+"PO-Revision-Date: 2019-07-11 12:59+0200\n"
 "Last-Translator: Edwin Siebel <edwin@yard.nl>\n"
 "Language-Team: Yard Internet <info@yard.nl>\n"
 "Language: nl_NL\n"
@@ -22,59 +22,59 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: vendor\n"
 "X-Poedit-SearchPathExcluded-3: languages\n"
 
-#: config/metaboxes.php:5
+#: config/metaboxes.php:5 src/Locations/Entities/CustomOpeninghours.php:31
 msgid "Monday"
 msgstr "Maandag"
 
-#: config/metaboxes.php:6
+#: config/metaboxes.php:6 src/Locations/Entities/CustomOpeninghours.php:32
 msgid "monday"
 msgstr "maandag"
 
-#: config/metaboxes.php:10
+#: config/metaboxes.php:10 src/Locations/Entities/CustomOpeninghours.php:36
 msgid "Tuesday"
 msgstr "Dinsdag"
 
-#: config/metaboxes.php:11
+#: config/metaboxes.php:11 src/Locations/Entities/CustomOpeninghours.php:37
 msgid "tuesday"
 msgstr "dinsdag"
 
-#: config/metaboxes.php:15
+#: config/metaboxes.php:15 src/Locations/Entities/CustomOpeninghours.php:41
 msgid "Wednesday"
 msgstr "Woensdag"
 
-#: config/metaboxes.php:16
+#: config/metaboxes.php:16 src/Locations/Entities/CustomOpeninghours.php:42
 msgid "wednesday"
 msgstr "woensdag"
 
-#: config/metaboxes.php:20
+#: config/metaboxes.php:20 src/Locations/Entities/CustomOpeninghours.php:46
 msgid "Thursday"
 msgstr "Donderdag"
 
-#: config/metaboxes.php:21
+#: config/metaboxes.php:21 src/Locations/Entities/CustomOpeninghours.php:47
 msgid "thursday"
 msgstr "donderdag"
 
-#: config/metaboxes.php:25
+#: config/metaboxes.php:25 src/Locations/Entities/CustomOpeninghours.php:51
 msgid "Friday"
 msgstr "Vrijdag"
 
-#: config/metaboxes.php:26
+#: config/metaboxes.php:26 src/Locations/Entities/CustomOpeninghours.php:52
 msgid "friday"
 msgstr "vrijdag"
 
-#: config/metaboxes.php:30
+#: config/metaboxes.php:30 src/Locations/Entities/CustomOpeninghours.php:56
 msgid "Saturday"
 msgstr "Zaterdag"
 
-#: config/metaboxes.php:31
+#: config/metaboxes.php:31 src/Locations/Entities/CustomOpeninghours.php:57
 msgid "saturday"
 msgstr "zaterdag"
 
-#: config/metaboxes.php:35
+#: config/metaboxes.php:35 src/Locations/Entities/CustomOpeninghours.php:61
 msgid "Sunday"
 msgstr "Zondag"
 
-#: config/metaboxes.php:36
+#: config/metaboxes.php:36 src/Locations/Entities/CustomOpeninghours.php:62
 msgid "sunday"
 msgstr "zondag"
 
@@ -82,19 +82,19 @@ msgstr "zondag"
 msgid "Openinghours"
 msgstr "Openingsuren"
 
-#: config/metaboxes.php:52
+#: config/metaboxes.php:52 src/Locations/Entities/CustomOpeninghours.php:70
 msgid "Open from"
 msgstr "Open vanaf"
 
-#: config/metaboxes.php:57
+#: config/metaboxes.php:57 src/Locations/Entities/CustomOpeninghours.php:75
 msgid "Closed at"
 msgstr "Gesloten vanaf"
 
-#: config/metaboxes.php:62
+#: config/metaboxes.php:62 src/Locations/Entities/CustomOpeninghours.php:80
 msgid "Closed?"
 msgstr "Gesloten?"
 
-#: config/metaboxes.php:67
+#: config/metaboxes.php:67 src/Locations/Entities/CustomOpeninghours.php:85
 msgid "Message"
 msgstr "Bericht"
 
@@ -165,6 +165,14 @@ msgstr "Openingsuren bericht actief?"
 msgid "Openinghours message"
 msgstr "Openingsuren bericht"
 
+#: config/metaboxes.php:176
+msgid "Custom openinghoursmessage active?"
+msgstr "Opmaat openingsuren bericht actief?"
+
+#: config/metaboxes.php:181
+msgid "Custom openinghours message"
+msgstr "Opmaat openingsuren bericht"
+
 #: config/p2p_connections.php:9
 msgid "PDC item"
 msgstr "PDC item"
@@ -173,29 +181,38 @@ msgstr "PDC item"
 msgid "PDC Location"
 msgstr "PDC Locatie"
 
-#: src/Locations/Entities/Openinghours.php:165
-msgid "Closed"
-msgstr "Gesloten"
+#: src/Locations/Entities/CustomOpeninghours.php:92
+msgid "Custom openinghours"
+msgstr "Opmaak openingsuren"
 
-#: src/Locations/Entities/Openinghours.php:170
+#: src/Locations/Entities/CustomOpeninghours.php:103
+msgid "Add new time"
+msgstr "Voeg nieuwe tijd toe"
+
+#: src/Locations/Entities/CustomOpeninghours.php:130
+#: src/Locations/Entities/CustomOpeninghours.php:140
+#: src/Locations/Entities/Openinghours.php:169
+#: src/Locations/Entities/Openinghours.php:177
+msgid "Now closed"
+msgstr "Nu gesloten"
+
+#: src/Locations/Entities/CustomOpeninghours.php:133
+#: src/Locations/Entities/CustomOpeninghours.php:143
+#: src/Locations/Entities/Openinghours.php:174
 #, php-format
 msgid "Now open from %s to %s hour"
 msgstr "Nu open van %s tot %s uur"
 
-#: src/Locations/Entities/Openinghours.php:173
-msgid "Now closed"
-msgstr "Nu gesloten"
-
-#: src/Locations/Entities/Openinghours.php:229
+#: src/Locations/Entities/Openinghours.php:233
 #, php-format
 msgid "Monday open from %s to %s hour"
 msgstr "Maandag open van %s tot %s uur"
 
-#: src/Locations/Entities/Openinghours.php:234
+#: src/Locations/Entities/Openinghours.php:238
 msgid "Tomorrow closed"
 msgstr "Morgen gesloten"
 
-#: src/Locations/Entities/Openinghours.php:237
+#: src/Locations/Entities/Openinghours.php:241
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr "Morgen open van %s tot %s uur"
@@ -249,10 +266,13 @@ msgstr "PDC Locaties"
 msgid "Published"
 msgstr "Gepubliceerd"
 
-#: src/Locations/RestAPI/ItemFields/LocationsField.php:56
+#: src/Locations/RestAPI/ItemFields/LocationsField.php:55
 #, php-format
 msgid "Connection type \"%s\" does not exist"
 msgstr "Verbindingstype \"%s\" bestaat niet"
+
+#~ msgid "Closed"
+#~ msgstr "Gesloten"
 
 #~ msgid "Today closed"
 #~ msgstr "Vandaag gesloten"

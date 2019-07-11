@@ -100,6 +100,7 @@ class CustomOpeninghours extends Openinghours
             $dayGroup['clone'] = true;
             $dayGroup['collapsible'] = true;
             $dayGroup['sort_clone'] = true;
+            $dayGroup['add_button'] = __('Add new time', 'pdc-locations');
             $dayGroup['group_title'] = '{open-time} - {closed-time}';
             $dayGroup['fields'] = $fieldsPerDay;
             $weeks['fields'][] = $dayGroup;

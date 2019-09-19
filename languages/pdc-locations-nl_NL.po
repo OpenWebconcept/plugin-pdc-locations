@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDC Locations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-11 12:57+0200\n"
-"PO-Revision-Date: 2019-07-11 12:59+0200\n"
+"POT-Creation-Date: 2019-09-19 13:15+0200\n"
+"PO-Revision-Date: 2019-09-19 13:18+0200\n"
 "Last-Translator: Edwin Siebel <edwin@yard.nl>\n"
 "Language-Team: Yard Internet <info@yard.nl>\n"
 "Language: nl_NL\n"
@@ -167,11 +167,11 @@ msgstr "Openingsuren bericht"
 
 #: config/metaboxes.php:176
 msgid "Custom openinghoursmessage active?"
-msgstr "Opmaat openingsuren bericht actief?"
+msgstr "Openingsuren met timeslots-bericht actief?"
 
 #: config/metaboxes.php:181
 msgid "Custom openinghours message"
-msgstr "Opmaat openingsuren bericht"
+msgstr "Openingsuren met timeslots-bericht"
 
 #: config/p2p_connections.php:9
 msgid "PDC item"
@@ -183,7 +183,7 @@ msgstr "PDC Locatie"
 
 #: src/Locations/Entities/CustomOpeninghours.php:92
 msgid "Custom openinghours"
-msgstr "Opmaak openingsuren"
+msgstr "Openingsuren met timeslots"
 
 #: src/Locations/Entities/CustomOpeninghours.php:103
 msgid "Add new time"

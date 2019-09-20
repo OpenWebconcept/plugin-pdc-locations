@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 1.0.7
+### Features:
+* (chore): add custom openinghours with timeslots.
+
 ## Version 1.0.6
 ### Fix:
 * (fix): check if required file for ```is_plugin_active``` is already loaded, otherwise load it. Props @Jasper Heidebrink

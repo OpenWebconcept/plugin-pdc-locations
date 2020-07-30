@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provider which registers the Locations section to the API.
  */
@@ -91,7 +92,7 @@ class RestAPIServiceProvider extends ServiceProvider
         // Add global fields for all Models.
         foreach ($this->plugin->config->get('api.models') as $posttype => $data) {
             foreach ($data['fields'] as $key => $creator) {
-                $class = '\OWC\PDC\Base\Models\\' . ucfirst($posttype);
+                $class = '\OWC\PDC\Base\Repositories\\' . ucfirst($posttype);
                 if (class_exists($class)) {
                     $class::addGlobalField($key, new $creator($this->plugin));
                 }

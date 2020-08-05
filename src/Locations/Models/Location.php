@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Model for the item
  */
 
 namespace OWC\PDC\Locations\Models;
 
-use OWC\PDC\Base\Models\Model;
+use OWC\PDC\Base\Repositories\AbstractRepository;
 use OWC\PDC\Locations\Entities\CustomOpeninghours;
 use OWC\PDC\Locations\Entities\Day;
 use OWC\PDC\Locations\Entities\Openinghours;
@@ -17,7 +18,7 @@ use \WP_Post;
 /**
  * Model for the item
  */
-class Location extends Model
+class Location extends AbstractRepository
 {
 
     /**

@@ -36,6 +36,8 @@
 # track this file .gitignore (i.e. do NOT ignore it)
 !.gitignore
 
+!.php_cs
+
 # Eslint
 !.eslintrc
 !.eslintignore
@@ -87,6 +89,8 @@ node_modules/
 # bower
 bower_components
 
+code-coverage
+
 # no map files
 *.map
 
@@ -94,6 +98,9 @@ vendor
 !/src/vendor
 
 tests/coverage
+wp-content/
+
+.DS_Store
 
 # php cs
 .php_cs.cache

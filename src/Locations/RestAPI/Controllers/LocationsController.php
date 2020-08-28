@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller which handles the (requested) pdc-item(s).
  */
@@ -40,7 +41,7 @@ class LocationsController extends BaseController
     /**
      * Get an individual post item.
      *
-     * @param $request $request
+     * @param WP_REST_Request $request
      *
      * @return array|WP_Error
      */

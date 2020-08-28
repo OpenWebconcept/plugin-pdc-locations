@@ -21,10 +21,10 @@ return [
 
     'dependencies' => [
         [
-            'type' => 'plugin',
-            'label' => 'OpenPDC Base',
+            'type'    => 'plugin',
+            'label'   => 'OpenPDC Base',
             'version' => '3.0.0',
-            'file' => 'pdc-base/pdc-base.php',
+            'file'    => 'pdc-base/pdc-base.php',
         ],
     ],
 ];

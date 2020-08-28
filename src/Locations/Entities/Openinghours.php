@@ -6,6 +6,9 @@
 
 namespace OWC\PDC\Locations\Entities;
 
+use DateTime;
+use OWC\PDC\Locations\Entities\Timeslot;
+
 /**
  * Entity for the openinghours.
  */
@@ -60,8 +63,10 @@ class Openinghours
      * Set the current date.
      *
      * @param string $now
+     *
+     * @return void
      */
-    public function setNow($now = 'now')
+    public function setNow($now = 'now'): void
     {
         $this->now = $now;
     }
@@ -74,14 +79,14 @@ class Openinghours
      *
      * @return array
      */
-    protected function getOpeningHoursRaw(\DateTime $date)
+    protected function getOpeningHoursRaw(\DateTime $date): array
     {
         $dayName    = $this->getDayName($date);
         $openClosed = $this->data[$dayName];
 
         unset($openClosed['message']);
 
-        if (isset($openClosed['closed']) and $openClosed['closed'] == true) {
+        if (isset($openClosed['closed']) and true == $openClosed['closed']) {
             $openClosed['open-time']   = null;
             $openClosed['closed-time'] = null;
         }
@@ -91,11 +96,11 @@ class Openinghours
     /**
      * Extracts the values from the data object.
      *
-     * @param $key
+     * @param string $key
      *
      * @return bool|string
      */
-    public function get($key)
+    public function get(string $key)
     {
         if (false !== strpos($key, ".")) {
             return $this->dotNotation($key);
@@ -111,16 +116,16 @@ class Openinghours
     /**
      * Undocumented function
      *
-     * @param [type] $key
-     * @param [type] $default
-     * @return void
+     * @param string $key
+     * @param string $default
+     * @return mixed
      */
-    protected function dotNotation($key, $default = null)
+    protected function dotNotation(string $key, string $default = null)
     {
         $current = $this->data;
         $p       = strtok($key, '.');
 
-        while ($p !== false) {
+        while (false !== $p) {
             if (!isset($current[$p])) {
                 return $default;
             }
@@ -149,11 +154,11 @@ class Openinghours
      *
      * @param string $time
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    protected function getDateTime($time = 'now')
+    protected function getDateTime($time = 'now'): DateTime
     {
-        return new \DateTime($time, $this->dateTimeZone);
+        return new DateTime($time, $this->dateTimeZone);
     }
 
     /**
@@ -182,7 +187,7 @@ class Openinghours
      *
      * @return string
      */
-    public function openNowMessage()
+    public function openNowMessage(): string
     {
         $date          = $this->getDateTime($this->now);
         $openCloseTime = $this->getOpeningHours($date);
@@ -206,23 +211,23 @@ class Openinghours
      *
      * return bool
      */
-    public function isClosed($dayName = 'monday')
+    public function isClosed($dayName = 'monday'): bool
     {
-        return ((null !== $this->get($dayName . '.closed')) && $this->get($dayName . '.closed') == true);
+        return ((null !== $this->get($dayName . '.closed')) && true == $this->get($dayName . '.closed'));
     }
 
     /**
      * Returns array with open/close date objects used for date comparison
      * The setTime sets the hour and minutes from the getOpeningHoursRaw func.
      *
-     * @param \DateTime $date
+     * @param DateTime $date
      *
      * @return array
      */
-    protected function getOpeningHours(\DateTime $date)
+    protected function getOpeningHours(DateTime $date)
     {
         return array_map(
-            function ($timestamp) use ($date) {
+            function ($timestamp) {
                 if (empty($timestamp) or (true === $timestamp)) {
                     return;
                 }
@@ -235,7 +240,7 @@ class Openinghours
                 }
 
                 list($hours, $minutes) = explode($delimiter, $timestamp);
-                return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
+                return (new \DateTime($this->now, $this->dateTimeZone))->setTime((int) $hours, (int) $minutes);
             },
             $this->getOpeningHoursRaw($date)
         );
@@ -244,9 +249,9 @@ class Openinghours
     /**
      * Checks if the store is open or closed the next day based on the current day.
      *
-     * @return bool
+     * @return string
      */
-    public function openTomorrowMessage()
+    public function openTomorrowMessage(): string
     {
         $tomorrowDate = $this->getDateTime($this->now . '+1 day');
         $openClose    = $this->getOpeningHoursRaw($tomorrowDate);
@@ -276,7 +281,7 @@ class Openinghours
      */
     protected function isWeekend(\DateTime $dateTime)
     {
-        return (int) $this->getDayIndex($dateTime) > 5 ? true : false;
+        return 5 < (int) $this->getDayIndex($dateTime) ? true : false;
     }
 
     /**

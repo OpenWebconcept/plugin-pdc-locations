@@ -6,14 +6,14 @@
 
 namespace OWC\PDC\Locations\Entities;
 
-use OWC\PDC\Locations\Entities\Openinghours;
-use OWC\PDC\Locations\Entities\Week;
-
 /**
  * Entity for the openinghours.
  */
 class CustomOpeninghours extends Openinghours
 {
+    /** @var Week */
+    protected $week;
+
     public function __construct(Week $week)
     {
         $this->week = $week;
@@ -94,17 +94,17 @@ class CustomOpeninghours extends Openinghours
         $weeks['id']   = 'custom-days';
         $weeks['type'] = 'group';
         foreach ($daysDefault as $day) {
-            $dayGroup             = [];
-            $dayGroup['name']     = __($day['full'], 'pdc-locations');
-            $dayGroup['id']       = $day['raw'];
-            $dayGroup['type']     = 'group';
-            $dayGroup['clone'] = true;
+            $dayGroup                = [];
+            $dayGroup['name']        = __($day['full'], 'pdc-locations');
+            $dayGroup['id']          = $day['raw'];
+            $dayGroup['type']        = 'group';
+            $dayGroup['clone']       = true;
             $dayGroup['collapsible'] = true;
-            $dayGroup['sort_clone'] = true;
-            $dayGroup['add_button'] = __('Add new time', 'pdc-locations');
+            $dayGroup['sort_clone']  = true;
+            $dayGroup['add_button']  = __('Add new time', 'pdc-locations');
             $dayGroup['group_title'] = '{open-time} - {closed-time}';
-            $dayGroup['fields'] = $fieldsPerDay;
-            $weeks['fields'][] = $dayGroup;
+            $dayGroup['fields']      = $fieldsPerDay;
+            $weeks['fields'][]       = $dayGroup;
         }
         return $weeks;
     }
@@ -139,7 +139,7 @@ class CustomOpeninghours extends Openinghours
      *
      * @return string
      */
-    public function openNowMessage()
+    public function openNowMessage(): string
     {
         $openObject = $this->getOpeningHours($this->getDateTime($this->now));
         if (false === $openObject or !$openObject->isOpen()) {
@@ -149,7 +149,7 @@ class CustomOpeninghours extends Openinghours
         return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openObject->getTimeObject($openObject->getOpenTime())->format(), $openObject->getTimeObject($openObject->getClosedTime())->format());
     }
 
-    public function openTomorrowMessage()
+    public function openTomorrowMessage(): string
     {
         $openObject = $this->getOpeningHours($this->getDateTime($this->now . '+1 day'));
         if (false === $openObject or !$openObject->isOpen()) {
@@ -169,7 +169,7 @@ class CustomOpeninghours extends Openinghours
      */
     protected function getOpeningHours(\DateTime $date)
     {
-        $day = $this->week->getDay($this->getDayName($date));
+        $day      = $this->week->getDay($this->getDayName($date));
         $timeslot = array_filter($day->getTimeslots(), function ($timeslot) {
             if (!$timeslot->isOpen()) {
                 return false;

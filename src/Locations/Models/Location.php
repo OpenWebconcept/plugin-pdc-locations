@@ -6,13 +6,13 @@
 
 namespace OWC\PDC\Locations\Models;
 
+use OWC\PDC\Base\Foundation\Plugin;
 use OWC\PDC\Base\Repositories\AbstractRepository;
 use OWC\PDC\Locations\Entities\CustomOpeninghours;
 use OWC\PDC\Locations\Entities\Day;
 use OWC\PDC\Locations\Entities\Openinghours;
 use OWC\PDC\Locations\Entities\Timeslot;
 use OWC\PDC\Locations\Entities\Week;
-use OWC\PDC\Locations\Foundation\Plugin;
 use \WP_Post;
 
 /**
@@ -71,6 +71,7 @@ class Location extends AbstractRepository
         $this->allPostMeta = $this->getAllPostMeta($post);
         $fields            = $this->getFields($this->plugin->config->get('metaboxes.locations.fields'));
         $data              = [
+            'id'    => $post->ID,
             'title' => $post->post_title,
             'date'  => $post->post_date,
         ];
@@ -110,7 +111,7 @@ class Location extends AbstractRepository
             return [];
         }
 
-        $id         = get_post_thumbnail_id($post->ID);
+        $id         = (int) get_post_thumbnail_id($post->ID);
         $attachment = get_post($id);
         $imageSize  = 'large';
 
@@ -134,13 +135,17 @@ class Location extends AbstractRepository
     /**
      * Get meta data of an attachment.
      *
-     * @param $id
+     * @param int $id
      *
      * @return array
      */
-    private function getAttachmentMeta($id): array
+    private function getAttachmentMeta(int $id): array
     {
         $meta = wp_get_attachment_metadata($id, false);
+
+        if (false === $meta) {
+            return [];
+        }
 
         if (empty($meta['sizes'])) {
             return [];
@@ -148,7 +153,7 @@ class Location extends AbstractRepository
 
         foreach (array_keys($meta['sizes']) as $size) {
             $src                         = wp_get_attachment_image_src($id, $size);
-            $meta['sizes'][$size]['url'] = $src[0];
+            $meta['sizes'][$size]['url'] = (false === $src) ? '' : $src[0];
         }
 
         unset($meta['image_meta']);
@@ -166,6 +171,7 @@ class Location extends AbstractRepository
     protected function getDefaults()
     {
         return [
+            'id'            => '',
             'title'         => '',
             'date'          => '',
             'general'       => [
@@ -248,9 +254,9 @@ class Location extends AbstractRepository
      *
      * @param array $data
      *
-     * @return arry
+     * @return array
      */
-    protected function hydrate($data)
+    protected function hydrate(array $data): array
     {
         return array_replace_recursive($this->getDefaults(), $data);
     }
@@ -260,9 +266,9 @@ class Location extends AbstractRepository
      *
      * @param array $data
      *
-     * @return arry
+     * @return array
      */
-    protected function hydrateCustomOpeninghours($data)
+    protected function hydrateCustomOpeninghours(array $data): array
     {
         $default =   [
             'closed'      => false,
@@ -342,7 +348,7 @@ class Location extends AbstractRepository
 
         foreach ($data['custom-openinghours']['custom-days'] as $key => $day) {
             foreach ($day as $fieldKey => $field) {
-                $field['closed'] = isset($field['closed']) ? (bool) $field['closed'] : false;
+                $field['closed']                                             = isset($field['closed']) ? (bool) $field['closed'] : false;
                 $data['custom-openinghours']['custom-days'][$key][$fieldKey] = array_replace($default, $field);
             }
         }
@@ -410,7 +416,7 @@ class Location extends AbstractRepository
      */
     protected function manipulate($fields)
     {
-        if (count($fields) < 1) {
+        if (1 > count($fields)) {
             return $fields;
         }
 

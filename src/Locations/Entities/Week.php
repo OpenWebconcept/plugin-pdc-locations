@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Entity for the custom openinghours.
  */
@@ -19,7 +20,13 @@ class Week
      */
     protected $days = [];
 
-    public function addDay($name = '', Day $day)
+    /**
+     * @param string $name
+     * @param Day $day
+     *
+     * @return void
+     */
+    public function addDay(string $name = '', Day $day): void
     {
         $this->days[$name][] = $day;
     }
@@ -30,7 +37,7 @@ class Week
      * @param string $name
      * @return Day
      */
-    public function getDay($name)
+    public function getDay(string $name): Day
     {
         return reset($this->days[$name]);
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Entity for the custom openinghours.
  */
@@ -6,7 +7,6 @@
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
-use OWC\PDC\Locations\Entities\Time;
 
 /**
  * Entity for the openinghours.
@@ -29,22 +29,22 @@ class Timeslot
      */
     protected $now = 'now';
 
-    public function __construct($data = [])
+    final public function __construct(array $data = [])
     {
         $this->data = $this->hydrate($data);
     }
 
-    public static function make($data = [])
+    public static function make(array $data = []): self
     {
         return new static($data);
     }
 
-    public function isOpen()
+    public function isOpen(): bool
     {
         return (true !== $this->data['closed']);
     }
 
-    protected function hydrate($data)
+    protected function hydrate(array $data): array
     {
         $default =   [
             'closed'      => false,
@@ -71,7 +71,7 @@ class Timeslot
         return $this->data['open-time'] ?? null;
     }
 
-    public function getTimeObject(DateTime $date)
+    public function getTimeObject(DateTime $date): Time
     {
         return Time::make($date);
     }
@@ -81,13 +81,21 @@ class Timeslot
         return $this->data['closed-time'] ?? null;
     }
 
-    public function getMessage()
+    public function getMessage(): ?string
     {
         return $this->data['message'] ?? null;
     }
 
-    public function isOpenBetween($time)
+    public function isOpenBetween(DateTime $time): bool
     {
+        if (false === $this->getOpenTime()) {
+            return false;
+        }
+
+        if (false === $this->getClosedTime()) {
+            return false;
+        }
+
         if (($this->getOpenTime() < $time) && ($this->getClosedTime() > $time)) {
             return true;
         }

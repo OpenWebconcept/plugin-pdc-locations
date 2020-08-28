@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provider which handles registration of posttype.
  */
@@ -34,9 +35,8 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerPostType()
+    public function registerPostType(): void
     {
-
         if (!function_exists('register_extended_post_type')) {
             require_once $this->plugin->getRootPath() . '/src/Locations/vendor/johnbillion/extended-cpts/extended-cpts.php';
         }
@@ -82,6 +82,6 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
             ],
         ];
 
-        return register_extended_post_type($this->postType, $args, $labels);
+        \register_extended_post_type($this->postType, $args, $labels);
     }
 }

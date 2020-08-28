@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Adds connected/related fields to the output.
  */
@@ -30,7 +31,7 @@ class LocationsField extends CreatesFields
 
         $result = [];
 
-        foreach ($connections as $connection) {
+        foreach ($connections ?? [] as $connection) {
             $type   = $connection['from'] . '_to_' . $connection['to'];
             $result = $this->getConnectedItems($post->ID, $type);
         }
@@ -48,7 +49,11 @@ class LocationsField extends CreatesFields
      */
     protected function getConnectedItems(int $postID, string $type): array
     {
-        $connection = p2p_type($type);
+        if (!\function_exists('p2p_type')) {
+            return [];
+        }
+
+        $connection = \p2p_type($type);
 
         if (!$connection) {
             return [

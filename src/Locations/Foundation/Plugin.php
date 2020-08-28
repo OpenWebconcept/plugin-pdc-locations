@@ -13,13 +13,12 @@ use OWC\PDC\Base\Foundation\Plugin as BasePlugin;
  */
 class Plugin extends BasePlugin
 {
-
     /**
      * Name of the plugin.
      *
      * @const string NAME
      */
-    const NAME = 'pdc-locations';
+    public const NAME = 'pdc-locations';
 
     /**
      * Version of the plugin.
@@ -27,5 +26,5 @@ class Plugin extends BasePlugin
      *
      * @const string VERSION
      */
-    const VERSION = '2.0.4';
+    public const VERSION = '2.0.5';
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Entity for the custom openinghours.
  */
@@ -27,7 +28,10 @@ trait Timezone
      */
     protected $timeZone = 'Europe/Amsterdam';
 
-    public function getDateTimeZone()
+    /**
+     * @return DateTimeZone
+     */
+    public function getDateTimeZone(): DateTimeZone
     {
         return $this->dateTimeZone = new DateTimeZone($this->timeZone);
     }

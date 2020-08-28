@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Registers the metabox field.
  */
@@ -18,8 +19,10 @@ class MetaboxServiceProvider extends ServiceProvider
 
     /**
      * Register metaboxes for locations.
+     *
+     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->plugin->loader->addAction('owc/pdc-base/plugin', $this, 'registerMetaboxes', 10, 1);
     }
@@ -28,8 +31,10 @@ class MetaboxServiceProvider extends ServiceProvider
      * Register metaboxes for settings page into pdc-base plugin.
      *
      * @param Plugin $basePlugin
+     *
+     * @return void
      */
-    public function registerMetaboxes(Plugin $basePlugin)
+    public function registerMetaboxes(Plugin $basePlugin): void
     {
         $configMetaboxes = $this->plugin->config->get('metaboxes');
         $basePlugin->config->set('metaboxes.locations', $configMetaboxes['locations']);

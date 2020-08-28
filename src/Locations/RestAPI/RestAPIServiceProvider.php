@@ -24,8 +24,10 @@ class RestAPIServiceProvider extends ServiceProvider
 
     /**
      * Registers the locations section.
+     *
+     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->plugin->loader->addAction('rest_api_init', $this, 'registerRoutes');
         $this->plugin->loader->addFilter('owc/config-expander/rest-api/whitelist', $this, 'whitelist', 10, 1);
@@ -47,7 +49,7 @@ class RestAPIServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function registerRoutes()
+    public function registerRoutes(): void
     {
         register_rest_route($this->namespace, 'locations', [
             'methods'  => WP_REST_Server::READABLE,

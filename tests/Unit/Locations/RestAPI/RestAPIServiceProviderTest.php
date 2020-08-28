@@ -6,7 +6,6 @@ use Mockery as m;
 use OWC\PDC\Base\Foundation\Config;
 use OWC\PDC\Base\Foundation\Loader;
 use OWC\PDC\Base\Foundation\Plugin;
-use OWC\PDC\Locations\RestAPI\RestAPIServiceProvider;
 use OWC\PDC\Locations\Tests\Unit\TestCase;
 use WP_Mock;
 

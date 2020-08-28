@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Provider which registers the connected/posts-to-posts items.
  */
@@ -19,10 +20,10 @@ class PostsToPostsServiceProvider extends ServiceProvider
      * @var array $connectionDefaults
      */
     private $connectionDefaults = [
-        'can_create_post' => false,
-        'reciprocal' => true,
-        'sortable' => 'any',
-        'cardinality' => 'many-to-many',
+        'can_create_post'       => false,
+        'reciprocal'            => true,
+        'sortable'              => 'any',
+        'cardinality'           => 'many-to-many',
         'duplicate_connections' => false,
     ];
 
@@ -45,38 +46,38 @@ class PostsToPostsServiceProvider extends ServiceProvider
     public function registerPostsToPostsConnections()
     {
         if (function_exists('p2p_register_connection_type')) {
-            $posttypesInfo = $this->plugin->config->get('p2p_connections.posttypes_info');
+            $posttypesInfo         = $this->plugin->config->get('p2p_connections.posttypes_info');
             $defaultConnectionArgs = apply_filters('owc/pdc-base/p2p-connection-defaults', $this->connectionDefaults);
-            $connections = $this->plugin->config->get('p2p_connections.connections');
+            $connections           = $this->plugin->config->get('p2p_connections.connections');
 
             foreach ($connections as $connectionArgs) {
                 $args = array_merge($defaultConnectionArgs, $connectionArgs);
 
                 $connectionType = [
-                    'id' => $posttypesInfo[$connectionArgs['from']]['id'] . '_to_' . $posttypesInfo[$connectionArgs['to']]['id'],
-                    'from' => $connectionArgs['from'],
-                    'to' => $connectionArgs['to'],
-                    'sortable' => $args['sortable'],
+                    'id'           => $posttypesInfo[$connectionArgs['from']]['id'] . '_to_' . $posttypesInfo[$connectionArgs['to']]['id'],
+                    'from'         => $connectionArgs['from'],
+                    'to'           => $connectionArgs['to'],
+                    'sortable'     => $args['sortable'],
                     'admin_column' => 'any',
-                    'from_labels' => [
+                    'from_labels'  => [
                         'column_title' => $posttypesInfo[$connectionArgs['to']]['title'],
                     ],
                     'title' => [
                         'from' => 'Koppel met een ' . $posttypesInfo[$connectionArgs['to']]['title'],
-                        'to' => 'Koppel met een ' . $posttypesInfo[$connectionArgs['from']]['title'],
+                        'to'   => 'Koppel met een ' . $posttypesInfo[$connectionArgs['from']]['title'],
                     ],
                     'can_create_post' => $args['can_create_post'],
-                    'reciprocal' => $args['reciprocal'],
+                    'reciprocal'      => $args['reciprocal'],
                 ];
 
                 if ($connectionArgs['from'] == $connectionArgs['to']) {
                     $connectionType['title']['to'] = '';
-                    $connectionType['admin_box'] = 'from';
+                    $connectionType['admin_box']   = 'from';
                 }
 
                 $connectionType = apply_filters("owc/pdc-base/before-register-p2p-connection/{$posttypesInfo[$connectionArgs['from']]['id']}/{$posttypesInfo[$connectionArgs['to']]['id']}", $connectionType);
 
-                p2p_register_connection_type($connectionType);
+                \p2p_register_connection_type($connectionType);
             }
         }
     }
@@ -86,12 +87,12 @@ class PostsToPostsServiceProvider extends ServiceProvider
      *
      * @param array $args
      *
-     * @return void
+     * @return array
      */
-    public function filterP2PConnectableArgs(array $args)
+    public function filterP2PConnectableArgs(array $args): array
     {
-        $args['orderby'] = 'title';
-        $args['order'] = 'asc';
+        $args['orderby']      = 'title';
+        $args['order']        = 'asc';
         $args['p2p:per_page'] = 25;
 
         return $args;

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.5
+
+### Features
+
+-    Add id to locations endpoint.
+
 ## Version 2.0.4
 
 ### Fixed
@@ -20,9 +26,7 @@
 
 ## Version 2.0.1
 
-### Fix
-
--   Fix incorrect use statement in Location model
+- (fix): incorrect use statement in Location model
 
 ## Version 2.0.0
 

@@ -1,39 +1,43 @@
 <?php
+
 /**
  * Entity for the custom openinghours.
  */
 
 namespace OWC\PDC\Locations\Entities;
 
-use OWC\PDC\Locations\Entities\Timeslot;
-
 /**
  * Entity for the openinghours.
  */
 class Day
 {
+    /** @var string */
     protected $name = '';
 
+    /** @var array */
     protected $timeslots = [];
 
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
-    public function addTimeslot(Timeslot $timeslot)
+    public function addTimeslot(Timeslot $timeslot): void
     {
         $this->timeslots[]  = $timeslot;
     }
 
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getTimeslots()
+    /**
+     * @return Timeslot[]
+     */
+    public function getTimeslots(): array
     {
         return $this->timeslots;
     }

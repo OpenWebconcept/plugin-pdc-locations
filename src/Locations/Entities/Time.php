@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Entity for the custom openinghours.
  */
@@ -12,24 +13,33 @@ use DateTime;
  */
 class Time
 {
+    /** @var DateTime */
     protected $date;
 
-    public function __construct(DateTime $date)
+    /**
+     * @param DateTime $date
+     */
+    final public function __construct(DateTime $date)
     {
         $this->date = $date;
     }
 
-    public static function make(DateTime $date)
+    /**
+     * @param DateTime $date
+     *
+     * @return self
+     */
+    public static function make(DateTime $date): self
     {
         return new static($date);
     }
 
-    public function format($format = 'H:i')
+    public function format(string $format = 'H:i'): string
     {
         return $this->date->format($format);
     }
 
-    public function get()
+    public function get(): DateTime
     {
         return $this->date;
     }

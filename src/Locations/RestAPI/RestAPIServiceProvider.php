@@ -52,11 +52,13 @@ class RestAPIServiceProvider extends ServiceProvider
         register_rest_route($this->namespace, 'locations', [
             'methods'  => WP_REST_Server::READABLE,
             'callback' => [new Controllers\LocationsController($this->plugin), 'getItems'],
+            'permission_callback' => '__return_true',
         ]);
 
         register_rest_route($this->namespace, 'locations/(?P<id>\d+)', [
             'methods'  => WP_REST_Server::READABLE,
             'callback' => [new Controllers\LocationsController($this->plugin), 'getItem'],
+            'permission_callback' => '__return_true',
         ]);
     }
 

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.2
+
+### Fix
+
+-   Permission callback in registration rest routes
+
 ## Version 2.0.1
 
 ### Fix

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Entity for the custom openinghours.
  */
@@ -119,6 +120,21 @@ class CustomOpeninghours extends Openinghours
     }
 
     /**
+     * Open now boolean value
+     *
+     * @return bool
+     */
+    public function isOpenNow(): bool
+    {
+        $openObject = $this->getOpeningHours($this->getDateTime($this->now));
+        if (false === $openObject or !$openObject->isOpen()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Open now message.
      *
      * @return string
@@ -126,7 +142,7 @@ class CustomOpeninghours extends Openinghours
     public function openNowMessage()
     {
         $openObject = $this->getOpeningHours($this->getDateTime($this->now));
-        if (false === $openObject or ! $openObject->isOpen()) {
+        if (false === $openObject or !$openObject->isOpen()) {
             return sprintf(__('Now closed', 'pdc-locations'));
         }
 
@@ -136,7 +152,7 @@ class CustomOpeninghours extends Openinghours
     public function openTomorrowMessage()
     {
         $openObject = $this->getOpeningHours($this->getDateTime($this->now . '+1 day'));
-        if (false === $openObject or ! $openObject->isOpen()) {
+        if (false === $openObject or !$openObject->isOpen()) {
             return sprintf(__('Now closed', 'pdc-locations'));
         }
 
@@ -149,7 +165,7 @@ class CustomOpeninghours extends Openinghours
      *
      * @param \DateTime $date
      *
-     * @return array
+     * @return object
      */
     protected function getOpeningHours(\DateTime $date)
     {

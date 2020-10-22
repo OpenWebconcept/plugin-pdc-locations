@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Entity for the openinghours.
  */
@@ -153,6 +154,27 @@ class Openinghours
     protected function getDateTime($time = 'now')
     {
         return new \DateTime($time, $this->dateTimeZone);
+    }
+
+    /**
+     * Open now boolean value
+     *
+     * @return bool
+     */
+    public function isOpenNow(): bool
+    {
+        $date          = $this->getDateTime($this->now);
+        $openCloseTime = $this->getOpeningHours($date);
+
+        if ($this->isClosed($this->getDayName($date))) {
+            return false;
+        }
+
+        if ($openCloseTime['open-time'] < $date && $openCloseTime['closed-time'] > $date) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

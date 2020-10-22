@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.3
+
+### Features
+
+-   Add: boolean 'openNow' to openinghours in endpoint
+
 ## Version 2.0.2
 
 ### Fix

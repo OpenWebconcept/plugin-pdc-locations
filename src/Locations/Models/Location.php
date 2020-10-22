@@ -73,13 +73,13 @@ class Location extends AbstractRepository
         $data              = [
             'title' => $post->post_title,
             'date'  => $post->post_date,
-
         ];
 
         $data                             = $this->assignFields(array_merge($data, $fields), $post);
         $data                             = $this->hydrateCustomOpeninghours($data);
         $data                             = $this->hydrate($data);
         $data['location']['image']        = $this->getFeaturedImage($post);
+        $data['openinghours']['openNow']  = (new Openinghours($data['openinghours']['days']))->isOpenNow();
         $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days']))->getMessages();
 
         $week = new Week();
@@ -91,6 +91,7 @@ class Location extends AbstractRepository
 
             $week->addDay($name, $day);
         }
+        $data['custom-openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
         $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages();
 
         return $data;

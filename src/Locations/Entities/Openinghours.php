@@ -252,7 +252,11 @@ class Openinghours
         $openClose    = $this->getOpeningHoursRaw($tomorrowDate);
 
         if ($this->isWeekend($tomorrowDate)) {
-            return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $this->contactInfo['_ys_mon_open_time'], $this->contactInfo['_ys_mon_close_time']);
+            if (!boolval($this->data['monday']['closed'])) {
+                return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $this->data['monday']['open-time'], $this->data['monday']['closed-time']);
+            } else {
+                return __('Monday also closed', 'pdc-locations');
+            }
         }
 
         $openClose = $this->getOpeningHoursRaw($tomorrowDate);

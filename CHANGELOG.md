@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.4
+
+### Fixed
+
+-   Openinghours monday when tomorrow is weekend
+
 ## Version 2.0.3
 
 ### Features

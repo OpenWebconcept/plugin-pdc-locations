@@ -208,11 +208,15 @@ msgstr "Nu open van %s tot %s uur"
 msgid "Monday open from %s to %s hour"
 msgstr "Maandag open van %s tot %s uur"
 
-#: src/Locations/Entities/Openinghours.php:238
+#: src/Locations/Entities/Openinghours.php:258
+msgid "Monday also closed"
+msgstr "Maandag ook gesloten"
+
+#: src/Locations/Entities/Openinghours.php:264
 msgid "Tomorrow closed"
 msgstr "Morgen gesloten"
 
-#: src/Locations/Entities/Openinghours.php:241
+#: src/Locations/Entities/Openinghours.php:267
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr "Morgen open van %s tot %s uur"

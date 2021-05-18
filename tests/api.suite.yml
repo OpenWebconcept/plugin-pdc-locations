@@ -1,0 +1,24 @@
+actor: ApiTester
+path: .
+modules:
+    enabled:
+       - WPDb
+       - REST:
+           depends: PhpBrowser
+           url: "%CC_API_URL%"
+           part: Json
+           shortDebugResponse: 300 # only the first 300 characters of the response
+       - \Helper\Api
+    config:
+      WPDb:
+        url: "%CC_API_URL%"
+        dump: 'tests/_data/dump.sql'
+        dsn: 'mysql:host=%CC_API_DB%;port=3306;dbname=database'
+        user: 'mysql'
+        password: 'mysql'
+        populate: true
+        cleanup: true
+        waitlock: 10
+        urlReplacement: false
+        originalUrl: sed-openpdc.lndo.site
+        tablePrefix: 'wp_'

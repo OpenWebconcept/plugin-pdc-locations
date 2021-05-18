@@ -169,7 +169,11 @@ return [
                 ],
                 $weeks
             ],
-
+            'divider'       => [
+                [
+                    'type' => 'divider',
+                ],
+            ],
             'custom-openinghours' => [
                 [
                     'id'   => 'pdc-location-custom-openinghours-message-active',
@@ -182,6 +186,14 @@ return [
                     'type' => 'textarea',
                 ],
                 \OWC\PDC\Locations\Entities\CustomOpeninghours::renderMetabox()
+            ],
+            'divider'       => [
+                [
+                    'type' => 'divider',
+                ],
+            ],
+            'holidays' => [
+                \OWC\PDC\Locations\Entities\Holiday::renderMetabox()
             ]
         ],
     ],

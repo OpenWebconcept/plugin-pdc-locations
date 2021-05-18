@@ -1,31 +1,25 @@
 <?php
 
-/**
- * The base of the plugin.
- */
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Foundation;
 
 use OWC\PDC\Base\Foundation\Plugin as BasePlugin;
 
-/**
- * Sets the name and version of the plugin.
- */
 class Plugin extends BasePlugin
 {
-
     /**
      * Name of the plugin.
      *
-     * @const string NAME
+     * @var string
      */
-    const NAME = 'pdc-locations';
+    public const NAME = \PDC_LOC_SLUG;
 
     /**
      * Version of the plugin.
      * Used for setting versions of enqueue scripts and styles.
      *
-     * @const string VERSION
+     * @var string
      */
-    const VERSION = '2.0.4';
+    public const VERSION = \PDC_LOC_VERSION;
 }

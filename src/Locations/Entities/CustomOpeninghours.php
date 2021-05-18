@@ -1,17 +1,9 @@
 <?php
 
-/**
- * Entity for the custom openinghours.
- */
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
-use OWC\PDC\Locations\Entities\Openinghours;
-use OWC\PDC\Locations\Entities\Week;
-
-/**
- * Entity for the openinghours.
- */
 class CustomOpeninghours extends Openinghours
 {
     public function __construct(Week $week)
@@ -94,17 +86,17 @@ class CustomOpeninghours extends Openinghours
         $weeks['id']   = 'custom-days';
         $weeks['type'] = 'group';
         foreach ($daysDefault as $day) {
-            $dayGroup             = [];
-            $dayGroup['name']     = __($day['full'], 'pdc-locations');
-            $dayGroup['id']       = $day['raw'];
-            $dayGroup['type']     = 'group';
-            $dayGroup['clone'] = true;
+            $dayGroup                = [];
+            $dayGroup['name']        = __($day['full'], 'pdc-locations');
+            $dayGroup['id']          = $day['raw'];
+            $dayGroup['type']        = 'group';
+            $dayGroup['clone']       = true;
             $dayGroup['collapsible'] = true;
-            $dayGroup['sort_clone'] = true;
-            $dayGroup['add_button'] = __('Add new time', 'pdc-locations');
+            $dayGroup['sort_clone']  = true;
+            $dayGroup['add_button']  = __('Add new time', 'pdc-locations');
             $dayGroup['group_title'] = '{open-time} - {closed-time}';
-            $dayGroup['fields'] = $fieldsPerDay;
-            $weeks['fields'][] = $dayGroup;
+            $dayGroup['fields']      = $fieldsPerDay;
+            $weeks['fields'][]       = $dayGroup;
         }
         return $weeks;
     }
@@ -169,7 +161,7 @@ class CustomOpeninghours extends Openinghours
      */
     protected function getOpeningHours(\DateTime $date)
     {
-        $day = $this->week->getDay($this->getDayName($date));
+        $day      = $this->week->getDay($this->getDayName($date));
         $timeslot = array_filter($day->getTimeslots(), function ($timeslot) {
             if (!$timeslot->isOpen()) {
                 return false;

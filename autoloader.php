@@ -4,7 +4,6 @@ namespace OWC\PDC\Locations;
 
 class Autoloader
 {
-
     /**
      * Autoloader constructor.
      * PSR autoloader

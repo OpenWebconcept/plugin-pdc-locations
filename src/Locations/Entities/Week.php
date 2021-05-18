@@ -1,15 +1,9 @@
 <?php
-/**
- * Entity for the custom openinghours.
- */
+
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
-use OWC\PDC\Locations\Entities\Day;
-
-/**
- * Entity for the openinghours.
- */
 class Week
 {
     /**
@@ -19,19 +13,25 @@ class Week
      */
     protected $days = [];
 
-    public function addDay($name = '', Day $day)
+    public function addDay(string $name = '', Day $day): self
     {
         $this->days[$name][] = $day;
+        return $this;
     }
 
     /**
      * Return day object
-     *
-     * @param string $name
-     * @return Day
      */
-    public function getDay($name)
+    public function getDay(string $name): Day
     {
         return reset($this->days[$name]);
+    }
+
+    /**
+     * Get array of data from the week.
+     */
+    public function getDays(): array
+    {
+        return $this->days;
     }
 }

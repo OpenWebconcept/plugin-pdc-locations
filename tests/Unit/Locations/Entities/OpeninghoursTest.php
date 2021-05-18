@@ -1,11 +1,12 @@
 <?php
 
-namespace OWC\PDC\Locations\Entities;
+namespace Tests\OWC\PDC\Locations\Entities;
 
-use OWC\PDC\Locations\Tests\Unit\TestCase;
+use OWC\PDC\Locations\Entities\Openinghours;
+use Tests\OWC\PDC\Locations\TestCase;
 use WP_Mock;
 
-class TestOpeninghours extends TestCase
+class OpeninghoursTest extends TestCase
 {
     protected $config;
 

@@ -1,20 +1,12 @@
 <?php
 
-/**
- * Entity for the openinghours.
- */
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
-/**
- * Entity for the openinghours.
- */
 class Openinghours
 {
-
     /**
-     * OpeninghoursData
-     *
      * @var array
      */
     protected $data;
@@ -81,7 +73,7 @@ class Openinghours
 
         unset($openClosed['message']);
 
-        if (isset($openClosed['closed']) and $openClosed['closed'] == true) {
+        if (isset($openClosed['closed']) and true == $openClosed['closed']) {
             $openClosed['open-time']   = null;
             $openClosed['closed-time'] = null;
         }
@@ -120,7 +112,7 @@ class Openinghours
         $current = $this->data;
         $p       = strtok($key, '.');
 
-        while ($p !== false) {
+        while (false !== $p) {
             if (!isset($current[$p])) {
                 return $default;
             }
@@ -235,7 +227,7 @@ class Openinghours
                 }
 
                 list($hours, $minutes) = explode($delimiter, $timestamp);
-                return (new \DateTime($this->now, $this->dateTimeZone))->setTime($hours, $minutes);
+                return (new \DateTime($this->now, $this->dateTimeZone))->setTime((int) $hours, (int) $minutes);
             },
             $this->getOpeningHoursRaw($date)
         );

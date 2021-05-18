@@ -1,6 +1,6 @@
 <?php
 
-namespace OWC\PDC\Locations\Tests\Unit;
+namespace Tests\OWC\PDC\Locations;
 
 use PHPUnit\Framework\TestCase as PHPUnit;
 use ReflectionClass;

@@ -1,7 +1,6 @@
 <?php
-/**
- * Adds connected/related fields to the output.
- */
+
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\RestAPI\ItemFields;
 
@@ -9,9 +8,6 @@ use OWC\PDC\Base\Support\CreatesFields;
 use OWC\PDC\Locations\Models\Location;
 use WP_Post;
 
-/**
- * Adds connected/related fields to the output.
- */
 class LocationsField extends CreatesFields
 {
 

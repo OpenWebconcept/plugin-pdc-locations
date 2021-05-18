@@ -1,17 +1,14 @@
 <?php
-/**
- * Entity for the custom openinghours.
- */
+
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
 
-/**
- * Entity for the openinghours.
- */
 class Time
 {
+    /** @var DateTime */
     protected $date;
 
     public function __construct(DateTime $date)
@@ -19,17 +16,17 @@ class Time
         $this->date = $date;
     }
 
-    public static function make(DateTime $date)
+    public static function make(DateTime $date): self
     {
         return new static($date);
     }
 
-    public function format($format = 'H:i')
+    public function format($format = 'H:i'): string
     {
         return $this->date->format($format);
     }
 
-    public function get()
+    public function get(): DateTime
     {
         return $this->date;
     }

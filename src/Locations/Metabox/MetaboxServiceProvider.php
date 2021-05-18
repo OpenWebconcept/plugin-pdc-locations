@@ -1,7 +1,6 @@
 <?php
-/**
- * Registers the metabox field.
- */
+
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Metabox;
 

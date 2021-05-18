@@ -1,0 +1,289 @@
+openapi: 3.0.0
+info:
+  version: 2.1.0
+  title: 'OpenWebConcept PDC Locations API'
+  termsOfService: 'https://www.openwebconcept.nl/'
+  contact:
+    name: OpenWebConcept
+    url: 'https://www.openwebconcept.nl/'
+    email: info@openwebconcept.nl
+  license:
+    name: OpenWebConcept
+    url: 'https://www.openwebconcept.nl/'
+  x-logo:
+    url: 'https://openwebconcept.nl/wp-content/themes/openwebconcept/assets/src/images/logo.png'
+  description:
+    $ref: ../chapters/description.md
+  x-externalDocs:
+    description: 'Find out how to create Github repo for your OpenAPI spec.'
+    url: 'https://openwebconcept.bitbucket.io/pdc-locations/'
+servers:
+  -
+    url: 'https://{site}/wp-json/owc/pdc/v1'
+    description: ''
+paths:
+  /locations:
+    get:
+      summary: 'Get all Location items'
+      operationId: getItems
+      tags:
+        - API
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  '/locations/{ID}':
+    get:
+      summary: 'Get Location item by ID'
+      operationId: getItemByID
+      tags:
+        - API
+      parameters:
+        -
+          name: ID
+          in: path
+          description: 'ID of Location item'
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: /1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationItem'
+        '404':
+          description: 'Location not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: 'no_item_found'
+                  message:
+                    type: string
+                    example: 'Item with ID {id} not found'
+                  data:
+                    type: object
+                    properties:
+                      status:
+                        type: integer
+                        example: 404
+
+components:
+  schemas:
+    TimeSlotItem:
+      title: 'TimeSlot model'
+      type: object
+      properties:
+        monday:
+          type: object
+          properties:
+            closed:
+              type: boolean
+            message:
+              type: string
+            open-time:
+              type: string
+            closed-time:
+              type: string
+          example:
+            - closed: true
+              message: "Location is closed"
+              open-time: ""
+              closed-time: ""
+        tuesday:
+          type: object
+          properties:
+            closed:
+              type: boolean
+            message:
+              type: string
+            open-time:
+              type: string
+            closed-time:
+              type: string
+          example:
+            - closed: true
+              message: "Location is closed"
+              open-time: ""
+              closed-time: ""
+        wednesday:
+          type: object
+          properties:
+            closed:
+              type: boolean
+            message:
+              type: string
+            open-time:
+              type: string
+            closed-time:
+              type: string
+          example:
+            - closed: false
+              message: "Welcome"
+              open-time: "08:00"
+              closed-time: "16:00"
+        thursday:
+          type: object
+          properties:
+            closed:
+              type: boolean
+            message:
+              type: string
+            open-time:
+              type: string
+            closed-time:
+              type: string
+          example:
+            - closed: false
+              message: "Welcome"
+              open-time: "08:00"
+              closed-time: "16:00"
+        friday:
+          type: object
+          properties:
+            closed:
+              type: boolean
+            message:
+              type: string
+            open-time:
+              type: string
+            closed-time:
+              type: string
+          example:
+            - closed: false
+              message: "Welcome"
+              open-time: "08:00"
+              closed-time: "16:00"
+        saturday:
+          type: object
+          properties:
+            closed:
+              type: boolean
+            message:
+              type: string
+            open-time:
+              type: string
+            closed-time:
+              type: string
+          example:
+            - closed: true
+              message: "Closed for business"
+              open-time: ""
+              closed-time: ""
+        sunday:
+          type: object
+          properties:
+            closed:
+              type: boolean
+            message:
+              type: string
+            open-time:
+              type: string
+            closed-time:
+              type: string
+          example:
+            - closed: true
+              message: "Closed for business"
+              open-time: ""
+              closed-time: ""
+    LocationItem:
+      title: 'Location model'
+      type: object
+      properties:
+        title:
+          type: string
+        date:
+          type: string
+        general:
+          type: object
+          properties:
+            description:
+              type: string
+        location:
+          type: object
+          properties:
+            street:
+              type: string
+            zipcode:
+              type: string
+            city:
+              type: string
+            postalcode:
+              type: string
+            postalcity:
+              type: string
+            maplink:
+              type: string
+            image:
+              type: object
+        communication:
+          type: object
+          properties:
+            telephone-description:
+              type: string
+            telephone:
+              type: string
+            whatsapp:
+              type: string
+            fax:
+              type: string
+            email:
+              type: string
+        openinghours:
+          type: object
+          properties:
+            message-active:
+              type: boolean
+        custom-openinghours:
+          type: object
+          properties:
+            custom-openinghours-message-active:
+              type: boolean
+            custom-days:
+              type: array
+              items:
+                $ref: '#/components/schemas/TimeSlotItem'
+            openNow:
+              type: boolean
+            messages:
+              type: object
+              properties:
+                open:
+                  type: object
+                  properties:
+                    today:
+                      type: string
+                    tomorrow:
+                      type: string
+                  example:
+                    today: "Nu open van 08:30 tot 16:15 uur"
+                    tomorrow: "Nu open van 08:30 tot 16:15 uur"
+
+    Response:
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationItem'
+        pagination:
+          type: object
+          properties:
+            total_count:
+              type: integer
+            total_pages:
+              type: integer
+            current_page:
+              type: integer
+            limit:
+              type: integer
+      type: object

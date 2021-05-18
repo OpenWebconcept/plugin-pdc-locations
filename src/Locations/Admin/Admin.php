@@ -5,8 +5,8 @@
 
 namespace OWC\PDC\Locations\Admin;
 
-use OWC\PDC\Locations\Plugin\ServiceProvider;
 use OWC\PDC\Locations\Plugin;
+use OWC\PDC\Locations\Plugin\ServiceProvider;
 
 /**
  * Provider which boots the admin serviceproviders.

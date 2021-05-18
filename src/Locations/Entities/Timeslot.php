@@ -1,16 +1,11 @@
 <?php
-/**
- * Entity for the custom openinghours.
- */
+
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
-use OWC\PDC\Locations\Entities\Time;
 
-/**
- * Entity for the openinghours.
- */
 class Timeslot
 {
     use Timezone;

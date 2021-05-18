@@ -21,10 +21,21 @@ return [
 
     'dependencies' => [
         [
-            'type' => 'plugin',
-            'label' => 'OpenPDC Base',
+            'type'    => 'plugin',
+            'label'   => 'OpenPDC Base',
             'version' => '3.0.0',
-            'file' => 'pdc-base/pdc-base.php',
+            'file'    => 'pdc-base/pdc-base.php',
+        ],
+         [
+            'type'    => 'plugin',
+            'label'   => 'RWMB Metabox',
+            'version' => '4.14.0',
+            'file'    => 'meta-box/meta-box.php'
+        ],
+        [
+            'type'  => 'class',
+            'label' => '<a href="https://github.com/johnbillion/extended-cpts" target="_blank">Extended CPT library</a>',
+            'name'  => 'Extended_CPT'
         ],
     ],
 ];

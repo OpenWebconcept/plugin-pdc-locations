@@ -1,17 +1,12 @@
 <?php
 
-/**
- * Provider which registers the Locations section to the API.
- */
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\RestAPI;
 
-use OWC\PDC\Base\Foundation\ServiceProvider;
 use \WP_REST_Server;
+use OWC\PDC\Base\Foundation\ServiceProvider;
 
-/**
- * Provider which registers the Locations section to the API.
- */
 class RestAPIServiceProvider extends ServiceProvider
 {
 
@@ -29,8 +24,6 @@ class RestAPIServiceProvider extends ServiceProvider
     {
         $this->plugin->loader->addAction('rest_api_init', $this, 'registerRoutes');
         $this->plugin->loader->addFilter('owc/config-expander/rest-api/whitelist', $this, 'whitelist', 10, 1);
-
-        $this->registerModelFields();
     }
 
     /**
@@ -50,14 +43,14 @@ class RestAPIServiceProvider extends ServiceProvider
     public function registerRoutes()
     {
         register_rest_route($this->namespace, 'locations', [
-            'methods'  => WP_REST_Server::READABLE,
-            'callback' => [new Controllers\LocationsController($this->plugin), 'getItems'],
+            'methods'             => WP_REST_Server::READABLE,
+            'callback'            => [new Controllers\LocationsController($this->plugin), 'getItems'],
             'permission_callback' => '__return_true',
         ]);
 
         register_rest_route($this->namespace, 'locations/(?P<id>\d+)', [
-            'methods'  => WP_REST_Server::READABLE,
-            'callback' => [new Controllers\LocationsController($this->plugin), 'getItem'],
+            'methods'             => WP_REST_Server::READABLE,
+            'callback'            => [new Controllers\LocationsController($this->plugin), 'getItem'],
             'permission_callback' => '__return_true',
         ]);
     }
@@ -81,24 +74,5 @@ class RestAPIServiceProvider extends ServiceProvider
         ];
 
         return $whitelist;
-    }
-
-    /**
-     * Register fields for all configured posttypes.
-     *
-     * @return void
-     */
-    private function registerModelFields()
-    {
-
-        // Add global fields for all Models.
-        foreach ($this->plugin->config->get('api.models') as $posttype => $data) {
-            foreach ($data['fields'] as $key => $creator) {
-                $class = '\OWC\PDC\Base\Repositories\\' . ucfirst($posttype);
-                if (class_exists($class)) {
-                    $class::addGlobalField($key, new $creator($this->plugin));
-                }
-            }
-        }
     }
 }

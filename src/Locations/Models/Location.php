@@ -1,23 +1,19 @@
 <?php
 
-/**
- * Model for the item
- */
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Models;
 
+use \WP_Post;
 use OWC\PDC\Base\Repositories\AbstractRepository;
 use OWC\PDC\Locations\Entities\CustomOpeninghours;
 use OWC\PDC\Locations\Entities\Day;
+use OWC\PDC\Locations\Entities\Holiday;
 use OWC\PDC\Locations\Entities\Openinghours;
 use OWC\PDC\Locations\Entities\Timeslot;
 use OWC\PDC\Locations\Entities\Week;
 use OWC\PDC\Locations\Foundation\Plugin;
-use \WP_Post;
 
-/**
- * Model for the item
- */
 class Location extends AbstractRepository
 {
 
@@ -94,7 +90,47 @@ class Location extends AbstractRepository
         $data['custom-openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
         $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages();
 
+        if (!$this->hasHolidays($data)) {
+            return $data;
+        }
+
+        $data = $this->injectHolidaysIntoCustomOpeninghours($data);
+
         return $data;
+    }
+
+    protected function injectHolidaysIntoCustomOpeninghours(array $data): array
+    {
+        foreach ($data['holidays']['day'] as $holiday) {
+            $holiday = new Holiday($holiday);
+            if (!$holiday->isHolidayThisWeek($holiday)) {
+                continue;
+            }
+
+            $data['custom-openinghours']['custom-days'][$holiday->getNameOfDay()] =
+            [
+                [
+                    'closed'      => true,
+                    'message'     => $holiday->getMessage(),
+                    'open-time'   => '',
+                    'closed-time' => ''
+                ]
+            ];
+            if ($holiday->isTodayAHoliday()) {
+                $data['custom-openinghours']['openNow']                   = false;
+                $data['custom-openinghours']['messages']['open']['today'] = $holiday->getMessage();
+            }
+            if ($holiday->isTomorrowAHoliday()) {
+                $data['custom-openinghours']['messages']['open']['tomorrow'] = $holiday->getMessage();
+            }
+        }
+
+        return $data;
+    }
+
+    protected function hasHolidays(array $data): bool
+    {
+        return !empty($data['holidays']['day']);
     }
 
     /**
@@ -106,12 +142,12 @@ class Location extends AbstractRepository
      */
     public function getFeaturedImage(WP_Post $post): array
     {
-        if (!has_post_thumbnail($post->ID)) {
+        if (! \has_post_thumbnail($post->ID)) {
             return [];
         }
 
-        $id         = get_post_thumbnail_id($post->ID);
-        $attachment = get_post($id);
+        $id         = \get_post_thumbnail_id($post->ID);
+        $attachment = \get_post($id);
         $imageSize  = 'large';
 
         $result = [];
@@ -119,13 +155,13 @@ class Location extends AbstractRepository
         $result['title']       = $attachment->post_title;
         $result['description'] = $attachment->post_content;
         $result['caption']     = $attachment->post_excerpt;
-        $result['alt']         = get_post_meta($attachment->ID, '_wp_attachment_image_alt', true);
+        $result['alt']         = \get_post_meta($attachment->ID, '_wp_attachment_image_alt', true);
 
         $meta = $this->getAttachmentMeta($id);
 
-        $result['rendered'] = wp_get_attachment_image($id, $imageSize);
-        $result['sizes']    = wp_get_attachment_image_sizes($id, $imageSize, $meta);
-        $result['srcset']   = wp_get_attachment_image_srcset($id, $imageSize, $meta);
+        $result['rendered'] = \wp_get_attachment_image($id, $imageSize);
+        $result['sizes']    = \wp_get_attachment_image_sizes($id, $imageSize, $meta);
+        $result['srcset']   = \wp_get_attachment_image_srcset($id, $imageSize, $meta);
         $result['meta']     = $meta;
 
         return $result;
@@ -140,14 +176,14 @@ class Location extends AbstractRepository
      */
     private function getAttachmentMeta($id): array
     {
-        $meta = wp_get_attachment_metadata($id, false);
+        $meta = \wp_get_attachment_metadata($id, false);
 
         if (empty($meta['sizes'])) {
             return [];
         }
 
         foreach (array_keys($meta['sizes']) as $size) {
-            $src                         = wp_get_attachment_image_src($id, $size);
+            $src                         = \wp_get_attachment_image_src($id, $size);
             $meta['sizes'][$size]['url'] = $src[0];
         }
 
@@ -245,24 +281,16 @@ class Location extends AbstractRepository
 
     /**
      * Fill all the fields this their defaults.
-     *
-     * @param array $data
-     *
-     * @return arry
      */
-    protected function hydrate($data)
+    protected function hydrate(array $data): array
     {
         return array_replace_recursive($this->getDefaults(), $data);
     }
 
     /**
      * Fill all the fields this their defaults.
-     *
-     * @param array $data
-     *
-     * @return arry
      */
-    protected function hydrateCustomOpeninghours($data)
+    protected function hydrateCustomOpeninghours(array $data): array
     {
         $default =   [
             'closed'      => false,
@@ -342,7 +370,7 @@ class Location extends AbstractRepository
 
         foreach ($data['custom-openinghours']['custom-days'] as $key => $day) {
             foreach ($day as $fieldKey => $field) {
-                $field['closed'] = isset($field['closed']) ? (bool) $field['closed'] : false;
+                $field['closed']                                             = isset($field['closed']) ? (bool) $field['closed'] : false;
                 $data['custom-openinghours']['custom-days'][$key][$fieldKey] = array_replace($default, $field);
             }
         }
@@ -415,6 +443,9 @@ class Location extends AbstractRepository
         }
 
         foreach ($fields as $key => $field) {
+            if (!isset($field['id'])) {
+                continue;
+            }
             if (!array_key_exists('_owc_' . $field['id'], $this->allPostMeta) and (!in_array('_owc_' . $field['id'], $this->allPostMeta))) {
                 unset($fields[$key]);
                 continue;

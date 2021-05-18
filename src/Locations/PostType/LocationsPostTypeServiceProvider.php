@@ -1,15 +1,11 @@
 <?php
-/**
- * Provider which handles registration of posttype.
- */
+
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\PostType;
 
 use OWC\PDC\Base\Foundation\ServiceProvider;
 
-/**
- * Provider which handles registration of posttype.
- */
 class LocationsPostTypeServiceProvider extends ServiceProvider
 {
     /**
@@ -36,7 +32,6 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
      */
     public function registerPostType()
     {
-
         if (!function_exists('register_extended_post_type')) {
             require_once $this->plugin->getRootPath() . '/src/Locations/vendor/johnbillion/extended-cpts/extended-cpts.php';
         }

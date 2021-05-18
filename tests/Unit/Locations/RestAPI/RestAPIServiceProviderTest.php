@@ -1,13 +1,13 @@
 <?php
 
-namespace OWC\PDC\Locations\RestAPI;
+namespace Tests\OWC\PDC\Locations\RestAPI;
 
 use Mockery as m;
 use OWC\PDC\Base\Foundation\Config;
 use OWC\PDC\Base\Foundation\Loader;
 use OWC\PDC\Base\Foundation\Plugin;
 use OWC\PDC\Locations\RestAPI\RestAPIServiceProvider;
-use OWC\PDC\Locations\Tests\Unit\TestCase;
+use Tests\OWC\PDC\Locations\TestCase;
 use WP_Mock;
 
 class RestAPIServiceProviderTest extends TestCase
@@ -31,8 +31,16 @@ class RestAPIServiceProviderTest extends TestCase
         $plugin->config = $config;
         $plugin->loader = m::mock(Loader::class);
 
+        WP_Mock::userFunction('wp_parse_args')
+            ->once()
+            ->andReturn([]);
+
+        WP_Mock::userFunction('get_option')
+            ->once()
+            ->andReturn([]);
+
         $service = new RestAPIServiceProvider($plugin);
 
-        $this->assertTrue(true);
+        $this->assertInstanceOf('OWC\PDC\Locations\RestAPI\RestAPIServiceProvider', $service);
     }
 }

@@ -1,7 +1,6 @@
 <?php
-/**
- * Controller which handles the (requested) pdc-item(s).
- */
+
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\RestAPI\Controllers;
 
@@ -10,12 +9,8 @@ use OWC\PDC\Locations\Models\Location;
 use WP_Error;
 use WP_REST_Request;
 
-/**
- * Controller which handles the (requested) pdc-item(s).
- */
 class LocationsController extends BaseController
 {
-
     /**
      * Get a list of all items.
      *

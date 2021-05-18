@@ -1,15 +1,9 @@
 <?php
-/**
- * Entity for the custom openinghours.
- */
+
+declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
-use OWC\PDC\Locations\Entities\Timeslot;
-
-/**
- * Entity for the openinghours.
- */
 class Day
 {
     protected $name = '';

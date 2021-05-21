@@ -14,7 +14,6 @@ use OWC\PDC\Base\Foundation\ServiceProvider;
  */
 class MetaboxServiceProvider extends ServiceProvider
 {
-
     /**
      * Register metaboxes for locations.
      */

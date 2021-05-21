@@ -20,7 +20,7 @@ class Location extends AbstractRepository
     /**
      * Type of model.
      *
-     * @var string $posttype
+     * @var string
      */
     protected $posttype = 'pdc-location';
 
@@ -34,14 +34,14 @@ class Location extends AbstractRepository
     /**
      * Container with fields, associated with this model.
      *
-     * @var array $globalFields
+     * @var array
      */
     protected static $globalFields = [];
 
     /**
      * Instance of the plugin
      *
-     * @var Plugin $plugin
+     * @var Plugin
      */
     protected $plugin;
 
@@ -90,7 +90,7 @@ class Location extends AbstractRepository
         $data['custom-openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
         $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages();
 
-        if (!$this->hasHolidays($data)) {
+        if (! $this->hasHolidays($data)) {
             return $data;
         }
 
@@ -103,7 +103,7 @@ class Location extends AbstractRepository
     {
         foreach ($data['holidays']['day'] as $holiday) {
             $holiday = new Holiday($holiday);
-            if (!$holiday->isHolidayThisWeek($holiday)) {
+            if (! $holiday->isHolidayInUpcomingWeek($holiday)) {
                 continue;
             }
 
@@ -113,8 +113,8 @@ class Location extends AbstractRepository
                     'closed'      => true,
                     'message'     => $holiday->getMessage(),
                     'open-time'   => '',
-                    'closed-time' => ''
-                ]
+                    'closed-time' => '',
+                ],
             ];
             if ($holiday->isTodayAHoliday()) {
                 $data['custom-openinghours']['openNow']                   = false;
@@ -130,7 +130,7 @@ class Location extends AbstractRepository
 
     protected function hasHolidays(array $data): bool
     {
-        return !empty($data['holidays']['day']);
+        return ! empty($data['holidays']['day']);
     }
 
     /**
@@ -306,7 +306,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'tuesday'   => [
                 [
@@ -314,7 +314,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'wednesday' => [
                 [
@@ -322,7 +322,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'thursday'  => [
                 [
@@ -330,7 +330,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'friday'    => [
                 [
@@ -338,7 +338,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'saturday'  => [
                 [
@@ -346,7 +346,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'sunday'    => [
                 [
@@ -354,17 +354,18 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
-            ]
+                ],
+            ],
         ];
 
-        if (!isset($data['custom-openinghours']['custom-days'])) {
+        if (! isset($data['custom-openinghours']['custom-days'])) {
             foreach ($daysDefault as $day => $fields) {
                 if (isset($data['custom-openinghours']['custom-days'][$day])) {
                     continue;
                 }
                 $data['custom-openinghours']['custom-days'][$day] = $fields;
             }
+
             return $data;
         }
 
@@ -423,7 +424,7 @@ class Location extends AbstractRepository
     {
         $toRemove = ['divider'];
         $fields   = array_filter($fields, function ($key) use ($toRemove) {
-            return (!in_array($key, $toRemove));
+            return (! in_array($key, $toRemove));
         }, ARRAY_FILTER_USE_KEY);
 
         return $fields;
@@ -443,11 +444,12 @@ class Location extends AbstractRepository
         }
 
         foreach ($fields as $key => $field) {
-            if (!isset($field['id'])) {
+            if (! isset($field['id'])) {
                 continue;
             }
-            if (!array_key_exists('_owc_' . $field['id'], $this->allPostMeta) and (!in_array('_owc_' . $field['id'], $this->allPostMeta))) {
+            if (! array_key_exists('_owc_' . $field['id'], $this->allPostMeta) and (! in_array('_owc_' . $field['id'], $this->allPostMeta))) {
                 unset($fields[$key]);
+
                 continue;
             }
 

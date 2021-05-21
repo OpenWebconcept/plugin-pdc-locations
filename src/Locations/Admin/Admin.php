@@ -17,14 +17,14 @@ class Admin
     /**
      * Instance of the plugin.
      *
-     * @var $plugin \OWC\PDC\Locations\Plugin
+     * @var \OWC\PDC\Locations\Plugin
      */
     protected $plugin;
 
     /**
      * Instance of the actions and filters loader.
      *
-     * @var $plugin \OWC\PDC\Locations\Plugin\Loader
+     * @var \OWC\PDC\Locations\Plugin\Loader
      */
     protected $loader;
 

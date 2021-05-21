@@ -11,7 +11,7 @@ class SeeContentCest
     {
         $id = $I->havePostInDatabase([
             'post_type'   => 'pdc-location',
-            'post_status' => 'publish'
+            'post_status' => 'publish',
         ]);
 
         $I->sendGet('/locations');
@@ -20,7 +20,7 @@ class SeeContentCest
         $I->seeResponseIsJson();
         $I->seeResponseJsonMatchesJsonPath('data.[0].title');
         $I->seeResponseContainsJson([
-            'data' => []
+            'data' => [],
         ]);
     }
 
@@ -28,7 +28,7 @@ class SeeContentCest
     {
         $id = $I->havePostInDatabase([
             'post_type'   => 'pdc-location',
-            'post_status' => 'publish'
+            'post_status' => 'publish',
         ]);
 
         $I->sendGet('/locations/'. $id);
@@ -39,8 +39,8 @@ class SeeContentCest
             'title'   => 'string',
             'date'    => 'string',
             'general' => [
-                'description' => 'string'
-            ]
+                'description' => 'string',
+            ],
         ]);
     }
 }

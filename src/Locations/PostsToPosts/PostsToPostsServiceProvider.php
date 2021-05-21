@@ -12,7 +12,7 @@ class PostsToPostsServiceProvider extends ServiceProvider
     /**
      * Default connection arguments.
      *
-     * @var array $connectionDefaults
+     * @var array
      */
     private $connectionDefaults = [
         'can_create_post'       => false,

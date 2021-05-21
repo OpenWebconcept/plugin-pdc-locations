@@ -77,6 +77,7 @@ class Openinghours
             $openClosed['open-time']   = null;
             $openClosed['closed-time'] = null;
         }
+
         return $openClosed;
     }
 
@@ -105,6 +106,7 @@ class Openinghours
      *
      * @param [type] $key
      * @param [type] $default
+     *
      * @return void
      */
     protected function dotNotation($key, $default = null)
@@ -113,7 +115,7 @@ class Openinghours
         $p       = strtok($key, '.');
 
         while (false !== $p) {
-            if (!isset($current[$p])) {
+            if (! isset($current[$p])) {
                 return $default;
             }
             $current = $current[$p];
@@ -133,6 +135,7 @@ class Openinghours
     protected function getDayName(\DateTime $date)
     {
         $format = 'l';
+
         return strtolower(date($format, $date->getTimestamp()));
     }
 
@@ -227,6 +230,7 @@ class Openinghours
                 }
 
                 list($hours, $minutes) = explode($delimiter, $timestamp);
+
                 return (new \DateTime($this->now, $this->dateTimeZone))->setTime((int) $hours, (int) $minutes);
             },
             $this->getOpeningHoursRaw($date)
@@ -244,7 +248,7 @@ class Openinghours
         $openClose    = $this->getOpeningHoursRaw($tomorrowDate);
 
         if ($this->isWeekend($tomorrowDate)) {
-            if (!boolval($this->data['monday']['closed'])) {
+            if (! boolval($this->data['monday']['closed'])) {
                 return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $this->data['monday']['open-time'], $this->data['monday']['closed-time']);
             } else {
                 return __('Monday also closed', 'pdc-locations');
@@ -252,7 +256,7 @@ class Openinghours
         }
 
         $openClose = $this->getOpeningHoursRaw($tomorrowDate);
-        if ($this->isClosed($this->getDayName($tomorrowDate)) || !$openClose['open-time'] || !$openClose['closed-time']) {
+        if ($this->isClosed($this->getDayName($tomorrowDate)) || ! $openClose['open-time'] || ! $openClose['closed-time']) {
             return __('Tomorrow closed', 'pdc-locations');
         }
 

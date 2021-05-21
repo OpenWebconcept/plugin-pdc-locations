@@ -50,11 +50,11 @@ class Timeslot
 
         $data = array_merge($default, $data);
 
-        if (!is_null($data['open-time'])) {
+        if (! is_null($data['open-time'])) {
             $data['open-time'] = DateTime::createFromFormat('H:i', $data['open-time'], $this->getDateTimeZone());
         }
 
-        if (!is_null($data['closed-time'])) {
+        if (! is_null($data['closed-time'])) {
             $data['closed-time'] = DateTime::createFromFormat('H:i', $data['closed-time'], $this->getDateTimeZone());
         }
 
@@ -86,6 +86,7 @@ class Timeslot
         if (($this->getOpenTime() < $time) && ($this->getClosedTime() > $time)) {
             return true;
         }
+
         return false;
     }
 }

@@ -46,7 +46,7 @@ class LocationsController extends BaseController
         $location = (new Location($this->plugin))
             ->find($id);
 
-        if (!$location) {
+        if (! $location) {
             return new WP_Error('no_item_found', sprintf('Item with ID "%d" not found', $id), [
                 'status' => 404,
             ]);

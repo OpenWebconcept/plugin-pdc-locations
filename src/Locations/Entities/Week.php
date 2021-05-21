@@ -16,6 +16,7 @@ class Week
     public function addDay(string $name = '', Day $day): self
     {
         $this->days[$name][] = $day;
+
         return $this;
     }
 

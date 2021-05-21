@@ -26,7 +26,7 @@ class HolidayTest extends TestCase
         ClockMock::withClockMock(strtotime('2021-05-19'));
         $data = [
             'date'    => '2021-05-19',
-            'message' => 'Pinksteren'
+            'message' => 'Pinksteren',
         ];
         $holiday = new Holiday($data);
         $this->assertTrue($holiday->isTodayAHoliday());
@@ -39,7 +39,7 @@ class HolidayTest extends TestCase
         ClockMock::withClockMock(strtotime('2021-05-20'));
         $data = [
             'date'    => '2021-05-21',
-            'message' => 'Pinksteren'
+            'message' => 'Pinksteren',
         ];
         $holiday = new Holiday($data);
         $this->assertTrue($holiday->isTomorrowAHoliday());
@@ -52,36 +52,36 @@ class HolidayTest extends TestCase
         ClockMock::withClockMock(strtotime('2021-05-20'));
         $data = [
             'date'    => '2021-05-20',
-            'message' => 'Pinksteren'
+            'message' => 'Pinksteren',
         ];
         $holiday = new Holiday($data);
         $this->assertEquals('thursday', $holiday->getNameOfDay());
     }
 
     /** @test */
-    public function that_the_holiday_is_this_week()
+    public function that_the_holiday_is_in_upcoming_week()
     {
         ClockMock::register(Holiday::class);
         ClockMock::withClockMock(strtotime('2021-05-20'));
         $data = [
             'date'    => '2021-05-20',
-            'message' => 'Pinksteren'
+            'message' => 'Pinksteren',
         ];
         $holiday = new Holiday($data);
-        $this->assertTrue($holiday->isHolidayThisWeek());
+        $this->assertTrue($holiday->isHolidayInUpcomingWeek());
     }
 
     /** @test */
-    public function that_the_holiday_is_not_this_week()
+    public function that_the_holiday_is_not_in_upcoming_week()
     {
         ClockMock::register(Holiday::class);
         ClockMock::withClockMock(strtotime('2021-01-01'));
         $data = [
-            'date'    => '2021-01-01',
-            'message' => 'Pinksteren'
+            'date'    => '2021-02-01',
+            'message' => 'Pinksteren',
         ];
         $holiday = new Holiday($data);
-        $this->assertFalse($holiday->isHolidayThisWeek());
+        $this->assertFalse($holiday->isHolidayInUpcomingWeek());
     }
 
     /** @test */
@@ -89,7 +89,7 @@ class HolidayTest extends TestCase
     {
         $data = [
             'date'    => '2021-05-19',
-            'message' => 'Pinksteren'
+            'message' => 'Pinksteren',
         ];
         $holiday = new Holiday($data);
         $this->assertEquals('Pinksteren', $holiday->getMessage());

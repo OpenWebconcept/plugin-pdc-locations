@@ -11,7 +11,7 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
     /**
      * Name of posttype.
      *
-     * @var string $postType
+     * @var string
      */
     protected $postType = 'pdc-location';
 
@@ -32,7 +32,7 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
      */
     public function registerPostType()
     {
-        if (!function_exists('register_extended_post_type')) {
+        if (! function_exists('register_extended_post_type')) {
             require_once $this->plugin->getRootPath() . '/src/Locations/vendor/johnbillion/extended-cpts/extended-cpts.php';
         }
 

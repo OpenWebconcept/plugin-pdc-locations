@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
+use DateInterval;
 use DateTime;
 use DateTimeZone;
 
@@ -26,6 +27,9 @@ class Holiday
      */
     protected $timeZone = 'Europe/Amsterdam';
 
+    /** @var string */
+    protected $dateFormat = 'Y-m-d';
+
     public function __construct(array $data)
     {
         $this->data = $data;
@@ -33,25 +37,25 @@ class Holiday
 
     public function isTodayAHoliday(): bool
     {
-        $now = date('Y-m-d');
-        return $this->getDate()->format('Y-m-d') === $now;
+        return $this->getDate()->format($this->dateFormat) === $this->today()->format($this->dateFormat);
+    }
+
+    public function today(): DateTime
+    {
+        return (new DateTime(date($this->dateFormat .' H:I:s'), new DateTimeZone($this->timeZone)));
     }
 
     public function isTomorrowAHoliday(): bool
     {
-        $tomorrow = (new DateTime('Tomorrow', new DateTimeZone($this->timeZone)))
-            ->format('Y-m-d');
-        return $this->getDate()->format('Y-m-d') === $tomorrow;
+        $tomorrow = $this->today()->add(new DateInterval('P1D'));
+
+        return $this->getDate()->format($this->dateFormat) === $tomorrow->format($this->dateFormat);
     }
 
-    public function isHolidayThisWeek(): bool
+    public function isHolidayInUpcomingWeek(): bool
     {
-        $monday = (new DateTime('Monday this week', new DateTimeZone($this->timeZone)))
-            ->format('Y-m-d');
-        $sunday = ( new DateTime('Sunday this week', new DateTimeZone($this->timeZone)))
-            ->format('Y-m-d');
-
-        return ($this->getDate()->format('Y-m-d') >= $monday and $this->getDate()->format('Y-m-d') <= $sunday);
+        $next7Days = $this->today()->add(new DateInterval('P7D'));
+        return ($this->getDate()->format($this->dateFormat) >= $this->today()->format($this->dateFormat) and $this->getDate()->format($this->dateFormat) < $next7Days->format($this->dateFormat));
     }
 
     public function getNameOfDay(): string

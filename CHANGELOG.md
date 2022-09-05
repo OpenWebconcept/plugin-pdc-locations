@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.6
+
+### Features
+
+-    Add special location opening times
+
 ## Version 2.0.5
 
 ### Features

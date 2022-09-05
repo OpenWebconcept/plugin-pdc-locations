@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /**
-             * Service Providers.
-         */
+     * Service Providers.
+     */
     'providers' => [
         /**
          * Global providers.

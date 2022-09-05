@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Entity for the custom openinghours.
  */
@@ -106,6 +108,7 @@ class CustomOpeninghours extends Openinghours
             $dayGroup['fields']      = $fieldsPerDay;
             $weeks['fields'][]       = $dayGroup;
         }
+
         return $weeks;
     }
 
@@ -121,13 +124,11 @@ class CustomOpeninghours extends Openinghours
 
     /**
      * Open now boolean value
-     *
-     * @return bool
      */
     public function isOpenNow(): bool
     {
         $openObject = $this->getOpeningHours($this->getDateTime($this->now));
-        if (false === $openObject or !$openObject->isOpen()) {
+        if (false === $openObject || ! $openObject->isOpen()) {
             return false;
         }
 
@@ -136,13 +137,18 @@ class CustomOpeninghours extends Openinghours
 
     /**
      * Open now message.
-     *
-     * @return string
      */
     public function openNowMessage(): string
     {
-        $openObject = $this->getOpeningHours($this->getDateTime($this->now));
-        if (false === $openObject or !$openObject->isOpen()) {
+        $now            = $this->getDateTime($this->now);
+        $openObject     = $this->getOpeningHours($now);
+        $specialMessage = $this->getOpeningDayFirstTimeslotMessage($now);
+
+        if (! empty($specialMessage)) {
+            return $specialMessage;
+        }
+        
+        if (false === $openObject || ! $openObject->isOpen()) {
             return sprintf(__('Now closed', 'pdc-locations'));
         }
 
@@ -151,8 +157,15 @@ class CustomOpeninghours extends Openinghours
 
     public function openTomorrowMessage(): string
     {
-        $openObject = $this->getOpeningHours($this->getDateTime($this->now . '+1 day'));
-        if (false === $openObject or !$openObject->isOpen()) {
+        $tomorrow       = $this->getDateTime($this->now . '+1 day');
+        $openObject     = $this->getOpeningHours($tomorrow);
+        $specialMessage = $this->getOpeningDayFirstTimeslotMessage($tomorrow);
+
+        if (! empty($specialMessage)) {
+            return $specialMessage;
+        }
+
+        if (false === $openObject || ! $openObject->isOpen()) {
             return sprintf(__('Now closed', 'pdc-locations'));
         }
 
@@ -171,12 +184,28 @@ class CustomOpeninghours extends Openinghours
     {
         $day      = $this->week->getDay($this->getDayName($date));
         $timeslot = array_filter($day->getTimeslots(), function ($timeslot) {
-            if (!$timeslot->isOpen()) {
+            if (! $timeslot->isOpen()) {
                 return false;
             }
+
             return ($timeslot->isOpenBetween($this->getDateTime($this->now)));
         });
 
         return end($timeslot) ?? $timeslot;
+    }
+
+    /**
+     * Returns the first timeslot for the day.
+     */
+    protected function getOpeningDayFirstTimeslotMessage(\DateTime $date): string
+    {
+        $day       = $this->week->getDay($this->getDayName($date));
+        $timeslots = $day->getTimeslots();
+
+        if (count($timeslots) === 0) {
+            return '';
+        }
+
+        return $day->getTimeslots()[0]->getMessage();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Entity for the custom openinghours.
  */
@@ -55,11 +57,11 @@ class Timeslot
 
         $data = array_merge($default, $data);
 
-        if (!is_null($data['open-time'])) {
+        if (! is_null($data['open-time'])) {
             $data['open-time'] = DateTime::createFromFormat('H:i', $data['open-time'], $this->getDateTimeZone());
         }
 
-        if (!is_null($data['closed-time'])) {
+        if (! is_null($data['closed-time'])) {
             $data['closed-time'] = DateTime::createFromFormat('H:i', $data['closed-time'], $this->getDateTimeZone());
         }
 
@@ -99,6 +101,17 @@ class Timeslot
         if (($this->getOpenTime() < $time) && ($this->getClosedTime() > $time)) {
             return true;
         }
+
         return false;
+    }
+
+    public function toRest(): array
+    {
+        return [
+            'closed'      => $this->data['closed'],
+            'message'     => $this->data['message'],
+            'open-time'   => $this->data['open-time'] ? Time::make($this->data['open-time'])->format() : '',
+            'closed-time' => $this->data['closed-time'] ? Time::make($this->data['closed-time'])->format() : '',
+        ];
     }
 }

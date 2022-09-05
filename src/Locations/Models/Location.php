@@ -1,19 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Model for the item
  */
 
 namespace OWC\PDC\Locations\Models;
 
+use \WP_Post;
 use OWC\PDC\Base\Foundation\Plugin;
 use OWC\PDC\Base\Repositories\AbstractRepository;
 use OWC\PDC\Locations\Entities\CustomOpeninghours;
 use OWC\PDC\Locations\Entities\Day;
 use OWC\PDC\Locations\Entities\Openinghours;
+use OWC\PDC\Locations\Entities\SpecialOpeningHours;
 use OWC\PDC\Locations\Entities\Timeslot;
 use OWC\PDC\Locations\Entities\Week;
-use \WP_Post;
 
 /**
  * Model for the item
@@ -24,7 +27,7 @@ class Location extends AbstractRepository
     /**
      * Type of model.
      *
-     * @var string $posttype
+     * @var string
      */
     protected $posttype = 'pdc-location';
 
@@ -38,14 +41,14 @@ class Location extends AbstractRepository
     /**
      * Container with fields, associated with this model.
      *
-     * @var array $globalFields
+     * @var array
      */
     protected static $globalFields = [];
 
     /**
      * Instance of the plugin
      *
-     * @var Plugin $plugin
+     * @var Plugin
      */
     protected $plugin;
 
@@ -83,6 +86,8 @@ class Location extends AbstractRepository
         $data['openinghours']['openNow']  = (new Openinghours($data['openinghours']['days']))->isOpenNow();
         $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days']))->getMessages();
 
+        $data['special_openingdays'] = (new SpecialOpeningHours($data['special_openingdays']))->make();
+
         $week = new Week();
         foreach ($data['custom-openinghours']['custom-days'] as $name => $timeslots) {
             $day = new Day($name);
@@ -90,8 +95,12 @@ class Location extends AbstractRepository
                 $day->addTimeslot(Timeslot::make($timeslot));
             }
 
+            $day = (new SpecialOpeningHours($data['special_openingdays']))->asPossibleSpecial($day);
+
             $week->addDay($name, $day);
+            $data['custom-openinghours']['custom-days'][$name] = $day->toRest();
         }
+        
         $data['custom-openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
         $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages();
 
@@ -107,7 +116,7 @@ class Location extends AbstractRepository
      */
     public function getFeaturedImage(WP_Post $post): array
     {
-        if (!has_post_thumbnail($post->ID)) {
+        if (! has_post_thumbnail($post->ID)) {
             return [];
         }
 
@@ -284,7 +293,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'tuesday'   => [
                 [
@@ -292,7 +301,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'wednesday' => [
                 [
@@ -300,7 +309,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'thursday'  => [
                 [
@@ -308,7 +317,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'friday'    => [
                 [
@@ -316,7 +325,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'saturday'  => [
                 [
@@ -324,7 +333,7 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
+                ],
             ],
             'sunday'    => [
                 [
@@ -332,17 +341,18 @@ class Location extends AbstractRepository
                     'message'     => '',
                     'open-time'   => '',
                     'closed-time' => '',
-                ]
-            ]
+                ],
+            ],
         ];
 
-        if (!isset($data['custom-openinghours']['custom-days'])) {
+        if (! isset($data['custom-openinghours']['custom-days'])) {
             foreach ($daysDefault as $day => $fields) {
                 if (isset($data['custom-openinghours']['custom-days'][$day])) {
                     continue;
                 }
                 $data['custom-openinghours']['custom-days'][$day] = $fields;
             }
+
             return $data;
         }
 
@@ -401,7 +411,7 @@ class Location extends AbstractRepository
     {
         $toRemove = ['divider'];
         $fields   = array_filter($fields, function ($key) use ($toRemove) {
-            return (!in_array($key, $toRemove));
+            return (! in_array($key, $toRemove));
         }, ARRAY_FILTER_USE_KEY);
 
         return $fields;
@@ -421,8 +431,9 @@ class Location extends AbstractRepository
         }
 
         foreach ($fields as $key => $field) {
-            if (!array_key_exists('_owc_' . $field['id'], $this->allPostMeta) and (!in_array('_owc_' . $field['id'], $this->allPostMeta))) {
+            if (! array_key_exists('_owc_' . $field['id'], $this->allPostMeta) && (! in_array('_owc_' . $field['id'], $this->allPostMeta))) {
                 unset($fields[$key]);
+
                 continue;
             }
 

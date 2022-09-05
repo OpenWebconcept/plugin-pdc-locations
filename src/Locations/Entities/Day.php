@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Entity for the custom openinghours.
  */
@@ -24,7 +26,17 @@ class Day
 
     public function addTimeslot(Timeslot $timeslot): void
     {
-        $this->timeslots[]  = $timeslot;
+        $this->timeslots[] = $timeslot;
+    }
+
+    public function setTimeslot(Timeslot $timeslot): void
+    {
+        $this->timeslots = [$timeslot];
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     public function setName(string $name): self
@@ -40,5 +52,13 @@ class Day
     public function getTimeslots(): array
     {
         return $this->timeslots;
+    }
+
+    /**
+     * Returns a REST representation of the timeslots
+     */
+    public function toRest(): array
+    {
+        return array_map(fn ($timeslot) => $timeslot->toRest(), $this->timeslots);
     }
 }

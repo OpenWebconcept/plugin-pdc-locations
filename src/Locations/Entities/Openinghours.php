@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Entity for the openinghours.
  */
@@ -7,7 +9,6 @@
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
-use OWC\PDC\Locations\Entities\Timeslot;
 
 /**
  * Entity for the openinghours.
@@ -86,10 +87,11 @@ class Openinghours
 
         unset($openClosed['message']);
 
-        if (isset($openClosed['closed']) and true == $openClosed['closed']) {
+        if (isset($openClosed['closed']) && true == $openClosed['closed']) {
             $openClosed['open-time']   = null;
             $openClosed['closed-time'] = null;
         }
+
         return $openClosed;
     }
 
@@ -118,6 +120,7 @@ class Openinghours
      *
      * @param string $key
      * @param string $default
+     *
      * @return mixed
      */
     protected function dotNotation(string $key, string $default = null)
@@ -126,7 +129,7 @@ class Openinghours
         $p       = strtok($key, '.');
 
         while (false !== $p) {
-            if (!isset($current[$p])) {
+            if (! isset($current[$p])) {
                 return $default;
             }
             $current = $current[$p];
@@ -146,6 +149,7 @@ class Openinghours
     protected function getDayName(\DateTime $date)
     {
         $format = 'l';
+
         return strtolower(date($format, $date->getTimestamp()));
     }
 
@@ -228,7 +232,7 @@ class Openinghours
     {
         return array_map(
             function ($timestamp) {
-                if (empty($timestamp) or (true === $timestamp)) {
+                if (empty($timestamp) || (true === $timestamp)) {
                     return;
                 }
 
@@ -240,6 +244,7 @@ class Openinghours
                 }
 
                 list($hours, $minutes) = explode($delimiter, $timestamp);
+
                 return (new \DateTime($this->now, $this->dateTimeZone))->setTime((int) $hours, (int) $minutes);
             },
             $this->getOpeningHoursRaw($date)
@@ -257,7 +262,7 @@ class Openinghours
         $openClose    = $this->getOpeningHoursRaw($tomorrowDate);
 
         if ($this->isWeekend($tomorrowDate)) {
-            if (!boolval($this->data['monday']['closed'])) {
+            if (! boolval($this->data['monday']['closed'])) {
                 return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $this->data['monday']['open-time'], $this->data['monday']['closed-time']);
             } else {
                 return __('Monday also closed', 'pdc-locations');
@@ -265,7 +270,7 @@ class Openinghours
         }
 
         $openClose = $this->getOpeningHoursRaw($tomorrowDate);
-        if ($this->isClosed($this->getDayName($tomorrowDate)) || !$openClose['open-time'] || !$openClose['closed-time']) {
+        if ($this->isClosed($this->getDayName($tomorrowDate)) || ! $openClose['open-time'] || ! $openClose['closed-time']) {
             return __('Tomorrow closed', 'pdc-locations');
         }
 

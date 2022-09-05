@@ -166,7 +166,7 @@ msgid "Openinghours message"
 msgstr "Openingsuren bericht"
 
 #: config/metaboxes.php:176
-msgid "Custom openinghoursmessage active?"
+msgid "Custom openinghours message active?"
 msgstr "Openingsuren met timeslots-bericht actief?"
 
 #: config/metaboxes.php:181

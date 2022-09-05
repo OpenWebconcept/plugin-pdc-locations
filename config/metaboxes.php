@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $days = [
     1 => [
         'full' => __('Monday', 'pdc-locations'),
@@ -84,14 +86,14 @@ return [
         'priority'   => 'high',
         'autosave'   => true,
         'fields'     => [
-            'general'       => [
+            'general' => [
                 [
                     'id'   => 'pdc-location-description',
                     'name' => __('Description', 'pdc-locations'),
                     'type' => 'textarea',
                 ],
             ],
-            'location'      => [
+            'location' => [
                 [
                     'id'   => 'pdc-location-street',
                     'name' => __('Street and number', 'pdc-locations'),
@@ -151,29 +153,15 @@ return [
                     'type' => 'text',
                 ],
             ],
-            'divider'       => [
+            'divider' => [
                 [
                     'type' => 'divider',
                 ],
             ],
-            'openinghours'  => [
-                [
-                    'id'   => 'pdc-location-message-active',
-                    'name' => __('Openinghours message active?', 'pdc-locations'),
-                    'type' => 'checkbox',
-                ],
-                [
-                    'id'   => 'pdc-location-message',
-                    'name' => __('Openinghours message', 'pdc-locations'),
-                    'type' => 'textarea',
-                ],
-                $weeks
-            ],
-
             'custom-openinghours' => [
                 [
                     'id'   => 'pdc-location-custom-openinghours-message-active',
-                    'name' => __('Custom openinghoursmessage active?', 'pdc-locations'),
+                    'name' => __('Custom openinghours message active?', 'pdc-locations'),
                     'type' => 'checkbox',
                 ],
                 [
@@ -181,8 +169,82 @@ return [
                     'name' => __('Custom openinghours message', 'pdc-locations'),
                     'type' => 'textarea',
                 ],
-                \OWC\PDC\Locations\Entities\CustomOpeninghours::renderMetabox()
-            ]
+                \OWC\PDC\Locations\Entities\CustomOpeninghours::renderMetabox(),
+            ],
+
+            'special_openingdays' => [
+                [
+                    'id'          => 'pdc-special-openings',
+                    'type'        => 'group',
+                    'group_title' => 'Aangepaste dagen',
+                    'add_button'  => 'Voeg nieuwe aangepaste dag toe',
+                    'clone'       => true,
+                    'fields'      => [
+                        [
+                            'type' => 'divider',
+                        ],
+                        [
+                            'id'     => 'pdc-special-opening',
+                            'name'   => 'Aangepaste dagen',
+                            'type'   => 'group',
+                            'fields' => [
+                                [
+                                    'id'         => 'pdc-special-opening-date',
+                                    'name'       => 'Datum',
+                                    'type'       => 'date',
+                                    'js_options' => [
+                                        'dateFormat' => 'dd-mm',
+                                    ],
+                                    'required' => true,
+                                ],
+                                [
+                                    'id'   => 'pdc-special-opening-time-open',
+                                    'name' => 'Open vanaf',
+                                    'type' => 'time',
+                                ],
+                                [
+                                    'id'   => 'pdc-special-opening-time-close',
+                                    'name' => 'Gesloten vanaf',
+                                    'type' => 'time',
+                                ],
+                                [
+                                    'id'   => 'pdc-special-opening-closed',
+                                    'name' => 'Gesloten?',
+                                    'type' => 'checkbox',
+                                ],
+                                [
+                                    'id'   => 'pdc-special-opening-msg',
+                                    'name' => 'Bericht',
+                                    'type' => 'text',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+
+            'openinghours' => [
+                [
+                    'group_title'   => 'Openingstijden (verouderd)',
+                    'type'          => 'group',
+                    'collapsible'   => true,
+                    'default_state' => 'collapsed',
+                    'id'            => 'collapse_group',
+                    'fields'        => [
+                        [
+                            'id'   => 'pdc-location-message-active',
+                            'name' => __('Openinghours message active?', 'pdc-locations'),
+                            'type' => 'checkbox',
+                        ],
+                        [
+                            'id'   => 'pdc-location-message',
+                            'name' => __('Openinghours message', 'pdc-locations'),
+                            'type' => 'textarea',
+                        ],
+                        $weeks,
+                    ],
+                ],
+            ],
         ],
     ],
 ];

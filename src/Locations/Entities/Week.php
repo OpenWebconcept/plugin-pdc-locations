@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Entity for the custom openinghours.
  */
 
 namespace OWC\PDC\Locations\Entities;
-
-use OWC\PDC\Locations\Entities\Day;
 
 /**
  * Entity for the openinghours.
@@ -35,6 +35,7 @@ class Week
      * Return day object
      *
      * @param string $name
+     *
      * @return Day
      */
     public function getDay(string $name): Day

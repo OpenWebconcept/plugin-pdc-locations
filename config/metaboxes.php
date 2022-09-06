@@ -158,6 +158,21 @@ return [
                     'type' => 'divider',
                 ],
             ],
+
+            'openinghours'  => [
+                [
+                    'id'   => 'pdc-location-message-active',
+                    'name' => __('Openinghours message active?', 'pdc-locations'),
+                    'type' => 'checkbox',
+                ],
+                [
+                    'id'   => 'pdc-location-message',
+                    'name' => __('Openinghours message', 'pdc-locations'),
+                    'type' => 'textarea',
+                ],
+                $weeks,
+            ],
+
             'custom-openinghours' => [
                 [
                     'id'   => 'pdc-location-custom-openinghours-message-active',
@@ -219,29 +234,6 @@ return [
                                 ],
                             ],
                         ],
-                    ],
-                ],
-            ],
-
-            'openinghours' => [
-                [
-                    'group_title'   => 'Openingstijden (verouderd)',
-                    'type'          => 'group',
-                    'collapsible'   => true,
-                    'default_state' => 'collapsed',
-                    'id'            => 'collapse_group',
-                    'fields'        => [
-                        [
-                            'id'   => 'pdc-location-message-active',
-                            'name' => __('Openinghours message active?', 'pdc-locations'),
-                            'type' => 'checkbox',
-                        ],
-                        [
-                            'id'   => 'pdc-location-message',
-                            'name' => __('Openinghours message', 'pdc-locations'),
-                            'type' => 'textarea',
-                        ],
-                        $weeks,
                     ],
                 ],
             ],

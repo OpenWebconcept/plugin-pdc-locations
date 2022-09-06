@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Plugin Name:       PDC Locations
  * Plugin URI:        https://www.openwebconcept.nl/

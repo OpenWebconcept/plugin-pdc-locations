@@ -1,16 +1,22 @@
 # CHANGELOG
 
+## Version 2.0.7
+
+### Features
+
+-   Add special location opening times to default openinghours
+
 ## Version 2.0.6
 
 ### Features
 
--    Add special location opening times
+-   Add special location opening times
 
 ## Version 2.0.5
 
 ### Features
 
--    Add id to locations endpoint.
+-   Add id to locations endpoint.
 
 ## Version 2.0.4
 
@@ -32,7 +38,7 @@
 
 ## Version 2.0.1
 
-- (fix): incorrect use statement in Location model
+-   (fix): incorrect use statement in Location model
 
 ## Version 2.0.0
 

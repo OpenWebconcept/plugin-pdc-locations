@@ -89,6 +89,19 @@ class Location extends AbstractRepository
         $data['special_openingdays'] = (new SpecialOpeningHours($data['special_openingdays']))->make();
 
         $week = new Week();
+        foreach ($data['openinghours']['days'] as $name => $timeslot) {
+            $day                                 = new Day($name);
+            $day->addTimeslot(Timeslot::make($timeslot));
+            $day                                 = (new SpecialOpeningHours($data['special_openingdays']))->asPossibleSpecial($day);
+            
+            $week->addDay($name, $day);
+            $data['openinghours']['days'][$name] = $day->toRest();
+        }
+
+        $data['openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
+        $data['openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages();
+
+        $week = new Week();
         foreach ($data['custom-openinghours']['custom-days'] as $name => $timeslots) {
             $day = new Day($name);
             foreach ($timeslots as $timeslot) {

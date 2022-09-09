@@ -210,7 +210,6 @@ return [
                                     'js_options' => [
                                         'dateFormat' => 'dd-mm',
                                     ],
-                                    'required' => true,
                                 ],
                                 [
                                     'id'   => 'pdc-special-opening-time-open',

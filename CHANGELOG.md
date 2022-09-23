@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.8
+
+### Refactor
+
+-   pdc-special-opening-date optional instead of required
+
 ## Version 2.0.7
 
 ### Features

@@ -207,6 +207,7 @@ return [
                                     'id'         => 'pdc-special-opening-date',
                                     'name'       => 'Datum',
                                     'type'       => 'date',
+                                    'required'   => false,
                                     'js_options' => [
                                         'dateFormat' => 'dd-mm',
                                     ],

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.9
+
+### Fix
+
+-   Openinghours metabox type from text to time
+
 ## Version 2.0.8
 
 ### Refactor

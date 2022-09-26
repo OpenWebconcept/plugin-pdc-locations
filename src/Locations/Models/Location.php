@@ -95,7 +95,6 @@ class Location extends AbstractRepository
             $day                                 = (new SpecialOpeningHours($data['special_openingdays']))->asPossibleSpecial($day);
             
             $week->addDay($name, $day);
-            $data['openinghours']['days'][$name] = $day->toRest();
         }
 
         $data['openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();

@@ -52,12 +52,12 @@ foreach ($days as $dayID => $day) {
     $days['fields'][] = [
         'id'   => 'open-time',
         'name' => __('Open from', 'pdc-locations'),
-        'type' => 'text',
+        'type' => 'time',
     ];
     $days['fields'][] = [
         'id'   => 'closed-time',
         'name' => __('Closed at', 'pdc-locations'),
-        'type' => 'text',
+        'type' => 'time',
     ];
     $days['fields'][] = [
         'id'   => 'closed',

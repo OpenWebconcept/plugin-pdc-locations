@@ -1,0 +1,21 @@
+name: "plugin-pdc-locations"
+
+publiccodeYmlVersion: 1.0
+url: "https://github.com/OpenWebconcept/plugin-pdc-locations"
+
+platforms:
+  - "web"
+
+categories:
+  - "application-development"
+
+softwareType: "softwareAddon"
+
+description:
+  localisedName: "PDC Locations"
+  shortDescription: "Deze plugin zorgt ervoor dat er binnen de OpenPDC locaties kunnen worden opgenomen."
+  longDescription: "Deze plugin zorgt ervoor dat er binnen de OpenPDC locaties kunnen worden opgenomen."
+
+nl:
+  commonground:
+    layerType: "service"

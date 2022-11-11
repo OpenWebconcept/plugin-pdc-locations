@@ -29,6 +29,8 @@ class SpecialOpeningHours extends Openinghours
                 $day->setTimeslot(Timeslot::make($specialDay));
                 unset($specialDay['date']);
 
+                $day->makeSpecial();
+
                 return $day;
             }
         }

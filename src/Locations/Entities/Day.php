@@ -19,6 +19,8 @@ class Day
     /** @var array */
     protected $timeslots = [];
 
+    protected bool $isSpecial = false;
+
     public function __construct(string $name)
     {
         $this->name = $name;
@@ -60,5 +62,15 @@ class Day
     public function toRest(): array
     {
         return array_map(fn ($timeslot) => $timeslot->toRest(), $this->timeslots);
+    }
+
+    public function makeSpecial(): void
+    {
+        $this->isSpecial = true;
+    }
+
+    public function isSpecial(): bool
+    {
+        return $this->isSpecial;
     }
 }

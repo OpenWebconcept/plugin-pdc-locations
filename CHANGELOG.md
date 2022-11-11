@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.11
+
+### Fix
+
+-   Special opening hours not showing in week list.
+
 ## Version 2.0.10
 
 ### Chore

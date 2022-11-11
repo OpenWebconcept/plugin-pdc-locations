@@ -23,7 +23,6 @@ use OWC\PDC\Locations\Entities\Week;
  */
 class Location extends AbstractRepository
 {
-
     /**
      * Type of model.
      *
@@ -93,6 +92,8 @@ class Location extends AbstractRepository
             $day                                 = new Day($name);
             $day->addTimeslot(Timeslot::make($timeslot));
             $day                                 = (new SpecialOpeningHours($data['special_openingdays']))->asPossibleSpecial($day);
+
+            $data['openinghours']['days'][$name] = $day->toRest()[0];
             
             $week->addDay($name, $day);
         }

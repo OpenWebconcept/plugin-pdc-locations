@@ -38,8 +38,14 @@ class Week
      *
      * @return Day
      */
-    public function getDay(string $name): Day
+    public function getDay(string $name): ?Day
     {
-        return reset($this->days[$name]);
+        $days = $this->days[$name] ?? '';
+
+        if (empty($days)) {
+            return null;
+        }
+
+        return reset($days);
     }
 }

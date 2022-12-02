@@ -67,6 +67,7 @@ foreach ($days as $dayID => $day) {
     $days['fields'][] = [
         'id'   => 'message',
         'name' => __('Message', 'pdc-locations'),
+        'desc' => __('If this field is not populated the default message will be displayed.', 'pdc-locations'),
         'type' => 'text',
         'size' => 65,
     ];
@@ -191,8 +192,8 @@ return [
                 [
                     'id'          => 'pdc-special-openings',
                     'type'        => 'group',
-                    'group_title' => 'Aangepaste dagen',
-                    'add_button'  => 'Voeg nieuwe aangepaste dag toe',
+                    'group_title' => __('Custom days', 'pdc-locations'),
+                    'add_button'  => __('Add new custom day', 'pdc-locations'),
                     'clone'       => true,
                     'fields'      => [
                         [
@@ -200,12 +201,12 @@ return [
                         ],
                         [
                             'id'     => 'pdc-special-opening',
-                            'name'   => 'Aangepaste dagen',
+                            'name'   => __('Custom days', 'pdc-locations'),
                             'type'   => 'group',
                             'fields' => [
                                 [
                                     'id'         => 'pdc-special-opening-date',
-                                    'name'       => 'Datum',
+                                    'name'       => __('Date', 'pdc-locations'),
                                     'type'       => 'date',
                                     'required'   => false,
                                     'js_options' => [
@@ -214,22 +215,22 @@ return [
                                 ],
                                 [
                                     'id'   => 'pdc-special-opening-time-open',
-                                    'name' => 'Open vanaf',
+                                    'name' => __('Open vanaf', 'pdc-locations'),
                                     'type' => 'time',
                                 ],
                                 [
                                     'id'   => 'pdc-special-opening-time-close',
-                                    'name' => 'Gesloten vanaf',
+                                    'name' => __('Gesloten vanaf', 'pdc-locations'),
                                     'type' => 'time',
                                 ],
                                 [
                                     'id'   => 'pdc-special-opening-closed',
-                                    'name' => 'Gesloten?',
+                                    'name' => __('Gesloten?', 'pdc-locations'),
                                     'type' => 'checkbox',
                                 ],
                                 [
                                     'id'   => 'pdc-special-opening-msg',
-                                    'name' => 'Bericht',
+                                    'name' => __('Bericht', 'pdc-locations'),
                                     'type' => 'text',
                                 ],
                             ],

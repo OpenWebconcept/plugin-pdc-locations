@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-/**
- * Entity for the custom openinghours.
- */
-
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
+use OWC\PDC\Locations\Traits\TimeFormatDelimiter;
 
 /**
  * Entity for the openinghours.
  */
 class Timeslot
 {
+    use TimeFormatDelimiter;
     use Timezone;
 
     /**
@@ -43,7 +41,7 @@ class Timeslot
 
     public function isOpen(): bool
     {
-        return (true !== $this->data['closed']);
+        return (true !== filter_var($this->data['closed'], FILTER_VALIDATE_BOOL));
     }
 
     protected function hydrate(array $data): array
@@ -58,11 +56,13 @@ class Timeslot
         $data = array_merge($default, $data);
 
         if (! is_null($data['open-time'])) {
-            $data['open-time'] = DateTime::createFromFormat('H:i', $data['open-time'], $this->getDateTimeZone());
+            $format = sprintf('H%si', $this->getDelimiter($data['open-time'], '.')); // Check for dutch notation.
+            $data['open-time'] = DateTime::createFromFormat($format, $data['open-time'], $this->getDateTimeZone());
         }
 
         if (! is_null($data['closed-time'])) {
-            $data['closed-time'] = DateTime::createFromFormat('H:i', $data['closed-time'], $this->getDateTimeZone());
+            $format = sprintf('H%si', $this->getDelimiter($data['closed-time'], '.')); // Check for dutch notation.
+            $data['closed-time'] = DateTime::createFromFormat($format, $data['closed-time'], $this->getDateTimeZone());
         }
 
         return $data;

@@ -101,7 +101,7 @@ class Location extends AbstractRepository
         }
 
         $data['openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
-        $data['openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages();
+        $data['openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages(false);
 
         $week = new Week();
         foreach ($data['custom-openinghours']['custom-days'] as $name => $timeslots) {

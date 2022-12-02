@@ -112,12 +112,12 @@ class CustomOpeninghours extends Openinghours
         return $weeks;
     }
 
-    public function getMessages()
+    public function getMessages(bool $showSpecialMessage = true)
     {
         return [
             'open' => [
-                'today'    => $this->openNowMessage(),
-                'tomorrow' => $this->openTomorrowMessage(),
+                'today'    => $this->openNowMessage($showSpecialMessage),
+                'tomorrow' => $this->openTomorrowMessage($showSpecialMessage),
             ],
         ];
     }
@@ -138,13 +138,13 @@ class CustomOpeninghours extends Openinghours
     /**
      * Open now message.
      */
-    public function openNowMessage(): string
+    public function openNowMessage(bool $showSpecialMessage = true): string
     {
         $now            = $this->getDateTime($this->now);
         $openObject     = $this->getOpeningHours($now);
-        $specialMessage = $this->getOpeningDayFirstTimeslotMessage($now);
+        $specialMessage = $this->getOpeningDayFirstOccuringTimeslotMessage($now);
 
-        if (! empty($specialMessage)) {
+        if (! empty($specialMessage) && ($showSpecialMessage || ! $openObject->isOpen())) {
             return $specialMessage;
         }
         
@@ -155,21 +155,36 @@ class CustomOpeninghours extends Openinghours
         return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openObject->getTimeObject($openObject->getOpenTime())->format(), $openObject->getTimeObject($openObject->getClosedTime())->format());
     }
 
-    public function openTomorrowMessage(): string
+    public function openTomorrowMessage(bool $showSpecialMessage = true): string
     {
         $tomorrow       = $this->getDateTime($this->now . '+1 day');
         $openObject     = $this->getOpeningHours($tomorrow);
-        $specialMessage = $this->getOpeningDayFirstTimeslotMessage($tomorrow);
+        $specialMessage = $this->getOpeningDayFirstOccuringTimeslotMessage($tomorrow);
 
-        if (! empty($specialMessage)) {
+        if (! empty($specialMessage) && ($showSpecialMessage || ! $openObject->isOpen())) {
             return $specialMessage;
         }
 
-        if (false === $openObject || ! $openObject->isOpen()) {
-            return sprintf(__('Now closed', 'pdc-locations'));
+        if ($this->isWeekend($tomorrow)) {
+            $monday = $this->week->getDay('monday');
+            $monday = $monday ? $monday->toRest()[0] : [];
+
+            if (empty($monday)) {
+                return __('Monday also closed', 'pdc-locations');
+            }
+
+            if (! boolval($monday['closed'])) {
+                return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $monday['open-time'], $monday['closed-time']);
+            } else {
+                return __('Monday also closed', 'pdc-locations');
+            }
         }
 
-        return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openObject->getTimeObject($openObject->getOpenTime())->format(), $openObject->getTimeObject($openObject->getClosedTime())->format());
+        if (false === $openObject || ! $openObject->isOpen()) {
+            return __('Tomorrow closed', 'pdc-locations');
+        }
+
+        return sprintf(__('Tomorrow open from %s to %s hour', 'pdc-locations'), $openObject->getTimeObject($openObject->getOpenTime())->format(), $openObject->getTimeObject($openObject->getClosedTime())->format());
     }
 
     /**
@@ -195,9 +210,9 @@ class CustomOpeninghours extends Openinghours
     }
 
     /**
-     * Returns the first timeslot for the day.
+     * Returns the first occuring timeslot for the day.
      */
-    protected function getOpeningDayFirstTimeslotMessage(\DateTime $date): string
+    protected function getOpeningDayFirstOccuringTimeslotMessage(\DateTime $date): string
     {
         $day       = $this->week->getDay($this->getDayName($date));
         $timeslots = $day->getTimeslots();
@@ -206,6 +221,25 @@ class CustomOpeninghours extends Openinghours
             return '';
         }
 
-        return $day->getTimeslots()[0]->getMessage();
+        $timeslots = $this->removePastTimeslots($timeslots);
+
+        if (empty($timeslots)) {
+            return '';
+        }
+
+        if (! $timeslots[0]->isOpen()) {
+            return '';
+        }
+
+        return $timeslots[0]->getMessage();
+    }
+
+    protected function removePastTimeslots(array $timeslots): array
+    {
+        $filtered = array_filter($timeslots, function ($timeslot) {
+            return $timeslot->isOpenBetween(new \DateTime());
+        });
+
+        return array_values($filtered);
     }
 }

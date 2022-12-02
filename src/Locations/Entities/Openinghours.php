@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-/**
- * Entity for the openinghours.
- */
-
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
+use OWC\PDC\Locations\Traits\TimeFormatDelimiter;
 
 /**
  * Entity for the openinghours.
  */
 class Openinghours
 {
+    use TimeFormatDelimiter;
 
     /**
      * OpeninghoursData
@@ -236,13 +234,7 @@ class Openinghours
                     return;
                 }
 
-                $delimiter = ":";
-
-                //check for dutch timeformat notation
-                if (false !== strpos($timestamp, '.')) {
-                    $delimiter = ".";
-                }
-
+                $delimiter = $this->getDelimiter($timestamp, '.'); // Check for dutch notation.
                 list($hours, $minutes) = explode($delimiter, $timestamp);
 
                 return (new \DateTime($this->now, $this->dateTimeZone))->setTime((int) $hours, (int) $minutes);
@@ -269,7 +261,6 @@ class Openinghours
             }
         }
 
-        $openClose = $this->getOpeningHoursRaw($tomorrowDate);
         if ($this->isClosed($this->getDayName($tomorrowDate)) || ! $openClose['open-time'] || ! $openClose['closed-time']) {
             return __('Tomorrow closed', 'pdc-locations');
         }

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Version 2.0.12
+
+### Refactor
+
+-   Delimiter in Timeslot class.
+-   Remove past timeslots of current day.
+-   Add weekend validation in CustomOpeninghours
+-   Add translations
+
 ## Version 2.0.11
 
 ### Fix

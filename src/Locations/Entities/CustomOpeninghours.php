@@ -144,7 +144,7 @@ class CustomOpeninghours extends Openinghours
         $openObject     = $this->getOpeningHours($now);
         $specialMessage = $this->getOpeningDayFirstOccuringTimeslotMessage($now);
 
-        if (! empty($specialMessage) && ($showSpecialMessage || ! $openObject->isOpen())) {
+        if (! empty($specialMessage) && $showSpecialMessage) {
             return $specialMessage;
         }
         
@@ -161,7 +161,7 @@ class CustomOpeninghours extends Openinghours
         $openObject     = $this->getOpeningHours($tomorrow);
         $specialMessage = $this->getOpeningDayFirstOccuringTimeslotMessage($tomorrow);
 
-        if (! empty($specialMessage) && ($showSpecialMessage || ! $openObject->isOpen())) {
+        if (! empty($specialMessage) && $showSpecialMessage) {
             return $specialMessage;
         }
 
@@ -221,7 +221,7 @@ class CustomOpeninghours extends Openinghours
             return '';
         }
 
-        $timeslots = $this->removePastTimeslots($timeslots);
+        $timeslots = $this->getCurrentTimeslots($timeslots);
 
         if (empty($timeslots)) {
             return '';
@@ -234,7 +234,7 @@ class CustomOpeninghours extends Openinghours
         return $timeslots[0]->getMessage();
     }
 
-    protected function removePastTimeslots(array $timeslots): array
+    protected function getCurrentTimeslots(array $timeslots): array
     {
         $filtered = array_filter($timeslots, function ($timeslot) {
             return $timeslot->isOpenBetween(new \DateTime());

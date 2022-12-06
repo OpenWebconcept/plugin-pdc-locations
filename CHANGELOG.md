@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.13
+
+### Refactor
+
+-   Remove isOpen check from special message check
+
 ## Version 2.0.12
 
 ### Refactor

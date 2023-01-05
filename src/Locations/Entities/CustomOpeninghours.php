@@ -13,12 +13,13 @@ namespace OWC\PDC\Locations\Entities;
  */
 class CustomOpeninghours extends Openinghours
 {
-    /** @var Week */
-    protected $week;
+    protected Week $week;
+    protected int $locationID;
 
-    public function __construct(Week $week)
+    public function __construct(Week $week, int $locationID = 0)
     {
         $this->week = $week;
+        $this->locationID = $locationID;
         parent::__construct([]);
     }
 
@@ -144,6 +145,16 @@ class CustomOpeninghours extends Openinghours
         $openObject     = $this->getOpeningHours($now);
         $specialMessage = $this->getOpeningDayFirstOccuringTimeslotMessage($now);
 
+        if ($this->locationID) {
+            // Hier checken of de eerstvolgende maandag een special day is.
+            $specialDays = get_post_meta($this->locationID, '_owc_pdc-special-openings', true);
+            foreach ($specialDays as $specialDay) {
+                if (date('d-m', strtotime('today')) === $specialDay['pdc-special-opening']['pdc-special-opening-date']) {
+                    return $specialDay['pdc-special-opening']['pdc-special-opening-msg'];
+                }
+            }
+        }
+
         if (! empty($specialMessage) && $showSpecialMessage) {
             return $specialMessage;
         }
@@ -160,6 +171,19 @@ class CustomOpeninghours extends Openinghours
         $tomorrow       = $this->getDateTime($this->now . '+1 day');
         $openObject     = $this->getOpeningHours($tomorrow);
         $specialMessage = $this->getOpeningDayFirstOccuringTimeslotMessage($tomorrow);
+
+        if ($this->isWeekend($tomorrow)) {
+            if ($this->locationID) {
+                // Hier checken of de eerstvolgende maandag een special day is.
+                $specialDays = get_post_meta($this->locationID, '_owc_pdc-special-openings', true);
+                foreach ($specialDays as $specialDay) {
+                    if (date('d-m', strtotime('next monday')) === $specialDay['pdc-special-opening']['pdc-special-opening-date']) {
+                        return $specialDay['pdc-special-opening']['pdc-special-opening-msg'];
+                    }
+                }
+            }
+        }
+            
 
         if (! empty($specialMessage) && $showSpecialMessage) {
             return $specialMessage;

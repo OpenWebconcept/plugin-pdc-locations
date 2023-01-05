@@ -14,56 +14,22 @@ class Openinghours
 {
     use TimeFormatDelimiter;
 
-    /**
-     * OpeninghoursData
-     *
-     * @var array
-     */
-    protected $data;
-
-    /**
-     * @var array
-     */
-    protected $contactInfo;
-
-    /**
-     * DateTimeZone object
-     *
-     * @var \DateTimeZone
-     */
-    protected $dateTimeZone;
-
-    /**
-     * TimeZone
-     *
-     * @var string
-     */
-    protected $timeZone = 'Europe/Amsterdam';
-
-    /**
-     * Current date string.
-     *
-     * @var string
-     */
+    protected array $data; // OpeninghoursDat
+    protected int $postID;
+    protected array $contactInfo;
+    protected \DateTimeZone $dateTimeZone;
+    protected string $timeZone = 'Europe/Amsterdam';
     protected $now = 'now';
 
-    /**
-     * Constructor
-     *
-     * @param array $data
-     */
-    public function __construct($data)
+    public function __construct($data, int $postID = 0)
     {
         $this->data         = $data;
+        $this->postID      = $postID;
         $this->dateTimeZone = new \DateTimeZone($this->timeZone);
     }
 
     /**
      * Set the current date.
-     *
-     * @param string $now
-     *
-     * @return void
      */
     public function setNow($now = 'now'): void
     {
@@ -73,10 +39,6 @@ class Openinghours
     /**
      * Returns array with open/close times string based from the contactInfo site option
      * NOTE: these are not date objects
-     *
-     * @param \DateTime $date
-     *
-     * @return array
      */
     protected function getOpeningHoursRaw(\DateTime $date): array
     {
@@ -96,8 +58,6 @@ class Openinghours
     /**
      * Extracts the values from the data object.
      *
-     * @param string $key
-     *
      * @return bool|string
      */
     public function get(string $key)
@@ -115,9 +75,6 @@ class Openinghours
 
     /**
      * Undocumented function
-     *
-     * @param string $key
-     * @param string $default
      *
      * @return mixed
      */
@@ -139,12 +96,8 @@ class Openinghours
 
     /**
      * Gets the dayName i.e. mon or monday when the fullNotation is true
-     *
-     * @param \DateTime $date
-     *
-     * @return string
      */
-    protected function getDayName(\DateTime $date)
+    protected function getDayName(\DateTime $date): string
     {
         $format = 'l';
 
@@ -153,10 +106,6 @@ class Openinghours
 
     /**
      * Get the dateTime object depending on the $time parameter.
-     *
-     * @param string $time
-     *
-     * @return DateTime
      */
     protected function getDateTime($time = 'now'): DateTime
     {
@@ -165,8 +114,6 @@ class Openinghours
 
     /**
      * Open now boolean value
-     *
-     * @return bool
      */
     public function isOpenNow(): bool
     {
@@ -245,8 +192,6 @@ class Openinghours
 
     /**
      * Checks if the store is open or closed the next day based on the current day.
-     *
-     * @return string
      */
     public function openTomorrowMessage(): string
     {

@@ -83,8 +83,7 @@ class Location extends AbstractRepository
         $data                             = $this->hydrate($data);
         $data['location']['image']        = $this->getFeaturedImage($post);
         $data['openinghours']['openNow']  = (new Openinghours($data['openinghours']['days']))->isOpenNow();
-        $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days']))->getMessages();
-
+        $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days'], $post->ID))->getMessages();
         $data['special_openingdays'] = (new SpecialOpeningHours($data['special_openingdays']))->make();
 
         $week = new Week();
@@ -101,7 +100,7 @@ class Location extends AbstractRepository
         }
 
         $data['openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
-        $data['openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages(false); // Don't show special message when normal openinghours.
+        $data['openinghours']['messages'] = (new CustomOpeninghours($week, $post->ID))->getMessages(false); // Don't show special message when normal openinghours.
 
         $week = new Week();
         foreach ($data['custom-openinghours']['custom-days'] as $name => $timeslots) {
@@ -117,7 +116,7 @@ class Location extends AbstractRepository
         }
         
         $data['custom-openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
-        $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week))->getMessages();
+        $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week, $post->ID))->getMessages();
 
         return $data;
     }

@@ -2,23 +2,12 @@
 
 declare(strict_types=1);
 
-/**
- * Entity for the custom openinghours.
- */
-
 namespace OWC\PDC\Locations\Entities;
 
-/**
- * Entity for the openinghours.
- */
 class Day
 {
-    /** @var string */
-    protected $name = '';
-
-    /** @var array */
-    protected $timeslots = [];
-
+    protected string $name = '';
+    protected array $timeslots = [];
     protected bool $isSpecial = false;
 
     public function __construct(string $name)

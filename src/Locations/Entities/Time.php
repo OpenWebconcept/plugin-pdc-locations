@@ -2,35 +2,19 @@
 
 declare(strict_types=1);
 
-/**
- * Entity for the custom openinghours.
- */
-
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
 
-/**
- * Entity for the openinghours.
- */
 class Time
 {
-    /** @var DateTime */
-    protected $date;
+    protected DateTime $date;
 
-    /**
-     * @param DateTime $date
-     */
     final public function __construct(DateTime $date)
     {
         $this->date = $date;
     }
 
-    /**
-     * @param DateTime $date
-     *
-     * @return self
-     */
     public static function make(DateTime $date): self
     {
         return new static($date);

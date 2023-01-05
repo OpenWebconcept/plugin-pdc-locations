@@ -7,9 +7,6 @@ namespace OWC\PDC\Locations\Entities;
 use DateTime;
 use OWC\PDC\Locations\Traits\TimeFormatDelimiter;
 
-/**
- * Entity for the openinghours.
- */
 class Timeslot
 {
     use TimeFormatDelimiter;
@@ -17,17 +14,13 @@ class Timeslot
 
     /**
      * Array of data from the timeslot.
-     *
-     * @var array
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * Current date string.
-     *
-     * @var string
      */
-    protected $now = 'now';
+    protected string $now = 'now';
 
     final public function __construct(array $data = [])
     {

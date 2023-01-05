@@ -63,9 +63,9 @@ class SpecialOpeningHours extends Openinghours
         ];
     }
 
-    /*
-    *  M-D -> M-D-Y
-    */
+    /**
+     *  M-D -> M-D-Y
+     */
     protected function asDateInCurrentYear(string $date): string
     {
         return $this->getDateTime($date . '-' . date('Y'))->format(\DateTime::ATOM);

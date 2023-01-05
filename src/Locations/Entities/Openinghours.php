@@ -7,63 +7,26 @@ namespace OWC\PDC\Locations\Entities;
 use DateTime;
 use OWC\PDC\Locations\Traits\TimeFormatDelimiter;
 
-/**
- * Entity for the openinghours.
- */
 class Openinghours
 {
     use TimeFormatDelimiter;
 
-    /**
-     * OpeninghoursData
-     *
-     * @var array
-     */
-    protected $data;
-
-    /**
-     * @var array
-     */
-    protected $contactInfo;
-
-    /**
-     * DateTimeZone object
-     *
-     * @var \DateTimeZone
-     */
-    protected $dateTimeZone;
-
-    /**
-     * TimeZone
-     *
-     * @var string
-     */
-    protected $timeZone = 'Europe/Amsterdam';
-
-    /**
-     * Current date string.
-     *
-     * @var string
-     */
+    protected array $data; // OpeninghoursDat
+    protected int $postID;
+    protected array $contactInfo;
+    protected \DateTimeZone $dateTimeZone;
+    protected string $timeZone = 'Europe/Amsterdam';
     protected $now = 'now';
 
-    /**
-     * Constructor
-     *
-     * @param array $data
-     */
-    public function __construct($data)
+    public function __construct($data, int $postID = 0)
     {
         $this->data         = $data;
+        $this->postID      = $postID;
         $this->dateTimeZone = new \DateTimeZone($this->timeZone);
     }
 
     /**
      * Set the current date.
-     *
-     * @param string $now
-     *
-     * @return void
      */
     public function setNow($now = 'now'): void
     {
@@ -73,10 +36,6 @@ class Openinghours
     /**
      * Returns array with open/close times string based from the contactInfo site option
      * NOTE: these are not date objects
-     *
-     * @param \DateTime $date
-     *
-     * @return array
      */
     protected function getOpeningHoursRaw(\DateTime $date): array
     {
@@ -96,8 +55,6 @@ class Openinghours
     /**
      * Extracts the values from the data object.
      *
-     * @param string $key
-     *
      * @return bool|string
      */
     public function get(string $key)
@@ -114,10 +71,7 @@ class Openinghours
     }
 
     /**
-     * Undocumented function
-     *
-     * @param string $key
-     * @param string $default
+     * Return value in array by dot notation.
      *
      * @return mixed
      */
@@ -139,12 +93,8 @@ class Openinghours
 
     /**
      * Gets the dayName i.e. mon or monday when the fullNotation is true
-     *
-     * @param \DateTime $date
-     *
-     * @return string
      */
-    protected function getDayName(\DateTime $date)
+    protected function getDayName(\DateTime $date): string
     {
         $format = 'l';
 
@@ -153,10 +103,6 @@ class Openinghours
 
     /**
      * Get the dateTime object depending on the $time parameter.
-     *
-     * @param string $time
-     *
-     * @return DateTime
      */
     protected function getDateTime($time = 'now'): DateTime
     {
@@ -165,12 +111,10 @@ class Openinghours
 
     /**
      * Open now boolean value
-     *
-     * @return bool
      */
     public function isOpenNow(): bool
     {
-        $date          = $this->getDateTime($this->now);
+        $date = $this->getDateTime($this->now);
         $openCloseTime = $this->getOpeningHours($date);
 
         if ($this->isClosed($this->getDayName($date))) {
@@ -186,12 +130,10 @@ class Openinghours
 
     /**
      * Open now message.
-     *
-     * @return string
      */
     public function openNowMessage(): string
     {
-        $date          = $this->getDateTime($this->now);
+        $date = $this->getDateTime($this->now);
         $openCloseTime = $this->getOpeningHours($date);
 
         if ($this->isClosed($this->getDayName($date))) {
@@ -208,10 +150,6 @@ class Openinghours
 
     /**
      * Checks if the checkbox 'closed' isset.
-     *
-     * @param string $dayName
-     *
-     * return bool
      */
     public function isClosed($dayName = 'monday'): bool
     {
@@ -221,10 +159,6 @@ class Openinghours
     /**
      * Returns array with open/close date objects used for date comparison
      * The setTime sets the hour and minutes from the getOpeningHoursRaw func.
-     *
-     * @param DateTime $date
-     *
-     * @return array
      */
     protected function getOpeningHours(DateTime $date)
     {
@@ -245,20 +179,18 @@ class Openinghours
 
     /**
      * Checks if the store is open or closed the next day based on the current day.
-     *
-     * @return string
      */
     public function openTomorrowMessage(): string
     {
         $tomorrowDate = $this->getDateTime($this->now . '+1 day');
-        $openClose    = $this->getOpeningHoursRaw($tomorrowDate);
+        $openClose = $this->getOpeningHoursRaw($tomorrowDate);
 
         if ($this->isWeekend($tomorrowDate)) {
             if (! boolval($this->data['monday']['closed'])) {
                 return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $this->data['monday']['open-time'], $this->data['monday']['closed-time']);
-            } else {
-                return __('Monday also closed', 'pdc-locations');
             }
+
+            return __('Monday also closed', 'pdc-locations');
         }
 
         if ($this->isClosed($this->getDayName($tomorrowDate)) || ! $openClose['open-time'] || ! $openClose['closed-time']) {
@@ -270,20 +202,14 @@ class Openinghours
 
     /**
      * Check if giving date is a weekend day 6 & 7
-     *
-     * @param \DateTime $dateTime
-     *
-     * @return bool
      */
-    protected function isWeekend(\DateTime $dateTime)
+    protected function isWeekend(\DateTime $dateTime): bool
     {
         return 5 < (int) $this->getDayIndex($dateTime) ? true : false;
     }
 
     /**
      * Gets the daynumber of the week i.e. Monday === 1
-     *
-     * @param \DateTime $date
      *
      * @return false|string
      */
@@ -294,14 +220,12 @@ class Openinghours
 
     /**
      * Render the output to the API.
-     *
-     * @return array
      */
-    public function getMessages()
+    public function getMessages(): array
     {
         return [
             'open' => [
-                'today'    => $this->openNowMessage(),
+                'today' => $this->openNowMessage(),
                 'tomorrow' => $this->openTomorrowMessage(),
             ],
         ];

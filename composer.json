@@ -20,16 +20,16 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
+    "php": "^7.0|^8.0",
     "johnbillion/extended-cpts": "^4.0"
   },
   "require-dev": {
-    "mockery/mockery": "^1.0.0",
-    "phpunit/phpunit": "~8.0",
-    "10up/wp_mock": "~0.4",
+    "10up/wp_mock": "~0.5",
     "friendsofphp/php-cs-fixer": "^3.0",
-    "phpstan/phpstan": "^0.12",
-    "szepeviktor/phpstan-wordpress": "^0.6.0"
+    "mockery/mockery": "^1.5",
+    "phpstan/phpstan": "^1.6",
+    "phpunit/phpunit": "~9.0",
+    "szepeviktor/phpstan-wordpress": "^1.1"
   },
   "autoload": {
     "psr-4": {

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.1.0
+
+### Feat
+
+-   Support php8 + update deps
+
 ## Version 2.0.14
 
 ### Fix

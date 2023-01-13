@@ -8,11 +8,13 @@ class CustomOpeninghours extends Openinghours
 {
     protected Week $week;
     protected int $locationID;
+    protected Week $regularWeek;
 
-    public function __construct(Week $week, int $locationID = 0)
+    public function __construct(Week $week, int $locationID = 0, Week $regularWeek)
     {
         $this->week = $week;
         $this->locationID = $locationID;
+        $this->regularWeek = $regularWeek;
         parent::__construct([]);
     }
 
@@ -179,13 +181,14 @@ class CustomOpeninghours extends Openinghours
 
         // Regular message of upcoming timeslot.
         if ($this->isWeekend($tomorrow)) {
-            $monday = $this->week->getDay('monday');
+            $monday = $this->regularWeek->getDay('monday');
             $monday = $monday ? $monday->toRest()[0] : [];
 
+            
             if (empty($monday)) {
                 return __('Monday also closed', 'pdc-locations');
             }
-
+            
             if (! boolval($monday['closed'])) {
                 return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $monday['open-time'], $monday['closed-time']);
             }

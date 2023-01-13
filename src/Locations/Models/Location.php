@@ -87,9 +87,11 @@ class Location extends AbstractRepository
         $data['special_openingdays'] = (new SpecialOpeningHours($data['special_openingdays']))->make();
 
         $week = new Week();
+        $regularWeek = new Week();
         foreach ($data['openinghours']['days'] as $name => $timeslot) {
             $day                                 = new Day($name);
             $day->addTimeslot(Timeslot::make($timeslot));
+            $regularWeek->addDay($name, clone $day);
             $day                                 = (new SpecialOpeningHours($data['special_openingdays']))->asPossibleSpecial($day);
 
             if ($day->isSpecial()) {
@@ -99,15 +101,18 @@ class Location extends AbstractRepository
             $week->addDay($name, $day);
         }
 
-        $data['openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
-        $data['openinghours']['messages'] = (new CustomOpeninghours($week, $post->ID))->getMessages(false); // Don't show special message when normal openinghours.
+        $data['openinghours']['openNow']  = (new CustomOpeninghours($week, 0, $regularWeek))->isOpenNow();
+        $data['openinghours']['messages'] = (new CustomOpeninghours($week, $post->ID, $regularWeek))->getMessages(false); // Don't show special message when normal openinghours.
 
         $week = new Week();
+        $regularWeek = new Week();
         foreach ($data['custom-openinghours']['custom-days'] as $name => $timeslots) {
             $day = new Day($name);
             foreach ($timeslots as $timeslot) {
                 $day->addTimeslot(Timeslot::make($timeslot));
             }
+
+            $regularWeek->addDay($name, clone $day);
 
             $day = (new SpecialOpeningHours($data['special_openingdays']))->asPossibleSpecial($day);
 
@@ -115,8 +120,8 @@ class Location extends AbstractRepository
             $data['custom-openinghours']['custom-days'][$name] = $day->toRest();
         }
         
-        $data['custom-openinghours']['openNow']  = (new CustomOpeninghours($week))->isOpenNow();
-        $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week, $post->ID))->getMessages();
+        $data['custom-openinghours']['openNow']  = (new CustomOpeninghours($week, 0, $regularWeek))->isOpenNow();
+        $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week, $post->ID, $regularWeek))->getMessages();
 
         return $data;
     }

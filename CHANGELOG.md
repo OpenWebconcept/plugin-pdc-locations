@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.0.14
+
+### Fix
+
+-   Upcoming special days messages overwrites tomorrow messages in API output.
+
 ## Version 2.0.13
 
 ### Refactor

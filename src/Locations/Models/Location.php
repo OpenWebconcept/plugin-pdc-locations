@@ -11,6 +11,7 @@ namespace OWC\PDC\Locations\Models;
 use \WP_Post;
 use OWC\PDC\Base\Foundation\Plugin;
 use OWC\PDC\Base\Repositories\AbstractRepository;
+use OWC\PDC\Base\Support\Traits\CheckPluginActive;
 use OWC\PDC\Locations\Entities\CustomOpeninghours;
 use OWC\PDC\Locations\Entities\Day;
 use OWC\PDC\Locations\Entities\Openinghours;
@@ -23,6 +24,8 @@ use OWC\PDC\Locations\Entities\Week;
  */
 class Location extends AbstractRepository
 {
+    use CheckPluginActive;
+    
     /**
      * Type of model.
      *
@@ -139,17 +142,20 @@ class Location extends AbstractRepository
             return [];
         }
 
-        $id         = (int) get_post_thumbnail_id($post->ID);
+        $id = (int) get_post_thumbnail_id($post->ID);
+
+        if ($this->switchToCentralMediaSite()) {
+            \switch_to_blog($this->getCentralMediaSiteID()); // Switch to central media site where the image is stored.
+        }
+
         $attachment = get_post($id);
-        $imageSize  = 'large';
+        $imageSize = 'large';
 
         $result = [];
-
         $result['title']       = $attachment->post_title;
         $result['description'] = $attachment->post_content;
         $result['caption']     = $attachment->post_excerpt;
         $result['alt']         = get_post_meta($attachment->ID, '_wp_attachment_image_alt', true);
-
         $meta = $this->getAttachmentMeta($id);
 
         $result['rendered'] = wp_get_attachment_image($id, $imageSize);
@@ -157,7 +163,26 @@ class Location extends AbstractRepository
         $result['srcset']   = wp_get_attachment_image_srcset($id, $imageSize, $meta);
         $result['meta']     = $meta;
 
+        if ($this->switchToCentralMediaSite()) {
+            \restore_current_blog(); // After switching return to initial site.
+        }
+
         return $result;
+    }
+
+    /**
+     * Check if the plugin is active and the current blog is not the central media site.
+     */
+    protected function switchToCentralMediaSite(): bool
+    {
+        return $this->isPluginActive('network-media-library/network-media-library.php') && get_current_blog_id() !== $this->getCentralMediaSiteID();
+    }
+
+    protected function getCentralMediaSiteID(): int
+    {
+        $siteID = $_ENV['NETWORK_MEDIA_LIBRARY_SITE_ID'] ?? 2;
+
+        return (int) $siteID;
     }
 
     /**

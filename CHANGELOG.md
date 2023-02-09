@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.1.2
+
+### Fix
+
+-   Switch to central media site when network media library plugin is active, when necessary.
+
 ## Version 2.1.1
 
 ### Feat

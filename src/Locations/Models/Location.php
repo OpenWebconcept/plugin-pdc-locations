@@ -144,7 +144,9 @@ class Location extends AbstractRepository
 
         $id = (int) get_post_thumbnail_id($post->ID);
 
-        if ($this->switchToCentralMediaSite()) {
+        $currentBlogID = get_current_blog_id();
+
+        if ($this->switchToCentralMediaSite($currentBlogID)) {
             \switch_to_blog($this->getCentralMediaSiteID()); // Switch to central media site where the image is stored.
         }
 
@@ -163,7 +165,7 @@ class Location extends AbstractRepository
         $result['srcset']   = wp_get_attachment_image_srcset($id, $imageSize, $meta);
         $result['meta']     = $meta;
 
-        if ($this->switchToCentralMediaSite()) {
+        if ($this->switchToCentralMediaSite($currentBlogID)) {
             \restore_current_blog(); // After switching return to initial site.
         }
 
@@ -173,9 +175,9 @@ class Location extends AbstractRepository
     /**
      * Check if the plugin is active and the current blog is not the central media site.
      */
-    protected function switchToCentralMediaSite(): bool
+    protected function switchToCentralMediaSite(int $currentBlogID): bool
     {
-        return $this->isPluginActive('network-media-library/network-media-library.php') && get_current_blog_id() !== $this->getCentralMediaSiteID();
+        return $this->isPluginActive('network-media-library/network-media-library.php') && $currentBlogID !== $this->getCentralMediaSiteID();
     }
 
     protected function getCentralMediaSiteID(): int

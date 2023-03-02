@@ -240,6 +240,11 @@ msgstr "Morgen gesloten"
 msgid "Tomorrow open from %s to %s hour"
 msgstr "Morgen open van %s tot %s uur"
 
+#: src/Locations/Entities/CustomOpeninghours.php:308
+#, php-format
+msgid "Soon open from %s to %s hour"
+msgstr "Straks open van %s tot %s uur"
+
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:46
 msgid "Location"
 msgstr "Locatie"

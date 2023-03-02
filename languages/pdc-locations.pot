@@ -218,24 +218,29 @@ msgstr ""
 #: src/Locations/Entities/Openinghours.php:265
 #, php-format
 msgid "Monday open from %s to %s hour"
-msgstr "Maandag open van %s tot %s uur"
+msgstr ""
 
 #: src/Locations/Entities/CustomOpeninghours.php:173
 #: src/Locations/Entities/CustomOpeninghours.php:179
 #: src/Locations/Entities/Openinghours.php:267
 msgid "Monday also closed"
-msgstr "Maandag ook gesloten"
+msgstr ""
 
 #: src/Locations/Entities/CustomOpeninghours.php:184
 #: src/Locations/Entities/Openinghours.php:272
 msgid "Tomorrow closed"
-msgstr "Morgen gesloten"
+msgstr ""
 
 #: src/Locations/Entities/CustomOpeninghours.php:187
 #: src/Locations/Entities/Openinghours.php:275
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
-msgstr "Morgen open van %s tot %s uur"
+msgstr ""
+
+#: src/Locations/Entities/CustomOpeninghours.php:308
+#, php-format
+msgid "Soon open from %s to %s hour
+msgstr ""
 
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:46
 msgid "Location"

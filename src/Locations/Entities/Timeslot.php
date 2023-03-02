@@ -48,12 +48,12 @@ class Timeslot
 
         $data = array_merge($default, $data);
 
-        if (! is_null($data['open-time'])) {
+        if (! empty($data['open-time'])) {
             $format = sprintf('H%si', $this->getDelimiter($data['open-time'], '.')); // Check for dutch notation.
             $data['open-time'] = DateTime::createFromFormat($format, $data['open-time'], $this->getDateTimeZone());
         }
 
-        if (! is_null($data['closed-time'])) {
+        if (! empty($data['closed-time'])) {
             $format = sprintf('H%si', $this->getDelimiter($data['closed-time'], '.')); // Check for dutch notation.
             $data['closed-time'] = DateTime::createFromFormat($format, $data['closed-time'], $this->getDateTimeZone());
         }
@@ -103,8 +103,8 @@ class Timeslot
         return [
             'closed'      => $this->data['closed'],
             'message'     => $this->data['message'],
-            'open-time'   => $this->data['open-time'] ? Time::make($this->data['open-time'])->format() : '',
-            'closed-time' => $this->data['closed-time'] ? Time::make($this->data['closed-time'])->format() : '',
+            'open-time'   => $this->data['open-time'] ? Time::make($this->data['open-time'])->format() : null,
+            'closed-time' => $this->data['closed-time'] ? Time::make($this->data['closed-time'])->format() : null,
         ];
     }
 }

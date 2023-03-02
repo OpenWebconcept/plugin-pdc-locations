@@ -255,44 +255,44 @@ class Location extends AbstractRepository
                     'monday'    => [
                         'closed'      => false,
                         'message'     => '',
-                        'open-time'   => '',
-                        'closed-time' => '',
+                        'open-time'   => null,
+                        'closed-time' => null,
                     ],
                     'tuesday'   => [
                         'closed'      => false,
                         'message'     => '',
-                        'open-time'   => '',
-                        'closed-time' => '',
+                        'open-time'   => null,
+                        'closed-time' => null,
                     ],
                     'wednesday' => [
                         'closed'      => false,
                         'message'     => '',
-                        'open-time'   => '',
-                        'closed-time' => '',
+                        'open-time'   => null,
+                        'closed-time' => null,
                     ],
                     'thursday'  => [
                         'closed'      => false,
                         'message'     => '',
-                        'open-time'   => '',
-                        'closed-time' => '',
+                        'open-time'   => null,
+                        'closed-time' => null,
                     ],
                     'friday'    => [
                         'closed'      => false,
                         'message'     => '',
-                        'open-time'   => '',
-                        'closed-time' => '',
+                        'open-time'   => null,
+                        'closed-time' => null,
                     ],
                     'saturday'  => [
                         'closed'      => false,
                         'message'     => '',
-                        'open-time'   => '',
-                        'closed-time' => '',
+                        'open-time'   => null,
+                        'closed-time' => null,
                     ],
                     'sunday'    => [
                         'closed'      => false,
                         'message'     => '',
-                        'open-time'   => '',
-                        'closed-time' => '',
+                        'open-time'   => null,
+                        'closed-time' => null,
                     ],
                 ],
 
@@ -328,8 +328,8 @@ class Location extends AbstractRepository
         $default =   [
             'closed'      => false,
             'message'     => '',
-            'open-time'   => '',
-            'closed-time' => '',
+            'open-time'   => null,
+            'closed-time' => null,
         ];
 
         $daysDefault = [
@@ -337,56 +337,56 @@ class Location extends AbstractRepository
                 [
                     'closed'      => false,
                     'message'     => '',
-                    'open-time'   => '',
-                    'closed-time' => '',
+                    'open-time'   => null,
+                    'closed-time' => null,
                 ],
             ],
             'tuesday'   => [
                 [
                     'closed'      => false,
                     'message'     => '',
-                    'open-time'   => '',
-                    'closed-time' => '',
+                    'open-time'   => null,
+                    'closed-time' => null,
                 ],
             ],
             'wednesday' => [
                 [
                     'closed'      => false,
                     'message'     => '',
-                    'open-time'   => '',
-                    'closed-time' => '',
+                    'open-time'   => null,
+                    'closed-time' => null,
                 ],
             ],
             'thursday'  => [
                 [
                     'closed'      => false,
                     'message'     => '',
-                    'open-time'   => '',
-                    'closed-time' => '',
+                    'open-time'   => null,
+                    'closed-time' => null,
                 ],
             ],
             'friday'    => [
                 [
                     'closed'      => false,
                     'message'     => '',
-                    'open-time'   => '',
-                    'closed-time' => '',
+                    'open-time'   => null,
+                    'closed-time' => null,
                 ],
             ],
             'saturday'  => [
                 [
                     'closed'      => false,
                     'message'     => '',
-                    'open-time'   => '',
-                    'closed-time' => '',
+                    'open-time'   => null,
+                    'closed-time' => null,
                 ],
             ],
             'sunday'    => [
                 [
                     'closed'      => false,
                     'message'     => '',
-                    'open-time'   => '',
-                    'closed-time' => '',
+                    'open-time'   => null,
+                    'closed-time' => null,
                 ],
             ],
         ];

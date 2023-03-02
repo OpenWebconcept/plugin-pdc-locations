@@ -25,14 +25,16 @@ class SpecialOpeningHours extends Openinghours
         foreach ($this->data as $specialDay) {
             $specialDate = (new \DateTime($specialDay['date']))->format('Y-m-d');
 
-            if ($specialDate === $dayDateInCurrentWeek) {
-                $day->setTimeslot(Timeslot::make($specialDay));
-                unset($specialDay['date']);
-
-                $day->makeSpecial();
-
-                return $day;
+            if ($specialDate !== $dayDateInCurrentWeek) {
+                continue;
             }
+
+            $day->setTimeslot(Timeslot::make($specialDay));
+            unset($specialDay['date']);
+
+            $day->makeSpecial();
+
+            return $day;
         }
 
         return $day;

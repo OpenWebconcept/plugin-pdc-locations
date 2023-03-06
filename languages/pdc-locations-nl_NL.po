@@ -197,22 +197,23 @@ msgstr "PDC item"
 msgid "PDC Location"
 msgstr "PDC Locatie"
 
-#: src/Locations/Entities/CustomOpeninghours.php:95
+#: src/Locations/Entities/CustomOpeninghours.php:91
 msgid "Custom openinghours"
 msgstr "Openingsuren met timeslots"
 
-#: src/Locations/Entities/CustomOpeninghours.php:106
+#: src/Locations/Entities/CustomOpeninghours.php:102
 msgid "Add new time"
 msgstr "Voeg nieuwe tijd toe"
 
-#: src/Locations/Entities/CustomOpeninghours.php:152
-#: src/Locations/Entities/Openinghours.php:199
-#: src/Locations/Entities/Openinghours.php:207
+#: src/Locations/Entities/CustomOpeninghours.php:158
+#: src/Locations/Entities/CustomOpeninghours.php:164
+#: src/Locations/Entities/Openinghours.php:140
+#: src/Locations/Entities/Openinghours.php:148
 msgid "Now closed"
 msgstr "Nu gesloten"
 
-#: src/Locations/Entities/CustomOpeninghours.php:155
-#: src/Locations/Entities/Openinghours.php:204
+#: src/Locations/Entities/CustomOpeninghours.php:171
+#: src/Locations/Entities/Openinghours.php:145
 #, php-format
 msgid "Now open from %s to %s hour"
 msgstr "Nu open van %s tot %s uur"
@@ -223,24 +224,27 @@ msgstr "Nu open van %s tot %s uur"
 msgid "Monday open from %s to %s hour"
 msgstr "Maandag open van %s tot %s uur"
 
-#: src/Locations/Entities/CustomOpeninghours.php:173
-#: src/Locations/Entities/CustomOpeninghours.php:179
+#: src/Locations/Entities/CustomOpeninghours.php:201
+#: src/Locations/Entities/CustomOpeninghours.php:208
 #: src/Locations/Entities/Openinghours.php:267
 msgid "Monday also closed"
 msgstr "Maandag ook gesloten"
 
-#: src/Locations/Entities/CustomOpeninghours.php:184
-#: src/Locations/Entities/Openinghours.php:272
+#: src/Locations/Entities/CustomOpeninghours.php:214
+#: src/Locations/Entities/CustomOpeninghours.php:220
+#: src/Locations/Entities/Openinghours.php:197
 msgid "Tomorrow closed"
 msgstr "Morgen gesloten"
 
-#: src/Locations/Entities/CustomOpeninghours.php:187
-#: src/Locations/Entities/Openinghours.php:275
+#: src/Locations/Entities/CustomOpeninghours.php:225
+#: src/Locations/Entities/CustomOpeninghours.php:401
+#: src/Locations/Entities/Openinghours.php:200
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr "Morgen open van %s tot %s uur"
 
-#: src/Locations/Entities/CustomOpeninghours.php:308
+#: src/Locations/Entities/CustomOpeninghours.php:167
+#: src/Locations/Entities/CustomOpeninghours.php:405
 #, php-format
 msgid "Soon open from %s to %s hour"
 msgstr "Straks open van %s tot %s uur"

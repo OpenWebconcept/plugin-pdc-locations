@@ -194,22 +194,23 @@ msgstr ""
 msgid "PDC Location"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:95
+#: src/Locations/Entities/CustomOpeninghours.php:91
 msgid "Custom openinghours"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:106
+#: src/Locations/Entities/CustomOpeninghours.php:102
 msgid "Add new time"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:152
-#: src/Locations/Entities/Openinghours.php:199
-#: src/Locations/Entities/Openinghours.php:207
+#: src/Locations/Entities/CustomOpeninghours.php:158
+#: src/Locations/Entities/CustomOpeninghours.php:164
+#: src/Locations/Entities/Openinghours.php:140
+#: src/Locations/Entities/Openinghours.php:148
 msgid "Now closed"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:155
-#: src/Locations/Entities/Openinghours.php:204
+#: src/Locations/Entities/CustomOpeninghours.php:171
+#: src/Locations/Entities/Openinghours.php:145
 #, php-format
 msgid "Now open from %s to %s hour"
 msgstr ""
@@ -220,26 +221,29 @@ msgstr ""
 msgid "Monday open from %s to %s hour"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:173
-#: src/Locations/Entities/CustomOpeninghours.php:179
+#: src/Locations/Entities/CustomOpeninghours.php:201
+#: src/Locations/Entities/CustomOpeninghours.php:208
 #: src/Locations/Entities/Openinghours.php:267
 msgid "Monday also closed"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:184
-#: src/Locations/Entities/Openinghours.php:272
+#: src/Locations/Entities/CustomOpeninghours.php:214
+#: src/Locations/Entities/CustomOpeninghours.php:220
+#: src/Locations/Entities/Openinghours.php:197
 msgid "Tomorrow closed"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:187
-#: src/Locations/Entities/Openinghours.php:275
+#: src/Locations/Entities/CustomOpeninghours.php:225
+#: src/Locations/Entities/CustomOpeninghours.php:401
+#: src/Locations/Entities/Openinghours.php:200
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:308
+#: src/Locations/Entities/CustomOpeninghours.php:167
+#: src/Locations/Entities/CustomOpeninghours.php:405
 #, php-format
-msgid "Soon open from %s to %s hour
+msgid "Soon open from %s to %s hour"
 msgstr ""
 
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:46

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
+use Exception;
+
 class CustomOpeninghours extends Openinghours
 {
     protected Week $week;
@@ -156,9 +158,9 @@ class CustomOpeninghours extends Openinghours
                 return $this->getNextOccuringTimeslotMessage($now, $isCustomOpeninghours) ?: sprintf(__('Now closed', 'pdc-locations'));
             }
 
-            $openNowObject = $this->getUpcomingOpenTimeslotToday($now); // Overwrite object with first upcoming timeslot of today that is open.
-
-            if (empty($openNowObject)) {
+            try {
+                $openNowObject = $this->getUpcomingOpenTimeslotToday($now); // Overwrite object with first upcoming timeslot of today that is open.
+            } catch(Exception $e) {
                 return sprintf(__('Now closed', 'pdc-locations'));
             }
 
@@ -212,9 +214,9 @@ class CustomOpeninghours extends Openinghours
                 return $this->getNextOccuringTimeslotMessage($tomorrow, $isCustomOpeninghours) ?: __('Tomorrow closed', 'pdc-locations');
             }
 
-            $openNowObject = $this->getFirstOpenTimeslotTomorrow($tomorrow); // Overwrite object with first timeslot of tomorrow that is open.
-
-            if (! $openNowObject->getOpenTime() || ! $openNowObject->getClosedTime()) {
+            try {
+                $openNowObject = $this->getFirstOpenTimeslotTomorrow($tomorrow); // Overwrite object with first timeslot of tomorrow that is open.
+            } catch(Exception $e) {
                 return __('Tomorrow closed', 'pdc-locations');
             }
         }
@@ -265,36 +267,52 @@ class CustomOpeninghours extends Openinghours
     /**
      * Get first upcoming open timeslot of today.
      */
-    protected function getUpcomingOpenTimeslotToday(\DateTime $time): ?Timeslot
+    protected function getUpcomingOpenTimeslotToday(\DateTime $time): Timeslot
     {
         $timeslots = $this->getOpeningHoursAll($time);
 
         if (empty($timeslots)) {
-            return null;
+            throw new Exception('No timeslots found for today.');
         }
 
         $timeslots = $this->getUpcomingTimeSlots($timeslots);
 
         if (empty($timeslots)) {
-            return null;
+            throw new Exception('No upcoming timeslots found for today.');
         }
         
         $timeslot = reset($timeslots);
 
-        return $timeslot->isOpen() ? $timeslot : null;
+        if (! $timeslot instanceof Timeslot) {
+            throw new Exception('No valid timeslot found for today.');
+        }
+
+        if (! $timeslot->isOpen() || ! $timeslot->getOpenTime() || ! $timeslot->getClosedTime()) {
+            throw new Exception('Found timeslot for today is closed or does not have valid times.');
+        }
+
+        return $timeslot;
     }
 
-    protected function getFirstOpenTimeslotTomorrow(\DateTime $time): ?Timeslot
+    protected function getFirstOpenTimeslotTomorrow(\DateTime $time): Timeslot
     {
         $timeslots = $this->getOpeningHoursAll($time);
 
         if (empty($timeslots)) {
-            return null;
+            throw new Exception('No timeslots found for tomorrow.');
         }
 
         $timeslot = reset($timeslots);
 
-        return $timeslot->isOpen() ? $timeslot : null;
+        if (! $timeslot instanceof Timeslot) {
+            throw new Exception('No valid timeslot found for tomorrow.');
+        }
+
+        if (! $timeslot->isOpen() || ! $timeslot->getOpenTime() || ! $timeslot->getClosedTime()) {
+            throw new Exception('Found timeslot for tomorrow is closed or does not have valid times.');
+        }
+
+        return $timeslot;
     }
 
     /**

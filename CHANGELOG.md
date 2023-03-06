@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 2.2.0
+
+### Fix
+
+-   Wrong open messages, don't show 'is closed' per default but look for upcoming timeslots.
+
 ## Version 2.1.2
 
 ### Fix

@@ -151,6 +151,11 @@ class Location extends AbstractRepository
         }
 
         $attachment = get_post($id);
+
+        if (! $attachment instanceof WP_Post) {
+            return [];
+        }
+        
         $imageSize = 'large';
 
         $result = [];

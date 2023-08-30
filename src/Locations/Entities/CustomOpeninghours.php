@@ -151,7 +151,7 @@ class CustomOpeninghours extends Openinghours
         if (! empty($timeslotMessage) && $isCustomOpeninghours) {
             return $timeslotMessage;
         }
-        
+
         // Check if location is closed
         if (false === $openNowObject || ! $openNowObject->isOpen()) {
             if ($isCustomOpeninghours) {
@@ -180,12 +180,12 @@ class CustomOpeninghours extends Openinghours
         // First check if next monday is a special day.
         if ($this->isWeekend($tomorrow) && $this->locationID) {
             $specialDayMessage = $this->handleSpecialDayMessage('next monday');
-    
+
             if (! empty($specialDayMessage)) {
                 return $specialDayMessage;
             }
         }
-            
+
         // Check if timeslot has a message.
         if (! empty($timeslotMessage) && $isCustomOpeninghours) {
             return $timeslotMessage;
@@ -196,11 +196,11 @@ class CustomOpeninghours extends Openinghours
             $monday = $this->regularWeek->getDay('monday');
             $monday = $monday ? $monday->toRest()[0] : [];
 
-            
+
             if (empty($monday)) {
                 return __('Monday also closed', 'pdc-locations');
             }
-            
+
             if (! boolval($monday['closed'])) {
                 return sprintf(__('Monday open from %s to %s hour', 'pdc-locations'), $monday['open-time'], $monday['closed-time']);
             }
@@ -280,7 +280,7 @@ class CustomOpeninghours extends Openinghours
         if (empty($timeslots)) {
             throw new Exception('No upcoming timeslots found for today.');
         }
-        
+
         $timeslot = reset($timeslots);
 
         if (! $timeslot instanceof Timeslot) {
@@ -327,7 +327,7 @@ class CustomOpeninghours extends Openinghours
         if (empty($timeslots)) {
             return [];
         }
-        
+
         return $timeslots;
     }
 
@@ -364,7 +364,7 @@ class CustomOpeninghours extends Openinghours
 
         return array_values($filtered);
     }
-    
+
     /**
      * Should be used when a location is closed at this specific moment.
      * When it is, get the first occuring timeslot when the location is open.
@@ -376,7 +376,8 @@ class CustomOpeninghours extends Openinghours
         }
 
         $day = $this->week->getDay($this->getDayName($time));
-        $upcomingTimeslot = reset($this->getUpcomingTimeSlots($day->getTimeslots()));
+		$timeslots = $this->getUpcomingTimeSlots($day->getTimeslots());
+        $upcomingTimeslot = reset($timeslots);
 
         if (empty($upcomingTimeslot) && $this->isToday($time)) {
             return '';
@@ -387,7 +388,8 @@ class CustomOpeninghours extends Openinghours
          * The upcoming ones are timeslots with a close time in the future as of now.
          */
         if (empty($upcomingTimeslot) && ! $this->isToday($time)) {
-            $upcomingTimeslot = reset($day->getTimeslots());
+			$timeslots = $day->getTimeslots();
+            $upcomingTimeslot = reset($timeslots);
         }
 
         $openTime = $upcomingTimeslot->getOpenTime() ? $upcomingTimeslot->getOpenTime()->format('H:i') : '';

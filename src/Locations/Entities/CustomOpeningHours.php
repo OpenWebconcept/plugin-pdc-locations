@@ -6,7 +6,7 @@ namespace OWC\PDC\Locations\Entities;
 
 use Exception;
 
-class CustomOpeningHours extends Openinghours
+class CustomOpeningHours extends OpeningHours
 {
     protected Week $week;
     protected int $locationID;

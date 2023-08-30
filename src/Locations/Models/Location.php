@@ -14,7 +14,7 @@ use OWC\PDC\Base\Repositories\AbstractRepository;
 use OWC\PDC\Base\Support\Traits\CheckPluginActive;
 use OWC\PDC\Locations\Entities\CustomOpeningHours;
 use OWC\PDC\Locations\Entities\Day;
-use OWC\PDC\Locations\Entities\Openinghours;
+use OWC\PDC\Locations\Entities\OpeningHours;
 use OWC\PDC\Locations\Entities\SpecialOpeningHours;
 use OWC\PDC\Locations\Entities\Timeslot;
 use OWC\PDC\Locations\Entities\Week;
@@ -85,8 +85,8 @@ class Location extends AbstractRepository
         $data                             = $this->hydrateCustomOpeningHours($data);
         $data                             = $this->hydrate($data);
         $data['location']['image']        = $this->getFeaturedImage($post);
-        $data['openinghours']['openNow']  = (new Openinghours($data['openinghours']['days']))->isOpenNow();
-        $data['openinghours']['messages'] = (new Openinghours($data['openinghours']['days'], $post->ID))->getMessages();
+        $data['openinghours']['openNow']  = (new OpeningHours($data['openinghours']['days']))->isOpenNow();
+        $data['openinghours']['messages'] = (new OpeningHours($data['openinghours']['days'], $post->ID))->getMessages();
         $data['special_openingdays'] = (new SpecialOpeningHours($data['special_openingdays']))->make();
 
         $week = new Week();

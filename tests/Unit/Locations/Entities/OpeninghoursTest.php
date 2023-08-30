@@ -5,7 +5,7 @@ namespace OWC\PDC\Locations\Entities;
 use OWC\PDC\Locations\Tests\Unit\TestCase;
 use WP_Mock;
 
-class TestOpeninghours extends TestCase
+class TestOpeningHours extends TestCase
 {
     protected $config;
 
@@ -55,7 +55,7 @@ class TestOpeninghours extends TestCase
             ],
         ];
 
-        $openinghoursMessage = new Openinghours($data);
+        $openinghoursMessage = new OpeningHours($data);
         $openinghoursMessage->setNow('Thu, 27 September 2018 13:17:00');
 
         $expected = $openinghoursMessage->getMessages();

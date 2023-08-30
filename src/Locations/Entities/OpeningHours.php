@@ -7,11 +7,11 @@ namespace OWC\PDC\Locations\Entities;
 use DateTime;
 use OWC\PDC\Locations\Traits\TimeFormatDelimiter;
 
-class Openinghours
+class OpeningHours
 {
     use TimeFormatDelimiter;
 
-    protected array $data; // OpeninghoursDat
+    protected array $data; // OpeningHoursDat
     protected int $postID;
     protected array $contactInfo;
     protected \DateTimeZone $dateTimeZone;

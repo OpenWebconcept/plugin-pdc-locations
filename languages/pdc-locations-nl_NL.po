@@ -79,7 +79,7 @@ msgid "sunday"
 msgstr "zondag"
 
 #: config/metaboxes.php:44
-msgid "Openinghours"
+msgid "OpeningHours"
 msgstr "Openingsuren"
 
 #: config/metaboxes.php:54 config/metaboxes.php:218 src/Locations/Entities/CustomOpeningHours.php:73
@@ -162,11 +162,11 @@ msgid "Email"
 msgstr "E-mail"
 
 #: config/metaboxes.php:166
-msgid "Openinghours message active?"
+msgid "OpeningHours message active?"
 msgstr "Openingsuren bericht actief?"
 
 #: config/metaboxes.php:171
-msgid "Openinghours message"
+msgid "OpeningHours message"
 msgstr "Openingsuren bericht"
 
 #: config/metaboxes.php:180
@@ -207,38 +207,38 @@ msgstr "Voeg nieuwe tijd toe"
 
 #: src/Locations/Entities/CustomOpeningHours.php:158
 #: src/Locations/Entities/CustomOpeningHours.php:164
-#: src/Locations/Entities/Openinghours.php:140
-#: src/Locations/Entities/Openinghours.php:148
+#: src/Locations/Entities/OpeningHours.php:140
+#: src/Locations/Entities/OpeningHours.php:148
 msgid "Now closed"
 msgstr "Nu gesloten"
 
 #: src/Locations/Entities/CustomOpeningHours.php:171
-#: src/Locations/Entities/Openinghours.php:145
+#: src/Locations/Entities/OpeningHours.php:145
 #, php-format
 msgid "Now open from %s to %s hour"
 msgstr "Nu open van %s tot %s uur"
 
 #: src/Locations/Entities/CustomOpeningHours.php:177
-#: src/Locations/Entities/Openinghours.php:265
+#: src/Locations/Entities/OpeningHours.php:265
 #, php-format
 msgid "Monday open from %s to %s hour"
 msgstr "Maandag open van %s tot %s uur"
 
 #: src/Locations/Entities/CustomOpeningHours.php:201
 #: src/Locations/Entities/CustomOpeningHours.php:208
-#: src/Locations/Entities/Openinghours.php:267
+#: src/Locations/Entities/OpeningHours.php:267
 msgid "Monday also closed"
 msgstr "Maandag ook gesloten"
 
 #: src/Locations/Entities/CustomOpeningHours.php:214
 #: src/Locations/Entities/CustomOpeningHours.php:220
-#: src/Locations/Entities/Openinghours.php:197
+#: src/Locations/Entities/OpeningHours.php:197
 msgid "Tomorrow closed"
 msgstr "Morgen gesloten"
 
 #: src/Locations/Entities/CustomOpeningHours.php:225
 #: src/Locations/Entities/CustomOpeningHours.php:401
-#: src/Locations/Entities/Openinghours.php:200
+#: src/Locations/Entities/OpeningHours.php:200
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr "Morgen open van %s tot %s uur"
@@ -490,7 +490,7 @@ msgstr ""
 #~ msgstr "E-mail"
 
 #~ msgctxt "Description for the Question of a Locations item"
-#~ msgid "Openinghours message"
+#~ msgid "OpeningHours message"
 #~ msgstr "Openingsuren bericht"
 
 #~ msgid "Frequently asked questions"

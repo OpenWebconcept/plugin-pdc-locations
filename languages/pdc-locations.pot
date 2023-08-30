@@ -19,59 +19,59 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: vendor\n"
 "X-Poedit-SearchPathExcluded-3: languages\n"
 
-#: config/metaboxes.php:7 src/Locations/Entities/CustomOpeninghours.php:34
+#: config/metaboxes.php:7 src/Locations/Entities/CustomOpeningHours.php:34
 msgid "Monday"
 msgstr ""
 
-#: config/metaboxes.php:8 src/Locations/Entities/CustomOpeninghours.php:35
+#: config/metaboxes.php:8 src/Locations/Entities/CustomOpeningHours.php:35
 msgid "monday"
 msgstr ""
 
-#: config/metaboxes.php:12 src/Locations/Entities/CustomOpeninghours.php:39
+#: config/metaboxes.php:12 src/Locations/Entities/CustomOpeningHours.php:39
 msgid "Tuesday"
 msgstr ""
 
-#: config/metaboxes.php:13 src/Locations/Entities/CustomOpeninghours.php:40
+#: config/metaboxes.php:13 src/Locations/Entities/CustomOpeningHours.php:40
 msgid "tuesday"
 msgstr ""
 
-#: config/metaboxes.php:17 src/Locations/Entities/CustomOpeninghours.php:44
+#: config/metaboxes.php:17 src/Locations/Entities/CustomOpeningHours.php:44
 msgid "Wednesday"
 msgstr ""
 
-#: config/metaboxes.php:18 src/Locations/Entities/CustomOpeninghours.php:45
+#: config/metaboxes.php:18 src/Locations/Entities/CustomOpeningHours.php:45
 msgid "wednesday"
 msgstr ""
 
-#: config/metaboxes.php:22 src/Locations/Entities/CustomOpeninghours.php:49
+#: config/metaboxes.php:22 src/Locations/Entities/CustomOpeningHours.php:49
 msgid "Thursday"
 msgstr ""
 
-#: config/metaboxes.php:23 src/Locations/Entities/CustomOpeninghours.php:50
+#: config/metaboxes.php:23 src/Locations/Entities/CustomOpeningHours.php:50
 msgid "thursday"
 msgstr ""
 
-#: config/metaboxes.php:27 src/Locations/Entities/CustomOpeninghours.php:54
+#: config/metaboxes.php:27 src/Locations/Entities/CustomOpeningHours.php:54
 msgid "Friday"
 msgstr ""
 
-#: config/metaboxes.php:28 src/Locations/Entities/CustomOpeninghours.php:55
+#: config/metaboxes.php:28 src/Locations/Entities/CustomOpeningHours.php:55
 msgid "friday"
 msgstr ""
 
-#: config/metaboxes.php:32 src/Locations/Entities/CustomOpeninghours.php:59
+#: config/metaboxes.php:32 src/Locations/Entities/CustomOpeningHours.php:59
 msgid "Saturday"
 msgstr ""
 
-#: config/metaboxes.php:33 src/Locations/Entities/CustomOpeninghours.php:60
+#: config/metaboxes.php:33 src/Locations/Entities/CustomOpeningHours.php:60
 msgid "saturday"
 msgstr ""
 
-#: config/metaboxes.php:37 src/Locations/Entities/CustomOpeninghours.php:64
+#: config/metaboxes.php:37 src/Locations/Entities/CustomOpeningHours.php:64
 msgid "Sunday"
 msgstr ""
 
-#: config/metaboxes.php:38 src/Locations/Entities/CustomOpeninghours.php:65
+#: config/metaboxes.php:38 src/Locations/Entities/CustomOpeningHours.php:65
 msgid "sunday"
 msgstr ""
 
@@ -79,19 +79,19 @@ msgstr ""
 msgid "Openinghours"
 msgstr ""
 
-#: config/metaboxes.php:54 config/metaboxes.php:218 src/Locations/Entities/CustomOpeninghours.php:73
+#: config/metaboxes.php:54 config/metaboxes.php:218 src/Locations/Entities/CustomOpeningHours.php:73
 msgid "Open from"
 msgstr ""
 
-#: config/metaboxes.php:59 config/metaboxes.php:223 src/Locations/Entities/CustomOpeninghours.php:78
+#: config/metaboxes.php:59 config/metaboxes.php:223 src/Locations/Entities/CustomOpeningHours.php:78
 msgid "Closed at"
 msgstr ""
 
-#: config/metaboxes.php:64 config/metaboxes.php:228 src/Locations/Entities/CustomOpeninghours.php:83
+#: config/metaboxes.php:64 config/metaboxes.php:228 src/Locations/Entities/CustomOpeningHours.php:83
 msgid "Closed?"
 msgstr ""
 
-#: config/metaboxes.php:69 config/metaboxes.php:233 src/Locations/Entities/CustomOpeninghours.php:88
+#: config/metaboxes.php:69 config/metaboxes.php:233 src/Locations/Entities/CustomOpeningHours.php:88
 msgid "Message"
 msgstr ""
 
@@ -194,54 +194,54 @@ msgstr ""
 msgid "PDC Location"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:91
+#: src/Locations/Entities/CustomOpeningHours.php:91
 msgid "Custom openinghours"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:102
+#: src/Locations/Entities/CustomOpeningHours.php:102
 msgid "Add new time"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:158
-#: src/Locations/Entities/CustomOpeninghours.php:164
+#: src/Locations/Entities/CustomOpeningHours.php:158
+#: src/Locations/Entities/CustomOpeningHours.php:164
 #: src/Locations/Entities/Openinghours.php:140
 #: src/Locations/Entities/Openinghours.php:148
 msgid "Now closed"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:171
+#: src/Locations/Entities/CustomOpeningHours.php:171
 #: src/Locations/Entities/Openinghours.php:145
 #, php-format
 msgid "Now open from %s to %s hour"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:177
+#: src/Locations/Entities/CustomOpeningHours.php:177
 #: src/Locations/Entities/Openinghours.php:265
 #, php-format
 msgid "Monday open from %s to %s hour"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:201
-#: src/Locations/Entities/CustomOpeninghours.php:208
+#: src/Locations/Entities/CustomOpeningHours.php:201
+#: src/Locations/Entities/CustomOpeningHours.php:208
 #: src/Locations/Entities/Openinghours.php:267
 msgid "Monday also closed"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:214
-#: src/Locations/Entities/CustomOpeninghours.php:220
+#: src/Locations/Entities/CustomOpeningHours.php:214
+#: src/Locations/Entities/CustomOpeningHours.php:220
 #: src/Locations/Entities/Openinghours.php:197
 msgid "Tomorrow closed"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:225
-#: src/Locations/Entities/CustomOpeninghours.php:401
+#: src/Locations/Entities/CustomOpeningHours.php:225
+#: src/Locations/Entities/CustomOpeningHours.php:401
 #: src/Locations/Entities/Openinghours.php:200
 #, php-format
 msgid "Tomorrow open from %s to %s hour"
 msgstr ""
 
-#: src/Locations/Entities/CustomOpeninghours.php:167
-#: src/Locations/Entities/CustomOpeninghours.php:405
+#: src/Locations/Entities/CustomOpeningHours.php:167
+#: src/Locations/Entities/CustomOpeningHours.php:405
 #, php-format
 msgid "Soon open from %s to %s hour"
 msgstr ""

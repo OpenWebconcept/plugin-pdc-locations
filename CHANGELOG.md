@@ -42,7 +42,7 @@
 
 -   Delimiter in Timeslot class.
 -   Remove past timeslots of current day.
--   Add weekend validation in CustomOpeninghours
+-   Add weekend validation in CustomOpeningHours
 -   Add translations
 
 ## Version 2.0.11

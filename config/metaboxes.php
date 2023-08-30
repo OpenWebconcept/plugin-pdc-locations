@@ -185,7 +185,7 @@ return [
                     'name' => __('Custom openinghours message', 'pdc-locations'),
                     'type' => 'textarea',
                 ],
-                \OWC\PDC\Locations\Entities\CustomOpeninghours::renderMetabox(),
+                \OWC\PDC\Locations\Entities\CustomOpeningHours::renderMetabox(),
             ],
 
             'special_openingdays' => [

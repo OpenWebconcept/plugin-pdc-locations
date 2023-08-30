@@ -6,7 +6,7 @@ namespace OWC\PDC\Locations\Entities;
 
 use Exception;
 
-class CustomOpeninghours extends Openinghours
+class CustomOpeningHours extends Openinghours
 {
     protected Week $week;
     protected int $locationID;
@@ -108,12 +108,12 @@ class CustomOpeninghours extends Openinghours
         return $weeks;
     }
 
-    public function getMessages(bool $isCustomOpeninghours = true): array
+    public function getMessages(bool $isCustomOpeningHours = true): array
     {
         return [
             'open' => [
-                'today' => $this->openNowMessage($isCustomOpeninghours),
-                'tomorrow' => $this->openTomorrowMessage($isCustomOpeninghours),
+                'today' => $this->openNowMessage($isCustomOpeningHours),
+                'tomorrow' => $this->openTomorrowMessage($isCustomOpeningHours),
             ],
         ];
     }
@@ -134,7 +134,7 @@ class CustomOpeninghours extends Openinghours
     /**
      * Open now message.
      */
-    public function openNowMessage(bool $isCustomOpeninghours = true): string
+    public function openNowMessage(bool $isCustomOpeningHours = true): string
     {
         // First check if today is a special day.
         if ($this->locationID && $specialDayMessage = $this->handleSpecialDayMessage('today')) {
@@ -148,14 +148,14 @@ class CustomOpeninghours extends Openinghours
         $timeslotMessage = $this->getOpeningDayFirstOccuringTimeslotMessage($now);
 
         // Check if timeslot has a message.
-        if (! empty($timeslotMessage) && $isCustomOpeninghours) {
+        if (! empty($timeslotMessage) && $isCustomOpeningHours) {
             return $timeslotMessage;
         }
 
         // Check if location is closed
         if (false === $openNowObject || ! $openNowObject->isOpen()) {
-            if ($isCustomOpeninghours) {
-                return $this->getNextOccuringTimeslotMessage($now, $isCustomOpeninghours) ?: sprintf(__('Now closed', 'pdc-locations'));
+            if ($isCustomOpeningHours) {
+                return $this->getNextOccuringTimeslotMessage($now, $isCustomOpeningHours) ?: sprintf(__('Now closed', 'pdc-locations'));
             }
 
             try {
@@ -171,7 +171,7 @@ class CustomOpeninghours extends Openinghours
         return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openNowObject->getTimeObject($openNowObject->getOpenTime())->format(), $openNowObject->getTimeObject($openNowObject->getClosedTime())->format());
     }
 
-    public function openTomorrowMessage(bool $isCustomOpeninghours = true): string
+    public function openTomorrowMessage(bool $isCustomOpeningHours = true): string
     {
         $tomorrow = $this->getDateTime($this->now . '+1 day');
         $openNowObject = $this->getOpeningHoursOpenNow($tomorrow);
@@ -187,7 +187,7 @@ class CustomOpeninghours extends Openinghours
         }
 
         // Check if timeslot has a message.
-        if (! empty($timeslotMessage) && $isCustomOpeninghours) {
+        if (! empty($timeslotMessage) && $isCustomOpeningHours) {
             return $timeslotMessage;
         }
 
@@ -210,8 +210,8 @@ class CustomOpeninghours extends Openinghours
 
         // Check if location is closed.
         if (! $openNowObject || ! $openNowObject->isOpen()) {
-            if ($isCustomOpeninghours) {
-                return $this->getNextOccuringTimeslotMessage($tomorrow, $isCustomOpeninghours) ?: __('Tomorrow closed', 'pdc-locations');
+            if ($isCustomOpeningHours) {
+                return $this->getNextOccuringTimeslotMessage($tomorrow, $isCustomOpeningHours) ?: __('Tomorrow closed', 'pdc-locations');
             }
 
             try {
@@ -369,9 +369,9 @@ class CustomOpeninghours extends Openinghours
      * Should be used when a location is closed at this specific moment.
      * When it is, get the first occuring timeslot when the location is open.
      */
-    protected function getNextOccuringTimeslotMessage(\DateTime $time, bool $isCustomOpeninghours): string
+    protected function getNextOccuringTimeslotMessage(\DateTime $time, bool $isCustomOpeningHours): string
     {
-        if (! $isCustomOpeninghours) {
+        if (! $isCustomOpeningHours) {
             return '';
         }
 

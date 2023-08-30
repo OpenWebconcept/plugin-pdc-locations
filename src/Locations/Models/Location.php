@@ -12,7 +12,7 @@ use \WP_Post;
 use OWC\PDC\Base\Foundation\Plugin;
 use OWC\PDC\Base\Repositories\AbstractRepository;
 use OWC\PDC\Base\Support\Traits\CheckPluginActive;
-use OWC\PDC\Locations\Entities\CustomOpeninghours;
+use OWC\PDC\Locations\Entities\CustomOpeningHours;
 use OWC\PDC\Locations\Entities\Day;
 use OWC\PDC\Locations\Entities\Openinghours;
 use OWC\PDC\Locations\Entities\SpecialOpeningHours;
@@ -25,7 +25,7 @@ use OWC\PDC\Locations\Entities\Week;
 class Location extends AbstractRepository
 {
     use CheckPluginActive;
-    
+
     /**
      * Type of model.
      *
@@ -82,7 +82,7 @@ class Location extends AbstractRepository
         ];
 
         $data                             = $this->assignFields(array_merge($data, $fields), $post);
-        $data                             = $this->hydrateCustomOpeninghours($data);
+        $data                             = $this->hydrateCustomOpeningHours($data);
         $data                             = $this->hydrate($data);
         $data['location']['image']        = $this->getFeaturedImage($post);
         $data['openinghours']['openNow']  = (new Openinghours($data['openinghours']['days']))->isOpenNow();
@@ -100,12 +100,12 @@ class Location extends AbstractRepository
             if ($day->isSpecial()) {
                 $data['openinghours']['days'][$name] = $day->toRest()[0];
             }
-            
+
             $week->addDay($name, $day);
         }
 
-        $data['openinghours']['openNow']  = (new CustomOpeninghours($week, 0, $regularWeek))->isOpenNow();
-        $data['openinghours']['messages'] = (new CustomOpeninghours($week, $post->ID, $regularWeek))->getMessages(false); // Don't show special message when normal openinghours.
+        $data['openinghours']['openNow']  = (new CustomOpeningHours($week, 0, $regularWeek))->isOpenNow();
+        $data['openinghours']['messages'] = (new CustomOpeningHours($week, $post->ID, $regularWeek))->getMessages(false); // Don't show special message when normal openinghours.
 
         $week = new Week();
         $regularWeek = new Week();
@@ -122,9 +122,9 @@ class Location extends AbstractRepository
             $week->addDay($name, $day);
             $data['custom-openinghours']['custom-days'][$name] = $day->toRest();
         }
-        
-        $data['custom-openinghours']['openNow']  = (new CustomOpeninghours($week, 0, $regularWeek))->isOpenNow();
-        $data['custom-openinghours']['messages'] = (new CustomOpeninghours($week, $post->ID, $regularWeek))->getMessages();
+
+        $data['custom-openinghours']['openNow']  = (new CustomOpeningHours($week, 0, $regularWeek))->isOpenNow();
+        $data['custom-openinghours']['messages'] = (new CustomOpeningHours($week, $post->ID, $regularWeek))->getMessages();
 
         return $data;
     }
@@ -155,7 +155,7 @@ class Location extends AbstractRepository
         if (! $attachment instanceof WP_Post) {
             return [];
         }
-        
+
         $imageSize = 'large';
 
         $result = [];
@@ -328,7 +328,7 @@ class Location extends AbstractRepository
      *
      * @return array
      */
-    protected function hydrateCustomOpeninghours(array $data): array
+    protected function hydrateCustomOpeningHours(array $data): array
     {
         $default =   [
             'closed'      => false,

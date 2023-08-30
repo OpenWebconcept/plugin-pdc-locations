@@ -41,7 +41,7 @@ $days = [
 ];
 
 $weeks         = [];
-$weeks['name'] = __('Openinghours', 'pdc-locations');
+$weeks['name'] = __('OpeningHours', 'pdc-locations');
 $weeks['id']   = 'days';
 $weeks['type'] = 'group';
 foreach ($days as $dayID => $day) {
@@ -163,12 +163,12 @@ return [
             'openinghours'  => [
                 [
                     'id'   => 'pdc-location-message-active',
-                    'name' => __('Openinghours message active?', 'pdc-locations'),
+                    'name' => __('OpeningHours message active?', 'pdc-locations'),
                     'type' => 'checkbox',
                 ],
                 [
                     'id'   => 'pdc-location-message',
-                    'name' => __('Openinghours message', 'pdc-locations'),
+                    'name' => __('OpeningHours message', 'pdc-locations'),
                     'type' => 'textarea',
                 ],
                 $weeks,

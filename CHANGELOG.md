@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 2.2.1
+
+- Fix: var reference and improve textual spelling.
+
 ## Version 2.2.0
 
 - Fix: wrong open messages, don't show 'is closed' per default but look for upcoming time slots.

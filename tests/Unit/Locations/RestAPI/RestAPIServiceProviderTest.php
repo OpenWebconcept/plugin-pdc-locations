@@ -33,7 +33,7 @@ class RestAPIServiceProviderTest extends TestCase
 
         m::mock('OWC\PDC\Base\Foundation\ServiceProvider');
 
-        // $service = new RestAPIServiceProvider($plugin);
+        $service = new RestAPIServiceProvider($plugin);
 
         $this->assertTrue(true);
     }

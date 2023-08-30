@@ -7,14 +7,13 @@
 namespace OWC\PDC\Locations\RestAPI;
 
 use OWC\PDC\Base\Foundation\ServiceProvider;
-use \WP_REST_Server;
+use WP_REST_Server;
 
 /**
  * Provider which registers the Locations section to the API.
  */
 class RestAPIServiceProvider extends ServiceProvider
 {
-
     /**
      * The endpoint of the base API.
      *

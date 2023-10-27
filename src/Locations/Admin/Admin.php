@@ -1,39 +1,24 @@
 <?php
 
-/**
- * Provider which boots the admin serviceproviders.
- */
-
 namespace OWC\PDC\Locations\Admin;
 
+use Exception;
+use OWC\PDC\Base\Foundation\Loader;
+use OWC\PDC\Base\Foundation\ServiceProvider;
 use OWC\PDC\Locations\Foundation\Plugin;
-use OWC\PDC\Locations\Plugin\ServiceProvider;
 
-/**
- * Provider which boots the admin serviceproviders.
- */
 class Admin
 {
-
     /**
      * Instance of the plugin.
-     *
-     * @var Plugin $plugin
      */
-    protected $plugin;
+    protected Plugin $plugin;
 
     /**
      * Instance of the actions and filters loader.
-     *
-     * @var \OWC\PDC\Base\Foundation\Loader $loader
      */
-    protected $loader;
+    protected Loader $loader;
 
-    /**
-     * Admin constructor.
-     *
-     * @param Plugin $plugin
-     */
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
@@ -42,8 +27,6 @@ class Admin
 
     /**
      * Boot up the frontend
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -52,8 +35,6 @@ class Admin
 
     /**
      * Boot service providers
-     *
-     * @return void
      */
     private function bootServiceProviders(): void
     {
@@ -62,13 +43,10 @@ class Admin
         foreach ($services as $service) {
             $service = new $service($this->plugin);
 
-            if (!$service instanceof \OWC\PDC\Base\Foundation\ServiceProvider) {
-                throw new \Exception('Provider must extend ServiceProvider.');
+            if (!$service instanceof ServiceProvider) {
+                throw new Exception('Provider must extend ServiceProvider.');
             }
 
-            /**
-             * @var \OWC\PDC\Base\Foundation\ServiceProvider $service
-             */
             $service->register();
         }
     }

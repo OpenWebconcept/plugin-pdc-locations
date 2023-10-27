@@ -2,448 +2,331 @@
 
 declare(strict_types=1);
 
-/**
- * Model for the item
- */
-
 namespace OWC\PDC\Locations\Models;
 
-use \WP_Post;
+use DateTime;
+use DateTimeZone;
+use Exception;
 use OWC\PDC\Base\Foundation\Plugin;
 use OWC\PDC\Base\Repositories\AbstractRepository;
 use OWC\PDC\Base\Support\Traits\CheckPluginActive;
-use OWC\PDC\Locations\Entities\CustomOpeningHours;
-use OWC\PDC\Locations\Entities\Day;
-use OWC\PDC\Locations\Entities\OpeningHours;
-use OWC\PDC\Locations\Entities\SpecialOpeningHours;
-use OWC\PDC\Locations\Entities\Timeslot;
-use OWC\PDC\Locations\Entities\Week;
+use OWC\PDC\Locations\Traits\Attachment;
+use Spatie\OpeningHours\OpeningHours as SpatieOpeningHours;
+use WP_Post;
 
-/**
- * Model for the item
- */
 class Location extends AbstractRepository
 {
+    use Attachment;
     use CheckPluginActive;
 
-    /**
-     * Type of model.
-     *
-     * @var string
-     */
     protected $posttype = 'pdc-location';
-
-    /**
-     * All meta data of post
-     *
-     * @var array
-     */
-    protected $allPostMeta = [];
-
-    /**
-     * Container with fields, associated with this model.
-     *
-     * @var array
-     */
+    protected array $allPostMeta = [];
     protected static $globalFields = [];
+    protected array $days = [
+        'monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday',
+    ];
 
-    /**
-     * Instance of the plugin
-     *
-     * @var Plugin
-     */
-    protected $plugin;
+    protected DateTimeZone $timezone;
+    protected DateTime $now;
 
-    /**
-     * Constructor of Location Model.
-     *
-     * @param Plugin $plugin
-     */
+    protected Plugin $plugin;
+
     public function __construct(Plugin $plugin)
     {
         $this->plugin = $plugin;
+        $this->timezone = new DateTimeZone(wp_timezone_string());
+        $this->now = new DateTime('now', $this->timezone);
     }
 
     /**
      * Transform a single WP_Post item.
-     *
-     * @param WP_Post $post
-     *
-     * @return array
      */
-    public function transform(WP_Post $post)
+    public function transform(WP_Post $post): array
     {
         $this->allPostMeta = $this->getAllPostMeta($post);
-        $fields            = $this->getFields($this->plugin->config->get('metaboxes.locations.fields'));
-        $data              = [
-            'id'    => $post->ID,
+        $fields = $this->getFields($this->plugin->config->get('cmb2_metaboxes.locations.fields'));
+
+        $data = [
+            'id' => $post->ID,
             'title' => $post->post_title,
-            'date'  => $post->post_date,
+            'date' => $post->post_date,
         ];
 
-        $data                             = $this->assignFields(array_merge($data, $fields), $post);
-        $data                             = $this->hydrateCustomOpeningHours($data);
-        $data                             = $this->hydrate($data);
-        $data['location']['image']        = $this->getFeaturedImage($post);
-        $data['openinghours']['openNow']  = (new OpeningHours($data['openinghours']['days']))->isOpenNow();
-        $data['openinghours']['messages'] = (new OpeningHours($data['openinghours']['days'], $post->ID))->getMessages();
-        $data['special_openingdays'] = (new SpecialOpeningHours($data['special_openingdays']))->make();
+        $data = $this->assignFields(array_merge($data, $fields), $post);
+        $data['location']['image'] = $this->getFeaturedImage($post);
 
-        $week = new Week();
-        $regularWeek = new Week();
-        foreach ($data['openinghours']['days'] as $name => $timeslot) {
-            $day                                 = new Day($name);
-            $day->addTimeslot(Timeslot::make($timeslot));
-            $regularWeek->addDay($name, clone $day);
-            $day                                 = (new SpecialOpeningHours($data['special_openingdays']))->asPossibleSpecial($day);
+        $openinghours = SpatieOpeningHours::create($this->prepareOpeningHours($post));
 
-            if ($day->isSpecial()) {
-                $data['openinghours']['days'][$name] = $day->toRest()[0];
-            }
-
-            $week->addDay($name, $day);
-        }
-
-        $data['openinghours']['openNow']  = (new CustomOpeningHours($week, 0, $regularWeek))->isOpenNow();
-        $data['openinghours']['messages'] = (new CustomOpeningHours($week, $post->ID, $regularWeek))->getMessages(false); // Don't show special message when normal openinghours.
-
-        $week = new Week();
-        $regularWeek = new Week();
-        foreach ($data['custom-openinghours']['custom-days'] as $name => $timeslots) {
-            $day = new Day($name);
-            foreach ($timeslots as $timeslot) {
-                $day->addTimeslot(Timeslot::make($timeslot));
-            }
-
-            $regularWeek->addDay($name, clone $day);
-
-            $day = (new SpecialOpeningHours($data['special_openingdays']))->asPossibleSpecial($day);
-
-            $week->addDay($name, $day);
-            $data['custom-openinghours']['custom-days'][$name] = $day->toRest();
-        }
-
-        $data['custom-openinghours']['openNow']  = (new CustomOpeningHours($week, 0, $regularWeek))->isOpenNow();
-        $data['custom-openinghours']['messages'] = (new CustomOpeningHours($week, $post->ID, $regularWeek))->getMessages();
-
-        return $data;
-    }
-
-    /**
-     * Gets the featured image of a post.
-     *
-     * @param WP_Post $post
-     *
-     * @return array
-     */
-    public function getFeaturedImage(WP_Post $post): array
-    {
-        if (! has_post_thumbnail($post->ID)) {
-            return [];
-        }
-
-        $id = (int) get_post_thumbnail_id($post->ID);
-
-        $currentBlogID = get_current_blog_id();
-
-        if ($this->switchToCentralMediaSite($currentBlogID)) {
-            \switch_to_blog($this->getCentralMediaSiteID()); // Switch to central media site where the image is stored.
-        }
-
-        $attachment = get_post($id);
-
-        if (! $attachment instanceof WP_Post) {
-            return [];
-        }
-
-        $imageSize = 'large';
-
-        $result = [];
-        $result['title']       = $attachment->post_title;
-        $result['description'] = $attachment->post_content;
-        $result['caption']     = $attachment->post_excerpt;
-        $result['alt']         = get_post_meta($attachment->ID, '_wp_attachment_image_alt', true);
-        $meta = $this->getAttachmentMeta($id);
-
-        $result['rendered'] = wp_get_attachment_image($id, $imageSize);
-        $result['sizes']    = wp_get_attachment_image_sizes($id, $imageSize, $meta);
-        $result['srcset']   = wp_get_attachment_image_srcset($id, $imageSize, $meta);
-        $result['meta']     = $meta;
-
-        if ($this->switchToCentralMediaSite($currentBlogID)) {
-            \restore_current_blog(); // After switching return to initial site.
-        }
-
-        return $result;
-    }
-
-    /**
-     * Check if the plugin is active and the current blog is not the central media site.
-     */
-    protected function switchToCentralMediaSite(int $currentBlogID): bool
-    {
-        return $this->isPluginActive('network-media-library/network-media-library.php') && $currentBlogID !== $this->getCentralMediaSiteID();
-    }
-
-    protected function getCentralMediaSiteID(): int
-    {
-        $siteID = $_ENV['NETWORK_MEDIA_LIBRARY_SITE_ID'] ?? 2;
-
-        return (int) $siteID;
-    }
-
-    /**
-     * Get meta data of an attachment.
-     *
-     * @param int $id
-     *
-     * @return array
-     */
-    private function getAttachmentMeta(int $id): array
-    {
-        $meta = wp_get_attachment_metadata($id, false);
-
-        if (false === $meta) {
-            return [];
-        }
-
-        if (empty($meta['sizes'])) {
-            return [];
-        }
-
-        foreach (array_keys($meta['sizes']) as $size) {
-            $src                         = wp_get_attachment_image_src($id, $size);
-            $meta['sizes'][$size]['url'] = (false === $src) ? '' : $src[0];
-        }
-
-        unset($meta['image_meta']);
-
-        return $meta;
-    }
-
-    /**
-     * Return the defaults.
-     *
-     * @TODO should be generated from metabox config, to avoid duplicate code.
-     *
-     * @return array
-     */
-    protected function getDefaults()
-    {
-        return [
-            'id'            => '',
-            'title'         => '',
-            'date'          => '',
-            'general'       => [
-                'description' => '',
-            ],
-            'location'      => [
-                'street'     => '',
-                'zipcode'    => '',
-                'city'       => '',
-                'postalcode' => '',
-                'postalcity' => '',
-                'maplink'    => '',
-                'image'      => '',
-            ],
-            'communication' => [
-                'telephone-description' => '',
-                'telephone'             => '',
-                'whatsapp'              => '',
-                'fax'                   => '',
-                'email'                 => '',
-            ],
-            'openinghours'  => [
-                'message-active' => false,
-                'message'        => '',
-                'days'           => [
-                    'monday'    => [
-                        'closed'      => false,
-                        'message'     => '',
-                        'open-time'   => null,
-                        'closed-time' => null,
-                    ],
-                    'tuesday'   => [
-                        'closed'      => false,
-                        'message'     => '',
-                        'open-time'   => null,
-                        'closed-time' => null,
-                    ],
-                    'wednesday' => [
-                        'closed'      => false,
-                        'message'     => '',
-                        'open-time'   => null,
-                        'closed-time' => null,
-                    ],
-                    'thursday'  => [
-                        'closed'      => false,
-                        'message'     => '',
-                        'open-time'   => null,
-                        'closed-time' => null,
-                    ],
-                    'friday'    => [
-                        'closed'      => false,
-                        'message'     => '',
-                        'open-time'   => null,
-                        'closed-time' => null,
-                    ],
-                    'saturday'  => [
-                        'closed'      => false,
-                        'message'     => '',
-                        'open-time'   => null,
-                        'closed-time' => null,
-                    ],
-                    'sunday'    => [
-                        'closed'      => false,
-                        'message'     => '',
-                        'open-time'   => null,
-                        'closed-time' => null,
-                    ],
-                ],
-
-                'messages'       => [
-                    'today'    => '',
-                    'tomorrow' => '',
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Fill all the fields this their defaults.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function hydrate(array $data): array
-    {
-        return array_replace_recursive($this->getDefaults(), $data);
-    }
-
-    /**
-     * Fill all the fields this their defaults.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function hydrateCustomOpeningHours(array $data): array
-    {
-        $default =   [
-            'closed'      => false,
-            'message'     => '',
-            'open-time'   => null,
-            'closed-time' => null,
-        ];
-
-        $daysDefault = [
-            'monday'    => [
-                [
-                    'closed'      => false,
-                    'message'     => '',
-                    'open-time'   => null,
-                    'closed-time' => null,
-                ],
-            ],
-            'tuesday'   => [
-                [
-                    'closed'      => false,
-                    'message'     => '',
-                    'open-time'   => null,
-                    'closed-time' => null,
-                ],
-            ],
-            'wednesday' => [
-                [
-                    'closed'      => false,
-                    'message'     => '',
-                    'open-time'   => null,
-                    'closed-time' => null,
-                ],
-            ],
-            'thursday'  => [
-                [
-                    'closed'      => false,
-                    'message'     => '',
-                    'open-time'   => null,
-                    'closed-time' => null,
-                ],
-            ],
-            'friday'    => [
-                [
-                    'closed'      => false,
-                    'message'     => '',
-                    'open-time'   => null,
-                    'closed-time' => null,
-                ],
-            ],
-            'saturday'  => [
-                [
-                    'closed'      => false,
-                    'message'     => '',
-                    'open-time'   => null,
-                    'closed-time' => null,
-                ],
-            ],
-            'sunday'    => [
-                [
-                    'closed'      => false,
-                    'message'     => '',
-                    'open-time'   => null,
-                    'closed-time' => null,
-                ],
-            ],
-        ];
-
-        if (! isset($data['custom-openinghours']['custom-days'])) {
-            foreach ($daysDefault as $day => $fields) {
-                if (isset($data['custom-openinghours']['custom-days'][$day])) {
-                    continue;
-                }
-                $data['custom-openinghours']['custom-days'][$day] = $fields;
-            }
-
-            return $data;
-        }
-
-        foreach ($data['custom-openinghours']['custom-days'] as $key => $day) {
-            foreach ($day as $fieldKey => $field) {
-                $field['closed']                                             = isset($field['closed']) ? (bool) $field['closed'] : false;
-                $data['custom-openinghours']['custom-days'][$key][$fieldKey] = array_replace($default, $field);
-            }
-        }
-
-        foreach ($daysDefault as $day => $fields) {
-            if (isset($data['custom-openinghours']['custom-days'][$day])) {
-                continue;
-            }
-            $data['custom-openinghours']['custom-days'][$day] = $fields;
-        }
+        $data = $this->populateOpeninghours($data, $openinghours);
+        $data = $this->getMessages($data, $openinghours);
+        $data = $this->populateOpenNow($data, $openinghours);
+        $data = $this->populateSpecialDays($data, $post);
 
         return $data;
     }
 
     /**
      * Get all meta assigned to post
-     *
-     * @param WP_Post $post
-     *
-     * @return array
      */
-    protected function getAllPostMeta($post)
+    protected function getAllPostMeta(WP_Post $post): array
     {
-        return get_metadata('post', $post->ID);
+        $meta = get_metadata('post', $post->ID);
+
+        return is_array($meta) ? $meta : [];
+    }
+
+    protected function prepareOpeningHours(WP_Post $post): array
+    {
+        $openinghours = [];
+
+        foreach ($this->days as $day) {
+            $dayMetaKey = sprintf('_owc_pdc-location-openinghours-%s', $day);
+            $timeslots = get_post_meta($post->ID, $dayMetaKey, true) ?: [];
+            $openinghours[$day] = [];
+
+            foreach ($timeslots ?? [] as $timeslot) {
+                $open = $timeslot[sprintf('pdc-location-openinghours-timeslot-%s-open-time', $day)] ?? '';
+                $closed = $timeslot[sprintf('pdc-location-openinghours-timeslot-%s-closed-time', $day)] ?? '';
+                $message = $timeslot[sprintf('pdc-location-openinghours-timeslot-%s-message', $day)] ?? '';
+
+                if (empty($open) || empty($closed)) {
+                    continue;
+                }
+
+                $openinghours[$day][] = ['hours' => sprintf('%s-%s', $open, $closed), 'data' => $message];
+            }
+        }
+
+        return $openinghours;
+    }
+
+    protected function populateOpeninghours(array $data, SpatieOpeningHours $openinghours): array
+    {
+        foreach ($this->days as $day) {
+            $data['openinghours']['days'][$day] =
+                $openinghours->forDay($day)->map(function ($time) {
+                    return [
+                        'open-time' => $time->start()->format('H.i'),
+                        'closed-time' => $time->end()->format('H.i'),
+                        'message' => $time->getData(),
+                    ];
+                });
+        }
+
+        return $this->hydrate($data);
+    }
+
+    protected function getMessages(array $data, SpatieOpeningHours $openinghours): array
+    {
+        $data['openinghours']['messages']['open'] = [
+            'today' => $this->getTodayMessage($openinghours),
+            'tomorrow' => $this->getTomorrowMessage($openinghours),
+        ];
+
+        return $data;
+    }
+
+    protected function getTodayMessage(SpatieOpeningHours $openinghours): string
+    {
+        $range = $openinghours->currentOpenRange($this->now);
+        $todayMsg = $range ? sprintf('Nu geopend van %s tot %s', $range->start(), $range->end()) : 'Nu gesloten';
+
+        if (! $range) {
+            $todayMsg = $this->getNextOpenCloseWhenNowClosed($openinghours, $todayMsg);
+        } else {
+            $todayMsg = $this->getNextOpenCloseWhenOpenNow($openinghours, $todayMsg);
+        }
+
+        return $todayMsg;
+    }
+
+    /**
+     * When not open now, overwrite today message with next open and close message.
+     */
+    protected function getNextOpenCloseWhenNowClosed(SpatieOpeningHours $openinghours, string $todayMsg): string
+    {
+        $searchFrom = new DateTime($this->now->format('Y-m-d H:i'), $this->timezone);
+        $searchTill = (new DateTime($this->now->format('Y-m-d'), $this->timezone))->setTime(23, 59);
+
+        try {
+            $nextOpenSearched = $openinghours->nextOpen($searchFrom, $searchTill)->format('H.i');
+            $nextClosedSearched = $openinghours->nextClose($searchFrom, $searchTill)->format('H.i');
+            $todayMsg .= sprintf(', straks geopend van %s tot %s', $nextOpenSearched, $nextClosedSearched);
+        } catch(Exception $e) {
+            $todayMsg = 'Nu gesloten';
+        }
+
+        return $todayMsg;
+    }
+
+    /**
+     * When open now, append next open and close message.
+     */
+    protected function getNextOpenCloseWhenOpenNow(SpatieOpeningHours $openinghours, string $todayMsg): string
+    {
+        $searchFrom = new DateTime($openinghours->currentOpenRangeEnd($this->now)->format('Y-m-d H:i'), $this->timezone);
+        $searchTill = (new DateTime($this->now->format('Y-m-d'), $this->timezone))->setTime(23, 59);
+
+        try {
+            $nextOpenSearched = $openinghours->nextOpen($searchFrom, $searchTill)->format('H.i');
+            $nextClosedSearched = $openinghours->nextClose($searchFrom, $searchTill)->format('H.i');
+            $todayMsg .= sprintf(', straks geopend van %s tot %s', $nextOpenSearched, $nextClosedSearched);
+        } catch(Exception $e) {
+            return $todayMsg;
+        }
+
+        return $todayMsg;
+    }
+
+    protected function getTomorrowMessage(SpatieOpeningHours $openinghours): string
+    {
+        $tomorrow = (new DateTime($this->now->format('Y-m-d'), $this->timezone))->modify('+ 1 day');
+        $searchTill = (new DateTime($this->now->format('Y-m-d'), $this->timezone))->modify('+ 6 day')->setTime(23, 59); // Not include this day in next week.
+
+        try {
+            $nextOpen = $openinghours->nextOpen($tomorrow, $searchTill);
+        } catch(Exception $e) {
+            return '';
+        }
+
+        return sprintf('%s geopend vanaf %s tot %s', ucfirst(date_i18n('l', $nextOpen->getTimestamp())), $nextOpen->format('H.i'), $openinghours->nextClose()->format('H.i'));
+    }
+
+    protected function populateOpenNow(array $data, SpatieOpeningHours $openinghours): array
+    {
+        $data['openinghours']['openNow'] = $openinghours->isOpenAt($this->now);
+
+        return $data;
+    }
+
+    /**
+     * Fill all the fields this their defaults.
+     */
+    protected function hydrate(array $data): array
+    {
+        return array_replace_recursive($this->getDefaults(), $data);
+    }
+
+    protected function populateSpecialDays(array $data, WP_Post $post)
+    {
+        $specials = get_post_meta($post->ID, '_owc_pdc-location-openinghours-exception-day', true);
+
+        $data['special_openingdays'] = array_map(function ($special) {
+            // Maybe convert $special to Entity/Model so the class methods takes care of all.
+			// Take care of the dutch notation inside it as well so 07:00 becomes 07.00
+            return [
+                'date' => $special['pdc-location-openinghours-timeslot-exception-date'] ?? null,
+                'message' => $special['pdc-location-openinghours-timeslot-exception-message'] ?? null,
+                'open-time' => $special['pdc-location-openinghours-timeslot-exception-open-time'] ?? null,
+                'closed-time' => $special['pdc-location-openinghours-timeslot-exception-closed-time'] ?? null,
+            ];
+        }, $specials ?: []);
+
+        return $data;
+    }
+
+    /**
+     * Return the defaults.
+     *
+     * @TODO should be generated from metabox config, to avoid duplicate code.
+     */
+    protected function getDefaults(): array
+    {
+        return [
+            'id' => '',
+            'title' => '',
+            'date' => '',
+            'general' => [
+                'description' => '',
+            ],
+            'location' => [
+                'street' => '',
+                'zipcode' => '',
+                'city' => '',
+                'postalcode' => '',
+                'postalcity' => '',
+                'maplink' => '',
+                'image' => '',
+            ],
+            'communication' => [
+                'telephone-description' => '',
+                'telephone' => '',
+                'whatsapp' => '',
+                'fax' => '',
+                'email' => '',
+            ],
+            'openinghours' => [
+                'days' => [
+                    'monday' => [
+                        [
+                            'open-time' => null,
+                            'closed-time' => null,
+                            'message' => '',
+                        ],
+                    ],
+                    'tuesday' => [
+                        [
+                            'open-time' => null,
+                            'closed-time' => null,
+                            'message' => '',
+                        ],
+                    ],
+                    'wednesday' => [
+                        [
+                            'open-time' => null,
+                            'closed-time' => null,
+                            'message' => '',
+                        ],
+                    ],
+                    'thursday' => [
+                        [
+                            'open-time' => null,
+                            'closed-time' => null,
+                            'message' => '',
+                        ],
+                    ],
+                    'friday' => [
+                        [
+                            'open-time' => null,
+                            'closed-time' => null,
+                            'message' => '',
+                        ],
+                    ],
+                    'saturday' => [
+                        [
+                            'open-time' => null,
+                            'closed-time' => null,
+                            'message' => '',
+                        ],
+                    ],
+                    'sunday' => [
+                        [
+                            'open-time' => null,
+                            'closed-time' => null,
+                            'message' => '',
+                        ],
+                    ],
+                ],
+                'messages' => [
+                    'open' => [
+                        'today' => '',
+                        'tomorrow' => '',
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**
      * Filter fields from config.
-     *
-     * @param array $fields
-     *
-     * @return array
      */
-    protected function getFields($fields): array
+    protected function getFields(array $fields): array
     {
         return array_map(function ($field) {
             return $this->manipulate($field);
@@ -453,15 +336,11 @@ class Location extends AbstractRepository
     /**
      * Remove the unnecessary fields, such as dividers.
      * And rename the keys to readable keys.
-     *
-     * @param array $fields
-     *
-     * @return array
      */
-    protected function removeUnnecessaryFieldsByKey($fields)
+    protected function removeUnnecessaryFieldsByKey(array $fields)
     {
         $toRemove = ['divider'];
-        $fields   = array_filter($fields, function ($key) use ($toRemove) {
+        $fields = array_filter($fields, function ($key) use ($toRemove) {
             return (! in_array($key, $toRemove));
         }, ARRAY_FILTER_USE_KEY);
 
@@ -470,30 +349,37 @@ class Location extends AbstractRepository
 
     /**
      * Manipulate the fields array.
-     *
-     * @param array $fields
-     *
-     * @return array
      */
-    protected function manipulate($fields)
+    protected function manipulate(array $fields): array
     {
         if (1 > count($fields)) {
             return $fields;
         }
 
         foreach ($fields as $key => $field) {
-            if (! array_key_exists('_owc_' . $field['id'], $this->allPostMeta) && (! in_array('_owc_' . $field['id'], $this->allPostMeta))) {
+            $metaKey = sprintf('_owc_%s', $field['id']);
+
+            // Does the key exists in the meta data?
+            if (! array_key_exists($metaKey, $this->allPostMeta) && (! in_array($metaKey, $this->allPostMeta))) {
                 unset($fields[$key]);
 
                 continue;
             }
 
-            $fieldName          = str_replace($this->posttype . '-', '', $field['id']);
-            $content            = $this->allPostMeta['_owc_' . $field['id']][0] ?? '';
-            if (in_array($content, ['0', '1', "0", "1"])) {
-                $content = filter_var($content, FILTER_VALIDATE_BOOLEAN);
+            $metaValue = $this->allPostMeta[$metaKey][0] ?? '';
+
+            // Convert specific values to a boolean.
+            if (in_array($metaValue, ['0', '1', "0", "1"])) {
+                $metaValue = filter_var($metaValue, FILTER_VALIDATE_BOOLEAN);
             }
-            $fields[$fieldName] = maybe_unserialize($content);
+
+            // Clean-up field name by removing the prefix 'pdc-location-'.
+            $fieldName = str_replace($this->posttype . '-', '', $field['id']);
+
+            // Set value in the field array with a cleaned up fieldname as array key.
+            $fields[$fieldName] = maybe_unserialize($metaValue);
+
+            // Unset the old value by key.
             unset($fields[$key]);
         }
 

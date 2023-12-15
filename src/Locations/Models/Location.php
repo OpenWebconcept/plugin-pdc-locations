@@ -63,10 +63,10 @@ class Location extends AbstractRepository
 
         $openinghours = SpatieOpeningHours::create($this->prepareOpeningHours($post));
 
-        $data = $this->populateOpeninghours($data, $openinghours);
+        $data = $this->formatOpeninghours($data, $openinghours);
         $data = $this->getMessages($data, $openinghours);
         $data = $this->populateOpenNow($data, $openinghours);
-        $data = $this->populateSpecialDays($data, $post);
+        $data = $this->formatSpecialDays($data, $this->prepareSpecialDays($post));
 
         return $data;
     }
@@ -91,8 +91,8 @@ class Location extends AbstractRepository
             $openinghours[$day] = [];
 
             foreach ($timeslots ?? [] as $timeslot) {
-                $open = $timeslot[sprintf('pdc-location-openinghours-timeslot-%s-open-time', $day)] ?? '';
-                $closed = $timeslot[sprintf('pdc-location-openinghours-timeslot-%s-closed-time', $day)] ?? '';
+                $open = $this->validateTime($timeslot[sprintf('pdc-location-openinghours-timeslot-%s-open-time', $day)] ?? '');
+                $closed = $this->validateTime($timeslot[sprintf('pdc-location-openinghours-timeslot-%s-closed-time', $day)] ?? '');
                 $message = $timeslot[sprintf('pdc-location-openinghours-timeslot-%s-message', $day)] ?? '';
 
                 if (empty($open) || empty($closed)) {
@@ -106,7 +106,7 @@ class Location extends AbstractRepository
         return $openinghours;
     }
 
-    protected function populateOpeninghours(array $data, SpatieOpeningHours $openinghours): array
+    protected function formatOpeninghours(array $data, SpatieOpeningHours $openinghours): array
     {
         foreach ($this->days as $day) {
             $data['openinghours']['days'][$day] =
@@ -122,6 +122,14 @@ class Location extends AbstractRepository
         return $this->hydrate($data);
     }
 
+	/**
+     * Fill all the fields this their defaults.
+     */
+    protected function hydrate(array $data): array
+    {
+        return array_replace_recursive($this->getDefaults(), $data);
+    }
+
     protected function getMessages(array $data, SpatieOpeningHours $openinghours): array
     {
         $data['openinghours']['messages']['open'] = [
@@ -135,7 +143,7 @@ class Location extends AbstractRepository
     protected function getTodayMessage(SpatieOpeningHours $openinghours): string
     {
         $range = $openinghours->currentOpenRange($this->now);
-        $todayMsg = $range ? sprintf('Nu geopend van %s tot %s', $range->start(), $range->end()) : 'Nu gesloten';
+        $todayMsg = $range ? sprintf(__('Nu geopend van %s tot %s', 'pdc-locations'), $range->start(), $range->end()) : 'Nu gesloten';
 
         if (! $range) {
             $todayMsg = $this->getNextOpenCloseWhenNowClosed($openinghours, $todayMsg);
@@ -157,7 +165,7 @@ class Location extends AbstractRepository
         try {
             $nextOpenSearched = $openinghours->nextOpen($searchFrom, $searchTill)->format('H.i');
             $nextClosedSearched = $openinghours->nextClose($searchFrom, $searchTill)->format('H.i');
-            $todayMsg .= sprintf(', straks geopend van %s tot %s', $nextOpenSearched, $nextClosedSearched);
+            $todayMsg .= sprintf(__(', straks geopend van %s tot %s', 'pdc-locations'), $nextOpenSearched, $nextClosedSearched);
         } catch(Exception $e) {
             $todayMsg = 'Nu gesloten';
         }
@@ -176,7 +184,7 @@ class Location extends AbstractRepository
         try {
             $nextOpenSearched = $openinghours->nextOpen($searchFrom, $searchTill)->format('H.i');
             $nextClosedSearched = $openinghours->nextClose($searchFrom, $searchTill)->format('H.i');
-            $todayMsg .= sprintf(', straks geopend van %s tot %s', $nextOpenSearched, $nextClosedSearched);
+            $todayMsg .= sprintf(__(', straks geopend van %s tot %s', 'pdc-locations'), $nextOpenSearched, $nextClosedSearched);
         } catch(Exception $e) {
             return $todayMsg;
         }
@@ -195,7 +203,7 @@ class Location extends AbstractRepository
             return '';
         }
 
-        return sprintf('%s geopend vanaf %s tot %s', ucfirst(date_i18n('l', $nextOpen->getTimestamp())), $nextOpen->format('H.i'), $openinghours->nextClose()->format('H.i'));
+        return sprintf(__('%s geopend vanaf %s tot %s', 'pdc-locations'), ucfirst(date_i18n('l', $nextOpen->getTimestamp())), $nextOpen->format('H.i'), $openinghours->nextClose()->format('H.i'));
     }
 
     protected function populateOpenNow(array $data, SpatieOpeningHours $openinghours): array
@@ -205,31 +213,40 @@ class Location extends AbstractRepository
         return $data;
     }
 
-    /**
-     * Fill all the fields this their defaults.
-     */
-    protected function hydrate(array $data): array
-    {
-        return array_replace_recursive($this->getDefaults(), $data);
-    }
+	protected function formatSpecialDays(array $data, array $specialDays): array
+	{
+		$data['special_openingdays'] = array_map(function($specialDay){
+			$specialDay['open-time'] = $this->validateTime($specialDay['open-time']) ? (new DateTime($specialDay['open-time']))->format('H.i') : '';
+			$specialDay['closed-time'] = $this->validateTime($specialDay['closed-time']) ? (new DateTime($specialDay['closed-time']))->format('H.i') : '';
 
-    protected function populateSpecialDays(array $data, WP_Post $post)
+			return $specialDay;
+		}, $specialDays);
+
+		return $data;
+	}
+
+    protected function prepareSpecialDays(WP_Post $post): array
     {
         $specials = get_post_meta($post->ID, '_owc_pdc-location-openinghours-exception-day', true);
 
-        $data['special_openingdays'] = array_map(function ($special) {
-            // Maybe convert $special to Entity/Model so the class methods takes care of all.
-			// Take care of the dutch notation inside it as well so 07:00 becomes 07.00
+        return array_map(function ($specialDay) {
             return [
-                'date' => $special['pdc-location-openinghours-timeslot-exception-date'] ?? null,
-                'message' => $special['pdc-location-openinghours-timeslot-exception-message'] ?? null,
-                'open-time' => $special['pdc-location-openinghours-timeslot-exception-open-time'] ?? null,
-                'closed-time' => $special['pdc-location-openinghours-timeslot-exception-closed-time'] ?? null,
+                'date' => $specialDay['pdc-location-openinghours-timeslot-exception-date'] ?? '',
+                'message' => $specialDay['pdc-location-openinghours-timeslot-exception-message'] ?? '',
+                'open-time' => $specialDay['pdc-location-openinghours-timeslot-exception-open-time'] ?? '',
+                'closed-time' => $specialDay['pdc-location-openinghours-timeslot-exception-closed-time'] ?? '',
             ];
         }, $specials ?: []);
-
-        return $data;
     }
+
+	protected function validateTime(string $time)
+	{
+		if (empty($time)) {
+			return '';
+		}
+
+		return strtotime($time) ? $time : '';
+	}
 
     /**
      * Return the defaults.

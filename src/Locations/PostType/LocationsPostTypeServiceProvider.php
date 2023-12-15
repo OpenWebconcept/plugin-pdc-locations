@@ -29,25 +29,25 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
         }
 
         $labels = [
-            'name'               => __('Locations', 'pdc-locations'),
-            'singular_name'      => __('Location', 'pdc-locations'),
-            'menu_name'          => __('Locations', 'pdc-locations'),
-            'name_admin_bar'     => __('Locations', 'pdc-locations'),
-            'add_new'            => __('Add new location', 'pdc-locations'),
-            'add_new_item'       => __('Add new location', 'pdc-locations'),
-            'new_item'           => __('New location', 'pdc-locations'),
-            'edit_item'          => __('Edit location', 'pdc-locations'),
-            'view_item'          => __('View location', 'pdc-locations'),
-            'all_items'          => __('All locations', 'pdc-locations'),
-            'search_items'       => __('Search locations', 'pdc-locations'),
-            'parent_item_colon'  => __('Parent locations:', 'pdc-locations'),
-            'not_found'          => __('No locations found.', 'pdc-locations'),
-            'not_found_in_trash' => __('No locations found in Trash.', 'pdc-locations'),
+            'name'               => __('Locaties', 'pdc-locations'),
+            'singular_name'      => __('Locatie', 'pdc-locations'),
+            'menu_name'          => __('Locaties', 'pdc-locations'),
+            'name_admin_bar'     => __('Locaties', 'pdc-locations'),
+            'add_new'            => __('Voeg nieuwe locatie toe', 'pdc-locations'),
+            'add_new_item'       => __('Voeg nieuwe locatie toe', 'pdc-locations'),
+            'new_item'           => __('Nieuwe locatie', 'pdc-locations'),
+            'edit_item'          => __('Wijzig locatie', 'pdc-locations'),
+            'view_item'          => __('Bekijk locatie', 'pdc-locations'),
+            'all_items'          => __('Alle locaties', 'pdc-locations'),
+            'search_items'       => __('Zoek locaties', 'pdc-locations'),
+            'parent_item_colon'  => __('Hoofd locaties:', 'pdc-locations'),
+            'not_found'          => __('Geen locatie gevonden.', 'pdc-locations'),
+            'not_found_in_trash' => __('Geen locatie gevonden de prullenbak.', 'pdc-locations'),
         ];
 
         $args = [
             'labels'             => $labels,
-            'description'        => __('PDC Locations', 'pdc-locations'),
+            'description'        => __('PDC Locaties', 'pdc-locations'),
             'public'             => false,
             'publicly_queryable' => false,
             'show_ui'            => true,
@@ -62,7 +62,7 @@ class LocationsPostTypeServiceProvider extends ServiceProvider
             'archive'            => false,
             'admin_cols'         => [
                 'published' => [
-                    'title'       => __('Published', 'pdc-locations'),
+                    'title'       => __('Gepubliceerd', 'pdc-locations'),
                     'post_field'  => 'post_date',
                     'date_format' => 'd M Y',
                 ],

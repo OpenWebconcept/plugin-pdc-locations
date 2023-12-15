@@ -43,7 +43,7 @@ class LocationsField extends CreatesFields
 
         if (! $connection) {
             return [
-                'error' => sprintf(__('Connection type "%s" does not exist', 'pdc-base'), $type),
+                'error' => sprintf(__('Verbinding type "%s" bestaat niet', 'pdc-base'), $type),
             ];
         }
 

@@ -1,445 +1,74 @@
-#, fuzzy
-msgid ""
-msgstr ""
-"Project-Id-Version: PDC Locations\n"
-"Report-Msgid-Bugs-To: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
-"Language-Team: Yard Digital Agency <info@yard.nl>\n"
-"X-Generator: Poedit 2.3\n"
-"X-Poedit-KeywordsList: __;_x;_e;_ex;_n;_nx;esc_attr__;esc_attr_e;esc_attr_x;esc_html__;esc_html_e;esc_html_x;_n_noop;_nx_noop\n"
-"X-Poedit-Basepath: ..\n"
-"Last-Translator: \n"
-"POT-Creation-Date: \n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: tests\n"
-"X-Poedit-SearchPathExcluded-1: docs\n"
-"X-Poedit-SearchPathExcluded-2: vendor\n"
-"X-Poedit-SearchPathExcluded-3: languages\n"
-
-#: config/metaboxes.php:7 src/Locations/Entities/CustomOpeningHours.php:34
-msgid "Monday"
+#: src/Locations/Models/Location.php:146
+msgid "Nu geopend van %s tot %s"
 msgstr ""
 
-#: config/metaboxes.php:8 src/Locations/Entities/CustomOpeningHours.php:35
-msgid "monday"
+#: src/Locations/Models/Location.php:168
+msgid ", straks geopend van %s tot %s"
 msgstr ""
 
-#: config/metaboxes.php:12 src/Locations/Entities/CustomOpeningHours.php:39
-msgid "Tuesday"
+#: src/Locations/Models/Location.php:187
+msgid ", straks geopend van %s tot %s"
 msgstr ""
 
-#: config/metaboxes.php:13 src/Locations/Entities/CustomOpeningHours.php:40
-msgid "tuesday"
+#: src/Locations/Models/Location.php:206
+msgid "%s geopend vanaf %s tot %s"
 msgstr ""
 
-#: config/metaboxes.php:17 src/Locations/Entities/CustomOpeningHours.php:44
-msgid "Wednesday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:32
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:34
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:35
+msgid "Locaties"
 msgstr ""
 
-#: config/metaboxes.php:18 src/Locations/Entities/CustomOpeningHours.php:45
-msgid "wednesday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:33
+msgid "Locatie"
 msgstr ""
 
-#: config/metaboxes.php:22 src/Locations/Entities/CustomOpeningHours.php:49
-msgid "Thursday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:36
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:37
+msgid "Voeg nieuwe locatie toe"
 msgstr ""
 
-#: config/metaboxes.php:23 src/Locations/Entities/CustomOpeningHours.php:50
-msgid "thursday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:38
+msgid "Nieuwe locatie"
 msgstr ""
 
-#: config/metaboxes.php:27 src/Locations/Entities/CustomOpeningHours.php:54
-msgid "Friday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:39
+msgid "Wijzig locatie"
 msgstr ""
 
-#: config/metaboxes.php:28 src/Locations/Entities/CustomOpeningHours.php:55
-msgid "friday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:40
+msgid "Bekijk locatie"
 msgstr ""
 
-#: config/metaboxes.php:32 src/Locations/Entities/CustomOpeningHours.php:59
-msgid "Saturday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:41
+msgid "Alle locaties"
 msgstr ""
 
-#: config/metaboxes.php:33 src/Locations/Entities/CustomOpeningHours.php:60
-msgid "saturday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:42
+msgid "Zoek locaties"
 msgstr ""
 
-#: config/metaboxes.php:37 src/Locations/Entities/CustomOpeningHours.php:64
-msgid "Sunday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:43
+msgid "Hoofd locaties:"
 msgstr ""
 
-#: config/metaboxes.php:38 src/Locations/Entities/CustomOpeningHours.php:65
-msgid "sunday"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:44
+msgid "Geen locatie gevonden."
 msgstr ""
 
-#: config/metaboxes.php:44
-msgid "OpeningHours"
-msgstr ""
-
-#: config/metaboxes.php:54 config/metaboxes.php:218 src/Locations/Entities/CustomOpeningHours.php:73
-msgid "Open from"
-msgstr ""
-
-#: config/metaboxes.php:59 config/metaboxes.php:223 src/Locations/Entities/CustomOpeningHours.php:78
-msgid "Closed at"
-msgstr ""
-
-#: config/metaboxes.php:64 config/metaboxes.php:228 src/Locations/Entities/CustomOpeningHours.php:83
-msgid "Closed?"
-msgstr ""
-
-#: config/metaboxes.php:69 config/metaboxes.php:233 src/Locations/Entities/CustomOpeningHours.php:88
-msgid "Message"
-msgstr ""
-
-#: config/metaboxes.php:69 config/metaboxes.php:233
-msgid "If this field is not populated the default message will be displayed."
-msgstr ""
-
-#: config/metaboxes.php:84
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:45
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:47
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:48
-msgid "Locations"
+msgid "Geen locatie gevonden de prullenbak."
 msgstr ""
 
-#: config/metaboxes.php:93
-msgid "Description"
-msgstr ""
-
-#: config/metaboxes.php:100
-msgid "Street and number"
-msgstr ""
-
-#: config/metaboxes.php:105
-msgid "Zipcode"
-msgstr ""
-
-#: config/metaboxes.php:110
-msgid "City"
-msgstr ""
-
-#: config/metaboxes.php:115
-msgid "Postalcode"
-msgstr ""
-
-#: config/metaboxes.php:120
-msgid "Postalcity"
-msgstr ""
-
-#: config/metaboxes.php:125
-msgid "Maplink"
-msgstr ""
-
-#: config/metaboxes.php:126
-msgid "Link to external map service"
-msgstr ""
-
-#: config/metaboxes.php:133
-msgid "Telephone description"
-msgstr ""
-
-#: config/metaboxes.php:138
-msgid "Telephone"
-msgstr ""
-
-#: config/metaboxes.php:143
-msgid "Whatsapp"
-msgstr ""
-
-#: config/metaboxes.php:148
-msgid "Fax"
-msgstr ""
-
-#: config/metaboxes.php:153
-msgid "Email"
-msgstr ""
-
-#: config/metaboxes.php:166
-msgid "OpeningHours message active?"
-msgstr ""
-
-#: config/metaboxes.php:171
-msgid "OpeningHours message"
-msgstr ""
-
-#: config/metaboxes.php:180
-msgid "Custom openinghours message active?"
-msgstr ""
-
-#: config/metaboxes.php:185
-msgid "Custom openinghours message"
-msgstr ""
-
-#: config/metaboxes.php:195 config/metaboxes.php:204
-msgid "Custom days"
-msgstr ""
-
-#: config/metaboxes.php:196
-msgid "Add new custom day"
-msgstr ""
-
-#: config/metaboxes.php:209
-msgid "Date"
-msgstr ""
-
-#: config/p2p_connections.php:9
-msgid "PDC item"
-msgstr ""
-
-#: config/p2p_connections.php:14
-msgid "PDC Location"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:91
-msgid "Custom openinghours"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:102
-msgid "Add new time"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:158
-#: src/Locations/Entities/CustomOpeningHours.php:164
-#: src/Locations/Entities/OpeningHours.php:140
-#: src/Locations/Entities/OpeningHours.php:148
-msgid "Now closed"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:171
-#: src/Locations/Entities/OpeningHours.php:145
-#, php-format
-msgid "Now open from %s to %s hour"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:177
-#: src/Locations/Entities/OpeningHours.php:265
-#, php-format
-msgid "Monday open from %s to %s hour"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:201
-#: src/Locations/Entities/CustomOpeningHours.php:208
-#: src/Locations/Entities/OpeningHours.php:267
-msgid "Monday also closed"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:214
-#: src/Locations/Entities/CustomOpeningHours.php:220
-#: src/Locations/Entities/OpeningHours.php:197
-msgid "Tomorrow closed"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:225
-#: src/Locations/Entities/CustomOpeningHours.php:401
-#: src/Locations/Entities/OpeningHours.php:200
-#, php-format
-msgid "Tomorrow open from %s to %s hour"
-msgstr ""
-
-#: src/Locations/Entities/CustomOpeningHours.php:167
-#: src/Locations/Entities/CustomOpeningHours.php:405
-#, php-format
-msgid "Soon open from %s to %s hour"
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:46
-msgid "Location"
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:49
 #: src/Locations/PostType/LocationsPostTypeServiceProvider.php:50
-msgid "Add new location"
+msgid "PDC Locaties"
 msgstr ""
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:51
-msgid "New location"
+#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:65
+msgid "Gepubliceerd"
 msgstr ""
 
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:52
-msgid "Edit location"
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:53
-msgid "View location"
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:54
-msgid "All locations"
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:55
-msgid "Search locations"
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:56
-msgid "Parent locations:"
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:57
-msgid "No locations found."
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:58
-msgid "No locations found in Trash."
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:63
-msgid "PDC Locations"
-msgstr ""
-
-#: src/Locations/PostType/LocationsPostTypeServiceProvider.php:78
-msgid "Published"
-msgstr ""
-
-#: src/Locations/RestAPI/ItemFields/LocationsField.php:60
-#, php-format
-msgid "Connection type \"%s\" does not exist"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/box.php:48
-msgid "Are you sure you want to delete all connections?"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/box.php:140
-msgid "Search"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/box.php:230
-msgid "previous"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/box.php:231
-msgid "next"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/box.php:232
-msgid "of"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/dropdown-user.php:32
-msgid "Filter"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/factory.php:88
-msgid " (from)"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/factory.php:89
-msgid " (to)"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/field-delete.php:7
-msgid "Delete all connections"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/field-delete.php:16
-msgid "Delete connection"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:7
-msgid "Connection Types"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:41
-#, php-format
-msgid "<em>%s</em> is not a registered connection type."
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:50
-#, php-format
-msgid "Converted %1$s connections from <em>%2$s</em> to <em>%3$s</em>."
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:64
-msgid "Name"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:65
-msgid "Information"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:66
-msgid "Connections"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:74
-msgid "No connection types registered."
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:76
-#, php-format
-msgid "To register a connection type, see <a href=\"%s\">the wiki</a>."
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:93
-msgid "Convert to registered connection type:"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/admin/tools-page.php:129
-msgid "Go"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/connection-type.php:91
-msgid "Create connections"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/connection-type.php:109
-#, php-format
-msgid "Connected %s"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/side-user.php:16
-msgid "Users"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/side-user.php:25
-msgid "User"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/side-user.php:26
-msgid "Search Users"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/side-user.php:27
-msgid "No users found."
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/widget.php:19
-msgid "Posts 2 Posts"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/widget.php:20
-msgid "A list of posts connected to the current post"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/widget.php:37
-msgid "Title:"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/widget.php:44
-msgid "Connection type:"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/widget.php:49
-msgid "Connection listing:"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/widget.php:55
-msgid "connected"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/lib-posts-to-posts/widget.php:56
-msgid "related"
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/scb-framework/AdminPage.php:259
-msgid "Settings <strong>saved</strong>."
-msgstr ""
-
-#: wp-content/plugins/posts-to-posts/vendor/scribu/scb-framework/AdminPage.php:517
-msgid "Settings"
+#: src/Locations/RestAPI/ItemFields/LocationsField.php:46
+msgid "Verbinding type "%s" bestaat niet"
 msgstr ""

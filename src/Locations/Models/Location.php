@@ -122,7 +122,7 @@ class Location extends AbstractRepository
         return $this->hydrate($data);
     }
 
-	/**
+    /**
      * Fill all the fields this their defaults.
      */
     protected function hydrate(array $data): array
@@ -213,17 +213,17 @@ class Location extends AbstractRepository
         return $data;
     }
 
-	protected function formatSpecialDays(array $data, array $specialDays): array
-	{
-		$data['special_openingdays'] = array_map(function($specialDay){
-			$specialDay['open-time'] = $this->validateTime($specialDay['open-time']) ? (new DateTime($specialDay['open-time']))->format('H.i') : '';
-			$specialDay['closed-time'] = $this->validateTime($specialDay['closed-time']) ? (new DateTime($specialDay['closed-time']))->format('H.i') : '';
+    protected function formatSpecialDays(array $data, array $specialDays): array
+    {
+        $data['special_openingdays'] = array_map(function ($specialDay) {
+            $specialDay['open-time'] = $this->validateTime($specialDay['open-time']) ? (new DateTime($specialDay['open-time']))->format('H.i') : '';
+            $specialDay['closed-time'] = $this->validateTime($specialDay['closed-time']) ? (new DateTime($specialDay['closed-time']))->format('H.i') : '';
 
-			return $specialDay;
-		}, $specialDays);
+            return $specialDay;
+        }, $specialDays);
 
-		return $data;
-	}
+        return $data;
+    }
 
     protected function prepareSpecialDays(WP_Post $post): array
     {
@@ -239,14 +239,14 @@ class Location extends AbstractRepository
         }, $specials ?: []);
     }
 
-	protected function validateTime(string $time)
-	{
-		if (empty($time)) {
-			return '';
-		}
+    protected function validateTime(string $time): string
+    {
+        if (empty($time)) {
+            return '';
+        }
 
-		return strtotime($time) ? $time : '';
-	}
+        return strtotime($time) ? $time : '';
+    }
 
     /**
      * Return the defaults.

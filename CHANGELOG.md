@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## Version 3.0
+
+- Refactor: clean-up and implement spatie openinghours package
+- Refactor: translatables to Dutch
+- Refactor: translatables to Dutch + validate time before returning to the API response
+- Chore: update .pot file and remove the others since Dutch is the main language now
+
 ## Version 2.2.1
 
 - Fix: var reference and improve textual spelling.

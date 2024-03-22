@@ -11,14 +11,14 @@ use OWC\PDC\Base\Foundation\Plugin as BasePlugin;
  */
 class Plugin extends BasePlugin
 {
-    /**
-     * Name of the plugin.
-     */
-    public const NAME = 'pdc-locations';
+	/**
+	 * Name of the plugin.
+	 */
+	public const NAME = 'pdc-locations';
 
-    /**
-     * Version of the plugin.
-     * Used for setting versions of enqueue scripts and styles.
-     */
-    public const VERSION = '2.2.1';
+	/**
+	 * Version of the plugin.
+	 * Used for setting versions of enqueue scripts and styles.
+	 */
+	public const VERSION = '3.0';
 }

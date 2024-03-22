@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Plugin Name:       PDC Locations
  * Plugin URI:        https://www.openwebconcept.nl/
  * Description:       Plugin to attach locations to a PDC item.
- * Version:           2.2.1
+ * Version:           3.0
  * Author:            Yard Digital Agency
  * Author URI:        https://www.yard.nl/
  * License:           GPL-3.0
@@ -22,11 +22,11 @@ use OWC\PDC\Locations\Foundation\Plugin;
  * If this file is called directly, abort.
  */
 if (! defined('WPINC')) {
-    die;
+	die;
 }
 
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    require_once __DIR__ . '/vendor/autoload.php';
+	require_once __DIR__ . '/vendor/autoload.php';
 }
 
 /**
@@ -43,5 +43,5 @@ $autoloader = new Autoloader();
  * and wp_loaded action hooks.
  */
 add_action('plugins_loaded', function () {
-    $plugin = (new Plugin(__DIR__))->boot();
+	$plugin = (new Plugin(__DIR__))->boot();
 }, 10);

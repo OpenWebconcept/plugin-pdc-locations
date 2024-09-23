@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 2.3.0
+
+- Feat: filterable open now messages, applied in REST API.
+
 ## Version 2.2.1
 
 - Fix: var reference and improve textual spelling.

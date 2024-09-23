@@ -167,8 +167,12 @@ class CustomOpeningHours extends OpeningHours
             return sprintf(__('Soon open from %s to %s hour', 'pdc-locations'), $openNowObject->getTimeObject($openNowObject->getOpenTime())->format(), $openNowObject->getTimeObject($openNowObject->getClosedTime())->format());
         }
 
-        // Location is open return openinghours.
-        return sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openNowObject->getTimeObject($openNowObject->getOpenTime())->format(), $openNowObject->getTimeObject($openNowObject->getClosedTime())->format());
+		$openNowMessage = sprintf(__('Now open from %s to %s hour', 'pdc-locations'), $openNowObject->getTimeObject($openNowObject->getOpenTime())->format(), $openNowObject->getTimeObject($openNowObject->getClosedTime())->format());
+		$openNowTime = $openNowObject->getTimeObject($openNowObject->getOpenTime())->format();
+        $closedNowTime = $openNowObject->getTimeObject($openNowObject->getClosedTime())->format();
+
+		// Location is open return openinghours.
+		return apply_filters('owc/pdc-locations/custom-openingshours/open-now-message', $openNowMessage, $openNowTime, $closedNowTime);
     }
 
     public function openTomorrowMessage(bool $isCustomOpeningHours = true): string

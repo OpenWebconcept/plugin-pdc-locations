@@ -12,7 +12,7 @@ class CustomOpeningHours extends OpeningHours
     protected int $locationID;
     protected Week $regularWeek;
 
-    public function __construct(Week $week, int $locationID = 0, Week $regularWeek)
+    public function __construct(Week $week, Week $regularWeek, int $locationID = 0)
     {
         $this->week = $week;
         $this->locationID = $locationID;

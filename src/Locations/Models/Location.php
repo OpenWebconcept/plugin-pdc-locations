@@ -104,8 +104,8 @@ class Location extends AbstractRepository
             $week->addDay($name, $day);
         }
 
-        $data['openinghours']['openNow']  = (new CustomOpeningHours($week, 0, $regularWeek))->isOpenNow();
-        $data['openinghours']['messages'] = (new CustomOpeningHours($week, $post->ID, $regularWeek))->getMessages(false); // Don't show special message when normal openinghours.
+        $data['openinghours']['openNow']  = (new CustomOpeningHours($week, $regularWeek))->isOpenNow();
+        $data['openinghours']['messages'] = (new CustomOpeningHours($week, $regularWeek, $post->ID))->getMessages(false); // Don't show special message when normal openinghours.
 
         $week = new Week();
         $regularWeek = new Week();
@@ -123,8 +123,8 @@ class Location extends AbstractRepository
             $data['custom-openinghours']['custom-days'][$name] = $day->toRest();
         }
 
-        $data['custom-openinghours']['openNow']  = (new CustomOpeningHours($week, 0, $regularWeek))->isOpenNow();
-        $data['custom-openinghours']['messages'] = (new CustomOpeningHours($week, $post->ID, $regularWeek))->getMessages();
+        $data['custom-openinghours']['openNow']  = (new CustomOpeningHours($week, $regularWeek))->isOpenNow();
+        $data['custom-openinghours']['messages'] = (new CustomOpeningHours($week, $regularWeek, $post->ID))->getMessages();
 
         return $data;
     }

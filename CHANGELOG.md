@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 2.3.1
+
+- Fix: translations just in time error.
+
 ## Version 2.3.0
 
 - Feat: filterable open now messages, applied in REST API.

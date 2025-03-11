@@ -1,0 +1,48 @@
+publiccodeYmlVersion: '0.2'
+
+name: "plugin-pdc-locations"
+applicationSuite: 'OpenWebconcept'
+url: 'https://github.com/OpenWebconcept/plugin-pdc-locations'
+releaseDate: '2018-03-13'
+
+platforms:
+    - 'web'
+
+categories:
+    - 'application-development'
+
+developmentStatus: 'Production'
+
+softwareType: 'softwareAddon'
+
+description:
+    en:
+        genericName: 'Yard | PDC Locations'
+        shortDescription: 'Plugin to attach locations to a PDC item'
+        longDescription: 'Plugin to attach locations to a PDC item'
+    nl:
+        genericName: 'Yard | PDC Locations'
+        shortDescription: 'Plugin om locaties te koppelen aan een PDC item'
+		longDescription: 'Plugin om locaties te koppelen aan een PDC item'
+
+legal:
+    license: 'EUPL-1.2'
+    repoOwner: 'Yard | Digital Agency'
+
+dependsOn:
+    open:
+		- name: 'pdc-base'
+		- versionMin: 3.0.0
+
+intendedAudience:
+    countries:
+        - nl
+    scope:
+        - government
+
+maintenance:
+    contractors:
+        - name: 'Yard | Digital Agency'
+          website: 'https://www.yard.nl'
+          email: 'owc@yard.nl'
+    type: 'contract'

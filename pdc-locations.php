@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * Plugin Name:       PDC Locations
+ * Plugin Name:       Yard | PDC Locations
  * Plugin URI:        https://www.openwebconcept.nl/
  * Description:       Plugin to attach locations to a PDC item.
  * Version:           2.3.0
@@ -43,5 +43,9 @@ $autoloader = new Autoloader();
  * and wp_loaded action hooks.
  */
 add_action('plugins_loaded', function () {
-    $plugin = (new Plugin(__DIR__))->boot();
+    $plugin = (new Plugin(__DIR__));
+
+	add_action('after_setup_theme', function() use ($plugin) {
+		$plugin->boot();
+	});
 }, 10);

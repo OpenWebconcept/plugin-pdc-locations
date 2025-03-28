@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 2.3.2
+
+- Fix: optional parameter.
+- Feat: update extended-cpts.
+
 ## Version 2.3.1
 
 - Fix: translations just in time error.

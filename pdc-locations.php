@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Plugin Name:       Yard | PDC Locations
  * Plugin URI:        https://www.openwebconcept.nl/
  * Description:       Plugin to attach locations to a PDC item.
- * Version:           2.3.1
+ * Version:           2.3.2
  * Author:            Yard Digital Agency
  * Author URI:        https://www.yard.nl/
  * License:           GPL-3.0

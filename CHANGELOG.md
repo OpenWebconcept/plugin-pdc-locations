@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 2.3.3
+
+- Fix: retrieval of current day name inside OpeningHours class.
+
 ## Version 2.3.2
 
 - Fix: optional parameter.

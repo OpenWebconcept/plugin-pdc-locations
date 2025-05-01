@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OWC\PDC\Locations\Entities;
 
+use DateTime;
 use Exception;
 
 class CustomOpeningHours extends OpeningHours
@@ -254,7 +255,7 @@ class CustomOpeningHours extends OpeningHours
      *
      * @return object
      */
-    protected function getOpeningHoursOpenNow(\DateTime $date)
+    protected function getOpeningHoursOpenNow(DateTime $date)
     {
         $day = $this->week->getDay($this->getDayName($date));
         $timeslot = array_filter($day->getTimeslots(), function ($timeslot) {
@@ -271,7 +272,7 @@ class CustomOpeningHours extends OpeningHours
     /**
      * Get first upcoming open timeslot of today.
      */
-    protected function getUpcomingOpenTimeslotToday(\DateTime $time): Timeslot
+    protected function getUpcomingOpenTimeslotToday(DateTime $time): Timeslot
     {
         $timeslots = $this->getOpeningHoursAll($time);
 
@@ -298,7 +299,7 @@ class CustomOpeningHours extends OpeningHours
         return $timeslot;
     }
 
-    protected function getFirstOpenTimeslotTomorrow(\DateTime $time): Timeslot
+    protected function getFirstOpenTimeslotTomorrow(DateTime $time): Timeslot
     {
         $timeslots = $this->getOpeningHoursAll($time);
 
@@ -323,7 +324,7 @@ class CustomOpeningHours extends OpeningHours
      * Get all the timeslots of a given day.
      * Only returns the timeslots which are not set to closed.
      */
-    protected function getOpeningHoursAll(\DateTime $time): array
+    protected function getOpeningHoursAll(DateTime $time): array
     {
         $day = $this->week->getDay($this->getDayName($time));
         $timeslots = $day->getTimeslots();
@@ -338,7 +339,7 @@ class CustomOpeningHours extends OpeningHours
     /**
      * Returns the first occuring timeslot for the day.
      */
-    protected function getOpeningDayFirstOccuringTimeslotMessage(\DateTime $date): string
+    protected function getOpeningDayFirstOccuringTimeslotMessage(DateTime $date): string
     {
         $day = $this->week->getDay($this->getDayName($date));
         $timeslots = $day->getTimeslots();
@@ -363,7 +364,7 @@ class CustomOpeningHours extends OpeningHours
     protected function getCurrentTimeslots(array $timeslots): array
     {
         $filtered = array_filter($timeslots, function ($timeslot) {
-            return $timeslot->isOpenBetween(new \DateTime());
+            return $timeslot->isOpenBetween(new DateTime());
         });
 
         return array_values($filtered);
@@ -373,7 +374,7 @@ class CustomOpeningHours extends OpeningHours
      * Should be used when a location is closed at this specific moment.
      * When it is, get the first occuring timeslot when the location is open.
      */
-    protected function getNextOccuringTimeslotMessage(\DateTime $time, bool $isCustomOpeningHours): string
+    protected function getNextOccuringTimeslotMessage(DateTime $time, bool $isCustomOpeningHours): string
     {
         if (! $isCustomOpeningHours) {
             return '';
@@ -417,7 +418,7 @@ class CustomOpeningHours extends OpeningHours
     protected function getUpcomingTimeSlots(array $timeslots)
     {
         $filtered = array_filter($timeslots, function ($timeslot) {
-            return $timeslot->getClosedTime() > new \DateTime() && ! $timeslot->isOpenBetween(new \DateTime());
+			return $timeslot->getClosedTime() > new DateTime() && ! $timeslot->isOpenBetween(new DateTime());
         });
 
         return array_values($filtered);
@@ -426,8 +427,8 @@ class CustomOpeningHours extends OpeningHours
     /**
      * Validate if it's today by day name.
      */
-    protected function isToday(\DateTime $time): bool
+    protected function isToday(DateTime $time): bool
     {
-        return $this->getDayName($time) === strtolower((new \DateTime)->format('l'));
+        return $this->getDayName($time) === strtolower((new DateTime)->format('l'));
     }
 }

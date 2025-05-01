@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace OWC\PDC\Locations\Entities;
 
 use DateTime;
+use DateTimeZone;
 use OWC\PDC\Locations\Traits\TimeFormatDelimiter;
 
 class OpeningHours
 {
     use TimeFormatDelimiter;
 
-    protected array $data; // OpeningHoursDat
+    protected array $data;
     protected int $postID;
     protected array $contactInfo;
-    protected \DateTimeZone $dateTimeZone;
+    protected DateTimeZone $dateTimeZone;
     protected string $timeZone = 'Europe/Amsterdam';
     protected $now = 'now';
 
@@ -22,7 +23,7 @@ class OpeningHours
     {
         $this->data         = $data;
         $this->postID      = $postID;
-        $this->dateTimeZone = new \DateTimeZone($this->timeZone);
+        $this->dateTimeZone = new DateTimeZone($this->timeZone);
     }
 
     /**
@@ -37,7 +38,7 @@ class OpeningHours
      * Returns array with open/close times string based from the contactInfo site option
      * NOTE: these are not date objects
      */
-    protected function getOpeningHoursRaw(\DateTime $date): array
+    protected function getOpeningHoursRaw(DateTime $date): array
     {
         $dayName    = $this->getDayName($date);
         $openClosed = $this->data[$dayName];
@@ -94,11 +95,9 @@ class OpeningHours
     /**
      * Gets the dayName i.e. mon or monday when the fullNotation is true
      */
-    protected function getDayName(\DateTime $date): string
+    protected function getDayName(DateTime $date): string
     {
-        $format = 'l';
-
-        return strtolower(date($format, $date->getTimestamp()));
+        return strtolower($date->format('l'));
     }
 
     /**
@@ -172,9 +171,14 @@ class OpeningHours
                 }
 
                 $delimiter = $this->getDelimiter($timestamp, '.'); // Check for dutch notation.
-                list($hours, $minutes) = explode($delimiter, $timestamp);
 
-                return (new \DateTime($this->now, $this->dateTimeZone))->setTime((int) $hours, (int) $minutes);
+				if (strpos($timestamp, $delimiter) !== false) {
+                    list($hours, $minutes) = explode($delimiter, $timestamp);
+                } else {
+                    $hours = $minutes = null;
+                }
+
+                return (new DateTime($this->now, $this->dateTimeZone))->setTime((int) $hours, (int) $minutes);
             },
             $this->getOpeningHoursRaw($date)
         );
@@ -206,7 +210,7 @@ class OpeningHours
     /**
      * Check if giving date is a weekend day 6 & 7
      */
-    protected function isWeekend(\DateTime $dateTime): bool
+    protected function isWeekend(DateTime $dateTime): bool
     {
         return 5 < (int) $this->getDayIndex($dateTime) ? true : false;
     }
@@ -216,7 +220,7 @@ class OpeningHours
      *
      * @return false|string
      */
-    protected function getDayIndex(\DateTime $date)
+    protected function getDayIndex(DateTime $date)
     {
         return date('N', $date->getTimestamp());
     }

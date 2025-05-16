@@ -143,7 +143,7 @@ class Location extends AbstractRepository
     protected function getTodayMessage(SpatieOpeningHours $openinghours): string
     {
         $range = $openinghours->currentOpenRange($this->now);
-        $todayMsg = $range ? sprintf(__('Nu geopend van %s tot %s', 'pdc-locations'), $range->start(), $range->end()) : 'Nu gesloten';
+        $todayMsg = $range ? sprintf(__('Nu geopend van %s tot %s', 'pdc-locations'), $range->start()->format('H.i'), $range->end()->format('H.i')) : 'Nu gesloten';
 
         if (! $range) {
             $todayMsg = $this->getNextOpenCloseWhenNowClosed($openinghours, $todayMsg);

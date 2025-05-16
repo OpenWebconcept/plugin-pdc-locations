@@ -23,7 +23,7 @@ class LocationsController extends BaseController
         $data = $locations->all();
         $query = $locations->getQuery();
 
-        return $this->addPaginator($data, $query);
+        return $this->addPaginator(array_values(array_filter($data)), $query);
     }
 
     /**

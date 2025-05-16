@@ -61,7 +61,11 @@ class Location extends AbstractRepository
         $data = $this->assignFields(array_merge($data, $fields), $post);
         $data['location']['image'] = $this->getFeaturedImage($post);
 
-        $openinghours = SpatieOpeningHours::create($this->prepareOpeningHours($post));
+		try {
+			$openinghours = SpatieOpeningHours::create($this->prepareOpeningHours($post));
+		} catch(Exception $e)  {
+			return [];
+		}
 
         $data = $this->formatOpeninghours($data, $openinghours);
         $data = $this->getMessages($data, $openinghours);

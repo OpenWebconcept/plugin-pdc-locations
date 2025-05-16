@@ -25,7 +25,7 @@
   ],
   "require": {
     "php": "^7.0|^8.0",
-    "johnbillion/extended-cpts": "^4.0",
+    "johnbillion/extended-cpts": "^4.0 | ^5.0",
     "spatie/opening-hours": "^2.0",
     "wpackagist-plugin/cmb2": "^2.0"
   },

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 3.2.1
+
+- Fix: handle exception thrown by spatie openinghours package when times overlap
+
 ## Version 3.2.0
 
 - Change: time delimiter from ':' to '.'

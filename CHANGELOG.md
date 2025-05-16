@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Version 3.2.0
+
+- Change: time delimiter from ':' to '.'
+- Change: allow ^5.0 of johnbillion/extended-cpts package besides ^4.0
+
+## Version 3.1
+
+- Chore: allow upgrading cmb2
+
 ## Version 3.0
 
 - Refactor: clean-up and implement spatie openinghours package

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 3.2.2
+
+- Change: open and closed messages today and tomorrow
+
 ## Version 3.2.1
 
 - Fix: handle exception thrown by spatie openinghours package when times overlap

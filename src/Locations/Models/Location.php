@@ -61,11 +61,11 @@ class Location extends AbstractRepository
         $data = $this->assignFields(array_merge($data, $fields), $post);
         $data['location']['image'] = $this->getFeaturedImage($post);
 
-		try {
-			$openinghours = SpatieOpeningHours::create($this->prepareOpeningHours($post));
-		} catch(Exception $e)  {
-			return [];
-		}
+        try {
+            $openinghours = SpatieOpeningHours::create($this->prepareOpeningHours($post));
+        } catch (Exception $e) {
+            return [];
+        }
 
         $data = $this->formatOpeninghours($data, $openinghours);
         $data = $this->getMessages($data, $openinghours);
@@ -147,7 +147,7 @@ class Location extends AbstractRepository
     protected function getTodayMessage(SpatieOpeningHours $openinghours): string
     {
         $range = $openinghours->currentOpenRange($this->now);
-        $todayMsg = $range ? sprintf(__('Nu geopend van %s tot %s', 'pdc-locations'), $range->start()->format('H.i'), $range->end()->format('H.i')) : 'Nu gesloten';
+        $todayMsg = $range ? sprintf(__('Nu geopend van %s tot %s uur', 'pdc-locations'), $range->start()->format('H.i'), $range->end()->format('H.i')) : 'Nu gesloten';
 
         if (! $range) {
             $todayMsg = $this->getNextOpenCloseWhenNowClosed($openinghours, $todayMsg);
@@ -169,8 +169,8 @@ class Location extends AbstractRepository
         try {
             $nextOpenSearched = $openinghours->nextOpen($searchFrom, $searchTill)->format('H.i');
             $nextClosedSearched = $openinghours->nextClose($searchFrom, $searchTill)->format('H.i');
-            $todayMsg .= sprintf(__(', straks geopend van %s tot %s', 'pdc-locations'), $nextOpenSearched, $nextClosedSearched);
-        } catch(Exception $e) {
+            $todayMsg .= sprintf(__(', straks geopend van %s tot %s uur', 'pdc-locations'), $nextOpenSearched, $nextClosedSearched);
+        } catch (Exception $e) {
             $todayMsg = 'Nu gesloten';
         }
 
@@ -188,8 +188,8 @@ class Location extends AbstractRepository
         try {
             $nextOpenSearched = $openinghours->nextOpen($searchFrom, $searchTill)->format('H.i');
             $nextClosedSearched = $openinghours->nextClose($searchFrom, $searchTill)->format('H.i');
-            $todayMsg .= sprintf(__(', straks geopend van %s tot %s', 'pdc-locations'), $nextOpenSearched, $nextClosedSearched);
-        } catch(Exception $e) {
+            $todayMsg .= sprintf(__(', straks geopend van %s tot %s uur', 'pdc-locations'), $nextOpenSearched, $nextClosedSearched);
+        } catch (Exception $e) {
             return $todayMsg;
         }
 
@@ -203,11 +203,11 @@ class Location extends AbstractRepository
 
         try {
             $nextOpen = $openinghours->nextOpen($tomorrow, $searchTill);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return '';
         }
 
-        return sprintf(__('%s geopend vanaf %s tot %s', 'pdc-locations'), ucfirst(date_i18n('l', $nextOpen->getTimestamp())), $nextOpen->format('H.i'), $openinghours->nextClose()->format('H.i'));
+        return sprintf(__('%s geopend vanaf %s tot %s uur', 'pdc-locations'), ucfirst(date_i18n('l', $nextOpen->getTimestamp())), $nextOpen->format('H.i'), $openinghours->nextClose()->format('H.i'));
     }
 
     protected function populateOpenNow(array $data, SpatieOpeningHours $openinghours): array

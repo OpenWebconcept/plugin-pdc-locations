@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Version 3.2.3
+
+- Refactor: clean up package dependencies
+
 ## Version 3.2.2
 
 - Change: open and closed messages today and tomorrow

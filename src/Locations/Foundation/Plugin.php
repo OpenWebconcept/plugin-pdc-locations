@@ -20,5 +20,5 @@ class Plugin extends BasePlugin
      * Version of the plugin.
      * Used for setting versions of enqueue scripts and styles.
      */
-    public const VERSION = '3.2.2';
+    public const VERSION = '3.2.3';
 }
